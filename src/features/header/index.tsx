@@ -1,8 +1,15 @@
 import { Component } from 'react';
 
 import classes from './header.module.css';
+import type { pokemon, pokemonResponse } from '../../shared/model/pokemon.type';
 
-class Header extends Component {
+interface HeaderProps {
+  setPokemonsList: (newList: pokemon[]) => void;
+}
+
+type Props = Readonly<HeaderProps>;
+
+class Header extends Component<Props> {
   state = {
     search: '',
   };
@@ -12,16 +19,17 @@ class Header extends Component {
       `https://pokeapi.co/api/v2/pokemon/${this.state.search}`
     );
 
-    const pokemonLists = await response.json();
+    const pokemonLists: pokemonResponse = await response.json();
 
-    console.log(pokemonLists);
+    console.log(pokemonLists.results);
+    this.props.setPokemonsList(pokemonLists.results);
   };
 
   render() {
     return (
       <header className={classes.header}>
         <div className="container flex-row">
-          <h1 className={classes.title}>Class components</h1>
+          <h1 className={classes.title}>Pokemon list</h1>
 
           <form className={classes.search}>
             <input
