@@ -1,10 +1,11 @@
 import { Component } from 'react';
 
 import classes from './header.module.css';
-import type { pokemon, pokemonResponse } from '../../shared/model/pokemon.type';
+import { getPokemons } from '../../shared/api/get-pokemon';
+import type { Pokemon } from '../../shared/model/pokemon.type';
 
 interface HeaderProps {
-  setPokemonsList: (newList: pokemon[]) => void;
+  setPokemonsList: (newList: Pokemon[]) => void;
 }
 
 type Props = Readonly<HeaderProps>;
@@ -14,15 +15,9 @@ class Header extends Component<Props> {
     search: '',
   };
 
-  onSearch = async () => {
-    const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${this.state.search}`
-    );
-
-    const pokemonLists: pokemonResponse = await response.json();
-
-    console.log(pokemonLists.results);
-    this.props.setPokemonsList(pokemonLists.results);
+  handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    this.props.setPokemonsList(await getPokemons(this.state.search));
   };
 
   render() {
@@ -31,7 +26,7 @@ class Header extends Component<Props> {
         <div className="container flex-row">
           <h1 className={classes.title}>Pokemon list</h1>
 
-          <form className={classes.search}>
+          <form onSubmit={this.handleSubmit} className={classes.search}>
             <input
               type="search"
               name="search"
@@ -44,12 +39,7 @@ class Header extends Component<Props> {
               value={this.state.search}
             />
 
-            <input
-              type="button"
-              name="search-button"
-              value="search"
-              onClick={this.onSearch}
-            />
+            <input type="submit" name="search-button" value="search" />
           </form>
         </div>
       </header>

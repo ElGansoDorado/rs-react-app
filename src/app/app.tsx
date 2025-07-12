@@ -1,10 +1,11 @@
 import { Component, type ReactNode } from 'react';
 
 import Header from '../features/header';
-import type { pokemon } from '../shared/model/pokemon.type';
+import PokemonsList from '../features/pokemons-list';
+import type { Pokemon } from '../shared/model/pokemon.type';
 
 interface ListState {
-  list: pokemon[];
+  list: Pokemon[];
 }
 
 type State = Readonly<ListState>;
@@ -14,7 +15,7 @@ class App extends Component {
     list: [],
   };
 
-  setPokemonsList = (newList: pokemon[]) => {
+  setPokemonsList = (newList: Pokemon[]) => {
     this.setState({
       list: newList,
     });
@@ -25,13 +26,7 @@ class App extends Component {
       <>
         <Header setPokemonsList={this.setPokemonsList} />
 
-        <main className="container">
-          {this.state.list?.map((item) => (
-            <div key={item.name}>
-              <p>{item.name}</p> <a href={item.url}>{item.url}</a>
-            </div>
-          ))}
-        </main>
+        <PokemonsList list={this.state.list} />
       </>
     );
   }
