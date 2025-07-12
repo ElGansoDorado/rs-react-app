@@ -1,46 +1,17 @@
 import { Component, type ReactNode } from 'react';
 
 import classes from './header.module.css';
-import { getPokemons } from '../../shared/api/get-pokemon';
-import type { Pokemon } from '../../shared/model/pokemon.type';
-
-interface HeaderProps {
-  setPokemonsList: (newList: Pokemon[]) => void;
-}
-
-type Props = Readonly<HeaderProps>;
+import Search from './search/search';
+import { type Props } from './search/search';
 
 class Header extends Component<Props> {
-  state = {
-    search: '',
-  };
-
-  handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    this.props.setPokemonsList(await getPokemons(this.state.search));
-  };
-
   render(): ReactNode {
     return (
       <header className={classes.header}>
         <div className="container flex-row">
           <h1 className={classes.title}>Pokemon list</h1>
 
-          <form onSubmit={this.handleSubmit} className={classes.search}>
-            <input
-              type="search"
-              name="search"
-              placeholder="search..."
-              onChange={(e) =>
-                this.setState({
-                  search: e.target.value,
-                })
-              }
-              value={this.state.search}
-            />
-
-            <input type="submit" name="search-button" value="search" />
-          </form>
+          <Search setPokemonsList={this.props.setPokemonsList} />
         </div>
       </header>
     );
