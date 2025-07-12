@@ -1,5 +1,6 @@
 @import './reset.css';
 @import './layout.css';
+@import './ui.css';
 
 body {
   background-color: #f3f3f2;

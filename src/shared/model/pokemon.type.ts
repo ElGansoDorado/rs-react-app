@@ -15,10 +15,22 @@ export type PokemonSprites = {
   front_default?: string;
 };
 
+interface Stat {
+  name: string;
+  url: string;
+}
+
+interface PokemonStat {
+  base_stat: number;
+  effort: number;
+  stat: Stat;
+}
+
 export type PokemonType = {
   id: number;
   name: string;
   weight: number;
   height: number;
+  stats: PokemonStat[];
   sprites: PokemonSprites;
 };

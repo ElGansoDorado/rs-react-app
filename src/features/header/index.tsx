@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, type ReactNode } from 'react';
 
 import classes from './header.module.css';
 import { getPokemons } from '../../shared/api/get-pokemon';
@@ -20,7 +20,7 @@ class Header extends Component<Props> {
     this.props.setPokemonsList(await getPokemons(this.state.search));
   };
 
-  render() {
+  render(): ReactNode {
     return (
       <header className={classes.header}>
         <div className="container flex-row">

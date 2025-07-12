@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from 'react';
+import CardPokemons from './card-pokemons';
 import type { Pokemon } from '../../shared/model/pokemon.type';
 
 interface PokemonsProps {
@@ -11,17 +12,14 @@ class PokemonsList extends Component<Props> {
   render(): ReactNode {
     return (
       <main className="container">
-        <h2>Result</h2>
+        <h2 className="list-pokemon__title">Result</h2>
 
-        {this.props.list ? (
-          <ul>
+        {this.props.list.length !== 0 ? (
+          <div className="list-pokemon">
             {this.props.list?.map((item) => (
-              <li key={item.name} className="pokemon-item">
-                <h3>{item.name}</h3>
-                <a href={item.url}>{item.url}</a>
-              </li>
+              <CardPokemons key={item.name} url={item.url} />
             ))}
-          </ul>
+          </div>
         ) : (
           <p>Error description</p>
         )}
