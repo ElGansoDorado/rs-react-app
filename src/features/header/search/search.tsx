@@ -1,16 +1,9 @@
 import classes from './search.module.css';
 import { Component, type ReactNode } from 'react';
-import { getPokemons } from '../../../shared/api/get-pokemon';
-import type { PokemonType } from '../../../shared/model/pokemon.type';
-import {
-  checkLineSearchSave,
-  getLineSearch,
-  setLineSearch,
-} from './search-save';
+import { getLineSearch } from '../../../shared/api/search-save';
 
 interface SearchProps {
-  setPokemonsList: (newList: PokemonType[]) => void;
-  setIsLoading: (load: boolean) => void;
+  searchPokemons: (search: string) => Promise<void>;
 }
 
 interface SearchState {
@@ -28,32 +21,20 @@ class Search extends Component<Props, SearchState> {
     };
   }
 
-  componentDidMount(): void {
-    this.props.setIsLoading(true);
-
-    getPokemons(this.state.search).then((list) => {
-      this.props.setPokemonsList(list);
-      this.props.setIsLoading(false);
-    });
-  }
-
   handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!checkLineSearchSave(this.state.search)) {
-      this.props.setIsLoading(true);
-      this.props.setPokemonsList(await getPokemons(this.state.search));
-      setLineSearch(this.state.search);
-    }
+    await this.props.searchPokemons(this.state.search);
   };
 
   render(): ReactNode {
     return (
-      <form onSubmit={this.handleSubmit} className={classes.search}>
+      <form onSubmit={this.handleSubmit} className={classes.container}>
         <input
           type="search"
           name="search"
-          placeholder="search..."
+          className={classes.search}
+          placeholder="Search..."
           onChange={(e) =>
             this.setState({
               search: e.target.value.trim(),
@@ -62,7 +43,12 @@ class Search extends Component<Props, SearchState> {
           value={this.state.search}
         />
 
-        <input type="submit" name="search-button" value="search" />
+        <input
+          type="submit"
+          name="search-button"
+          value="search"
+          className={classes.button}
+        />
       </form>
     );
   }

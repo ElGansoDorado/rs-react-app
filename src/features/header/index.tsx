@@ -8,7 +8,7 @@ class Header extends Component<Props> {
   render(): ReactNode {
     return (
       <header className={classes.header}>
-        <div className="container flex-row">
+        <div className={`container ${classes.container}`}>
           <h1 className={classes.title}>Pokemon list</h1>
 
           <Search {...this.props} />
