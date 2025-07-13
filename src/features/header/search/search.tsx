@@ -1,11 +1,16 @@
 import classes from './search.module.css';
 import { Component, type ReactNode } from 'react';
 import { getPokemons } from '../../../shared/api/get-pokemon';
-import type { Pokemon } from '../../../shared/model/pokemon.type';
-import { getSearch, setSearch } from './search-save';
+import type { PokemonType } from '../../../shared/model/pokemon.type';
+import {
+  checkLineSearchSave,
+  getLineSearch,
+  setLineSearch,
+} from './search-save';
 
 interface SearchProps {
-  setPokemonsList: (newList: Pokemon[]) => void;
+  setPokemonsList: (newList: PokemonType[]) => void;
+  setIsLoading: (load: boolean) => void;
 }
 
 interface SearchState {
@@ -19,20 +24,27 @@ class Search extends Component<Props, SearchState> {
     super(props);
 
     this.state = {
-      search: getSearch(),
+      search: getLineSearch(),
     };
   }
 
   componentDidMount(): void {
+    this.props.setIsLoading(true);
+
     getPokemons(this.state.search).then((list) => {
       this.props.setPokemonsList(list);
+      this.props.setIsLoading(false);
     });
   }
 
   handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.props.setPokemonsList(await getPokemons(this.state.search));
-    setSearch(this.state.search);
+
+    if (!checkLineSearchSave(this.state.search)) {
+      this.props.setIsLoading(true);
+      this.props.setPokemonsList(await getPokemons(this.state.search));
+      setLineSearch(this.state.search);
+    }
   };
 
   render(): ReactNode {

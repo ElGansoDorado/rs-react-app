@@ -1,9 +1,9 @@
 const SEARCH = 'SEARCH';
 
-export function setSearch(search: string) {
+export const setLineSearch = (search: string) =>
   localStorage.setItem(SEARCH, search);
-}
 
-export function getSearch() {
-  return localStorage.getItem(SEARCH) ?? '';
-}
+export const checkLineSearchSave = (search: string) =>
+  localStorage.getItem(SEARCH) === search;
+
+export const getLineSearch = () => localStorage.getItem(SEARCH) ?? '';

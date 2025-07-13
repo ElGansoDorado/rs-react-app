@@ -2,10 +2,11 @@ import { Component, type ReactNode } from 'react';
 
 import Header from '../features/header';
 import PokemonsList from '../features/pokemons-list';
-import type { Pokemon } from '../shared/model/pokemon.type';
+import type { PokemonType } from '../shared/model/pokemon.type';
 
 interface ListState {
-  list: Pokemon[];
+  list: PokemonType[];
+  isLoading: boolean;
 }
 
 type State = Readonly<ListState>;
@@ -13,20 +14,35 @@ type State = Readonly<ListState>;
 class App extends Component {
   state: State = {
     list: [],
+    isLoading: false,
   };
 
-  setPokemonsList = (newList: Pokemon[]) => {
+  setIsLoading = (load: boolean) => {
+    this.setState({
+      isLoading: load,
+    });
+  };
+
+  setPokemonsList = (newList: PokemonType[]) => {
     this.setState({
       list: newList,
+      isLoading: false,
     });
   };
 
   render(): ReactNode {
     return (
       <>
-        <Header setPokemonsList={this.setPokemonsList} />
+        <Header
+          setPokemonsList={this.setPokemonsList}
+          setIsLoading={this.setIsLoading}
+        />
 
-        <PokemonsList list={this.state.list} />
+        <main className="container">
+          <h2 className="list-pokemon__title">Result</h2>
+
+          <PokemonsList {...this.state} />
+        </main>
       </>
     );
   }

@@ -11,7 +11,7 @@ class Header extends Component<Props> {
         <div className="container flex-row">
           <h1 className={classes.title}>Pokemon list</h1>
 
-          <Search setPokemonsList={this.props.setPokemonsList} />
+          <Search {...this.props} />
         </div>
       </header>
     );
