@@ -3,11 +3,7 @@ import { Component, type ReactNode } from 'react';
 import Header from '../features/header';
 import PokemonsList from '../features/pokemons-list';
 import type { PokemonType } from '../shared/model/pokemon.type';
-import {
-  checkLineSearchSave,
-  getLineSearch,
-  setLineSearch,
-} from '../shared/api/search-save';
+import { getLineSearch } from '../shared/api/search-save';
 import { getPokemons } from '../shared/api/get-pokemon';
 
 interface ListState {
@@ -45,11 +41,8 @@ class App extends Component {
   };
 
   searchPokemons = async (search: string) => {
-    if (!checkLineSearchSave(search)) {
-      this.setIsLoading(true);
-      this.setPokemonsList(await getPokemons(search));
-      setLineSearch(search);
-    }
+    this.setIsLoading(true);
+    this.setPokemonsList(await getPokemons(search));
   };
 
   componentDidMount(): void {

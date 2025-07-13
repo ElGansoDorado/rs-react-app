@@ -12,7 +12,6 @@ class ErrorBoundary extends Component<Props> {
   };
 
   static getDerivedStateFromError(error: Error) {
-    console.log('hi');
     return { errorMessage: error.toString() };
   }
 
