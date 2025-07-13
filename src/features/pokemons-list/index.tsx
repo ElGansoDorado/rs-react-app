@@ -11,10 +11,12 @@ type Props = Readonly<PokemonsProps>;
 
 class PokemonsList extends Component<Props> {
   render(): ReactNode {
-    const loading = this.props.isLoading;
-
-    if (loading) {
-      return <h2>Loading...</h2>;
+    if (this.props.isLoading) {
+      return (
+        <h2>
+          <span className="spinner">߷</span>Loading...
+        </h2>
+      );
     }
 
     return (
@@ -26,7 +28,7 @@ class PokemonsList extends Component<Props> {
             ))}
           </div>
         ) : (
-          <p>Error description</p>
+          <p>Unfortunately, the search did not find anything (</p>
         )}
       </>
     );
