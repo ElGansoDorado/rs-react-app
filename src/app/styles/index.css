@@ -1,5 +1,6 @@
 @import './reset.css';
 @import './layout.css';
+@import './ui.css';
 
 body {
   background-color: #f3f3f2;
@@ -20,6 +21,13 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  --color-dark-blue: #0f1f38;
+  --color-orange: #f55449;
+  --color-ocean: #357082;
+  --color-ocean-light: #afd4e0;
+  --color-brown: #8e7970;
+  --color-placeholder: #d3d3d3;
 }
 
 main {
