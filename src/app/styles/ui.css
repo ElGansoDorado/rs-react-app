@@ -33,6 +33,7 @@
 }
 
 .pokemon-card__img-box {
+  min-height: 245px;
   display: flex;
   flex-direction: column;
   justify-content: center;
