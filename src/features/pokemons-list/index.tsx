@@ -28,7 +28,7 @@ class PokemonsList extends Component<Props> {
             ))}
           </div>
         ) : (
-          <p>Unfortunately, the search did not find anything (</p>
+          <p>Unfortunately, the search did not find anything</p>
         )}
       </>
     );

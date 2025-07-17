@@ -14,7 +14,7 @@ export async function getPokemons(search: string) {
     setLineSearch(search);
     return list;
   } catch {
-    return await getAllPokemonPath();
+    return [];
   }
 }
 
@@ -37,7 +37,7 @@ async function getPokemon(name: string) {
 
   checkRespons(response);
 
-  const Pokemon: PokemonType[] = [(await response.json()) as PokemonType];
+  const Pokemon = [(await response.json()) as PokemonType];
   return Pokemon;
 }
 
