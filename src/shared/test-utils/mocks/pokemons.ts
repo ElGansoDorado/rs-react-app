@@ -1,4 +1,38 @@
-import { type PokemonType } from '../../model/pokemon.type';
+import type { PokemonType } from '../../model/pokemon.type';
+
+export const mockPokemonResponse = (pokemon: PokemonType) =>
+  ({
+    ok: true,
+    json: () => Promise.resolve(pokemon),
+    status: 200,
+  }) as Response;
+
+export const mockPokemonArrayResponse = () =>
+  ({
+    ok: true,
+    json: () => Promise.resolve(mockPokemons[0]),
+    status: 200,
+  }) as Response;
+
+export const mockPokemonEmptyResponse = () =>
+  ({
+    ok: true,
+    json: () => Promise.resolve({ results: [] }),
+    status: 200,
+  }) as Response;
+
+export const mockPokemonPathResponse = () =>
+  ({
+    ok: true,
+    json: () => Promise.resolve(mockPokemonPath),
+  }) as Response;
+
+const mockPokemonPath = {
+  results: [
+    { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1' },
+    { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/2' },
+  ],
+};
 
 export const mockPokemons: PokemonType[] = [
   {

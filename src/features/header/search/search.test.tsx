@@ -1,32 +1,30 @@
 import '@testing-library/jest-dom/vitest';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Search from './search';
 
 describe('Pokemon search', () => {
   const mockSearchPokemons = vi.fn();
 
-  beforeEach(() => {
-    mockSearchPokemons.mockClear();
+  afterEach(() => {
+    cleanup();
   });
 
-  it('handles input changes correctly', () => {
+  it.each(['first test', '     second test     '])(
+    'should handle input changes correctly',
+    (str) => {
+      render(<Search searchPokemons={mockSearchPokemons} />);
+      const input = screen.getByPlaceholderText('Search...');
+
+      fireEvent.change(input, { target: { value: str } });
+
+      expect(input).toHaveValue(str.trim());
+    }
+  );
+
+  it('should search for pokemon when submitting form', async () => {
     render(<Search searchPokemons={mockSearchPokemons} />);
-    const input = screen.getByPlaceholderText('Search...');
-
-    fireEvent.change(input, { target: { value: 'first test search' } });
-    expect(input).toHaveValue('first test search');
-
-    fireEvent.change(input, {
-      target: { value: '     second test search     ' },
-    });
-    expect(input).toHaveValue('second test search');
-
-    fireEvent.change(input, { target: { value: '' } });
-  });
-
-  it('search for pokemon when submitting form', async () => {
     const input = screen.getByPlaceholderText('Search...');
 
     await userEvent.type(input, 'pikachu');
