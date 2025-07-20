@@ -29,7 +29,11 @@ class Search extends Component<Props, SearchState> {
 
   render(): ReactNode {
     return (
-      <form onSubmit={this.handleSubmit} className={classes.container}>
+      <form
+        onSubmit={this.handleSubmit}
+        className={classes.container}
+        role="search"
+      >
         <input
           type="search"
           name="search"

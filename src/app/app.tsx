@@ -40,17 +40,13 @@ class App extends Component {
     });
   };
 
-  searchPokemons = async (search: string) => {
+  loadPokemons = async (search: string) => {
     this.setIsLoading(true);
     this.setPokemonsList(await getPokemons(search));
   };
 
-  componentDidMount(): void {
-    this.setIsLoading(true);
-
-    getPokemons(getLineSearch()).then((list) => {
-      this.setPokemonsList(list);
-    });
+  async componentDidMount() {
+    await this.loadPokemons(getLineSearch());
   }
 
   render(): ReactNode {
@@ -60,7 +56,7 @@ class App extends Component {
 
     return (
       <>
-        <Header searchPokemons={this.searchPokemons} />
+        <Header searchPokemons={this.loadPokemons} />
 
         <main className="container">
           <h2 className="list-pokemon__title">Result</h2>
