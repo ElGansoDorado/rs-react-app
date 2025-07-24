@@ -1,5 +1,5 @@
 import PokemonCard from './pokemon-card/pokemon-card';
-import type { PokemonType } from '../../shared/model/pokemon.type';
+import type { PokemonType } from '@/shared/model/pokemon.type';
 
 interface Props {
   pokemonsList: PokemonType[];

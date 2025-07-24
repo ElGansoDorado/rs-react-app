@@ -10,7 +10,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loadPokemons = (search: string) => {
-    setIsLoading(() => true);
+    setIsLoading(true);
     getPokemons(search)
       .then((data) => setPokemonsList(data))
       .finally(() => setIsLoading(false));

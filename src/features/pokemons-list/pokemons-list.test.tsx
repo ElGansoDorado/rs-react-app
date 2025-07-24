@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, afterEach } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { mockPokemons } from '../../shared/test-utils/mocks/pokemons';
+import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
 import PokemonsList from '.';
 
 describe('Pokemon list', () => {

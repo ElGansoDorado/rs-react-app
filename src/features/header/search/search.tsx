@@ -1,5 +1,5 @@
 import classes from './search.module.css';
-import { getLineSearch } from '../../../shared/api/search-save';
+import { getLineSearch } from '@/shared/api/search-save';
 import { useState } from 'react';
 import { type HeaderProps } from '..';
 

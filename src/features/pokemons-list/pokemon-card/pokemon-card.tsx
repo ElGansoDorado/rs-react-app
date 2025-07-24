@@ -1,5 +1,5 @@
 import classes from './pokemon-card.module.css';
-import type { PokemonType } from '../../../shared/model/pokemon.type';
+import type { PokemonType } from '@/shared/model/pokemon.type';
 
 interface Props {
   pokemon: PokemonType;
