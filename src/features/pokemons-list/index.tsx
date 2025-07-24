@@ -1,38 +1,33 @@
-import { Component, type ReactNode } from 'react';
-import CardPokemons from './card-pokemon';
+import PokemonCard from './pokemon-card/pokemon-card';
 import type { PokemonType } from '../../shared/model/pokemon.type';
 
-interface PokemonsProps {
-  list: PokemonType[];
+interface Props {
+  pokemonsList: PokemonType[];
   isLoading: boolean;
 }
 
-type Props = Readonly<PokemonsProps>;
-
-class PokemonsList extends Component<Props> {
-  render(): ReactNode {
-    if (this.props.isLoading) {
-      return (
-        <h2>
-          <span className="spinner">߷</span>Loading...
-        </h2>
-      );
-    }
-
+function PokemonsList({ pokemonsList, isLoading }: Props) {
+  if (isLoading) {
     return (
-      <>
-        {this.props.list.length !== 0 ? (
-          <div className="list-pokemon">
-            {this.props.list?.map((item) => (
-              <CardPokemons key={item.name} pokemon={item} />
-            ))}
-          </div>
-        ) : (
-          <p>Unfortunately, the search did not find anything</p>
-        )}
-      </>
+      <h2>
+        <span className="spinner">߷</span>Loading...
+      </h2>
     );
   }
+
+  return (
+    <>
+      {pokemonsList.length !== 0 ? (
+        <div className="list-pokemon">
+          {pokemonsList?.map((item) => (
+            <PokemonCard key={item.name} pokemon={item} />
+          ))}
+        </div>
+      ) : (
+        <p>Unfortunately, the search did not find anything</p>
+      )}
+    </>
+  );
 }
 
 export default PokemonsList;

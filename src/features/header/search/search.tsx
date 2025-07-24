@@ -1,61 +1,36 @@
 import classes from './search.module.css';
-import { Component, type ReactNode } from 'react';
 import { getLineSearch } from '../../../shared/api/search-save';
+import { useState } from 'react';
+import { type HeaderProps } from '..';
 
-interface SearchProps {
-  searchPokemons: (search: string) => Promise<void>;
-}
+function Search({ searchPokemons }: HeaderProps) {
+  const [search, setSearch] = useState(getLineSearch());
 
-interface SearchState {
-  search: string;
-}
-
-export type Props = Readonly<SearchProps>;
-
-class Search extends Component<Props, SearchState> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      search: getLineSearch(),
-    };
-  }
-
-  handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await this.props.searchPokemons(this.state.search);
+    searchPokemons(search);
   };
 
-  render(): ReactNode {
-    return (
-      <form
-        onSubmit={this.handleSubmit}
-        className={classes.container}
-        role="search"
-      >
-        <input
-          type="search"
-          name="search"
-          className={classes.search}
-          placeholder="Search..."
-          onChange={(e) =>
-            this.setState({
-              search: e.target.value.trim(),
-            })
-          }
-          value={this.state.search}
-        />
+  return (
+    <form onSubmit={handleSubmit} className={classes.container} role="search">
+      <input
+        type="search"
+        name="search"
+        className={classes.search}
+        placeholder="Search..."
+        onChange={(e) => setSearch(e.target.value.trim())}
+        value={search}
+      />
 
-        <input
-          type="submit"
-          name="search-button"
-          value="search"
-          className={classes.button}
-        />
-      </form>
-    );
-  }
+      <input
+        type="submit"
+        name="search-button"
+        value="search"
+        className={classes.button}
+      />
+    </form>
+  );
 }
 
 export default Search;

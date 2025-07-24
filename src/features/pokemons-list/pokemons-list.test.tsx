@@ -10,19 +10,19 @@ describe('Pokemon list', () => {
   });
 
   it('checks for missing data warning', () => {
-    render(<PokemonsList list={[]} isLoading={false} />);
+    render(<PokemonsList pokemonsList={[]} isLoading={false} />);
     expect(
       screen.getByText('Unfortunately, the search did not find anything')
     ).toBeInTheDocument();
   });
 
   it('checks for loader', () => {
-    render(<PokemonsList list={[]} isLoading={true} />);
+    render(<PokemonsList pokemonsList={[]} isLoading={true} />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('checks if pokemon cards have loaded', () => {
-    render(<PokemonsList list={mockPokemons} isLoading={false} />);
+    render(<PokemonsList pokemonsList={mockPokemons} isLoading={false} />);
     expect(screen.getByText('bulbasaur')).toBeInTheDocument();
   });
 });

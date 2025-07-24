@@ -1,73 +1,35 @@
-import { Component, type ReactNode } from 'react';
-
 import Header from '../features/header';
 import PokemonsList from '../features/pokemons-list';
 import type { PokemonType } from '../shared/model/pokemon.type';
 import { getLineSearch } from '../shared/api/search-save';
 import { getPokemons } from '../shared/api/get-pokemon';
+import { useState, useEffect } from 'react';
 
-interface ListState {
-  list: PokemonType[];
-  isLoading: boolean;
-  crash: boolean;
-}
+function App() {
+  const [pokemonsList, setPokemonsList] = useState<PokemonType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-type State = Readonly<ListState>;
-
-class App extends Component {
-  state: State = {
-    list: [],
-    isLoading: false,
-    crash: false,
+  const loadPokemons = (search: string) => {
+    setIsLoading(() => true);
+    getPokemons(search)
+      .then((data) => setPokemonsList(data))
+      .finally(() => setIsLoading(false));
   };
 
-  crash = () => {
-    this.setState({
-      crash: true,
-    });
-  };
+  useEffect(() => {
+    loadPokemons(getLineSearch());
+  }, []);
 
-  setIsLoading = (load: boolean) => {
-    this.setState({
-      isLoading: load,
-    });
-  };
+  return (
+    <>
+      <Header searchPokemons={loadPokemons} />
 
-  setPokemonsList = (newList: PokemonType[]) => {
-    this.setState({
-      list: newList,
-      isLoading: false,
-    });
-  };
-
-  loadPokemons = async (search: string) => {
-    this.setIsLoading(true);
-    this.setPokemonsList(await getPokemons(search));
-  };
-
-  async componentDidMount() {
-    await this.loadPokemons(getLineSearch());
-  }
-
-  render(): ReactNode {
-    if (this.state.crash) {
-      throw new Error('Oooopss... this button is causing problems!');
-    }
-
-    return (
-      <>
-        <Header searchPokemons={this.loadPokemons} />
-
-        <main className="container">
-          <h2 className="list-pokemon__title">Result</h2>
-          <button onClick={this.crash} className="button-error">
-            don t touch me
-          </button>
-          <PokemonsList {...this.state} />
-        </main>
-      </>
-    );
-  }
+      <main className="container">
+        <h2 className="list-pokemon__title">Result</h2>
+        <PokemonsList {...{ pokemonsList, isLoading }} />
+      </main>
+    </>
+  );
 }
 
 export default App;
