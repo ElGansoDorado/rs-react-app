@@ -14,7 +14,7 @@ describe('Pokemon search', () => {
   it.each(['first test', '     second test     '])(
     'should handle input changes correctly',
     (str) => {
-      render(<Search searchPokemons={mockSearchPokemons} />);
+      render(<Search />);
       const input = screen.getByPlaceholderText('Search...');
 
       fireEvent.change(input, { target: { value: str } });
@@ -24,7 +24,7 @@ describe('Pokemon search', () => {
   );
 
   it('should search for pokemon when submitting form', async () => {
-    render(<Search searchPokemons={mockSearchPokemons} />);
+    render(<Search />);
     const input = screen.getByPlaceholderText('Search...');
 
     await userEvent.type(input, 'pikachu');

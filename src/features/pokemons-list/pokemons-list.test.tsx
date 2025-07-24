@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, afterEach } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
-import PokemonsList from '.';
+import { PokemonsList } from './pokemon-list.page';
 
 describe('Pokemon list', () => {
   afterEach(() => {
@@ -10,19 +9,19 @@ describe('Pokemon list', () => {
   });
 
   it('checks for missing data warning', () => {
-    render(<PokemonsList pokemonsList={[]} isLoading={false} />);
+    render(<PokemonsList />);
     expect(
       screen.getByText('Unfortunately, the search did not find anything')
     ).toBeInTheDocument();
   });
 
   it('checks for loader', () => {
-    render(<PokemonsList pokemonsList={[]} isLoading={true} />);
+    render(<PokemonsList />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('checks if pokemon cards have loaded', () => {
-    render(<PokemonsList pokemonsList={mockPokemons} isLoading={false} />);
+    render(<PokemonsList />);
     expect(screen.getByText('bulbasaur')).toBeInTheDocument();
   });
 });

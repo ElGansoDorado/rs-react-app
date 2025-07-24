@@ -1,15 +1,17 @@
 import classes from './search.module.css';
 import { getLineSearch } from '@/shared/api/search-save';
 import { useState } from 'react';
-import { type HeaderProps } from '..';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/shared/model/routes';
 
-function Search({ searchPokemons }: HeaderProps) {
+function Search() {
   const [search, setSearch] = useState(getLineSearch());
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    searchPokemons(search);
+    navigate(`${ROUTES.POKEMONS}?search=${encodeURIComponent(search)}`);
   };
 
   return (
