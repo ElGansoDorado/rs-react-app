@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.ABOUT,
-        lazy: () => import('@/features/pokemons-list/pokemon-list.page'),
+        lazy: () => import('@/features/about/about.page'),
       },
       {
         path: ROUTES.HOME,

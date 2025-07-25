@@ -1,0 +1,34 @@
+import { NavLink } from 'react-router-dom';
+import { ROUTES } from '@/shared/model/routes';
+
+const links = [
+  {
+    name: 'About',
+    links: ROUTES.ABOUT,
+  },
+  {
+    name: 'List',
+    links: ROUTES.POKEMONS,
+  },
+];
+
+export default function Menu() {
+  return (
+    <nav>
+      <ul className="menu">
+        {links.map((item) => (
+          <li key={item.name}>
+            <NavLink
+              to={item.links}
+              className={({ isActive }) =>
+                isActive ? 'menu__item menu__item-active' : 'menu__item'
+              }
+            >
+              {item.name}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}

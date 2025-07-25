@@ -5,7 +5,7 @@ import Header from '.';
 
 describe('Header', () => {
   it('should renders with default title content', () => {
-    render(<Header searchPokemons={async () => {}} />);
+    render(<Header />);
     expect(screen.getByText('Pokemon list')).toBeInTheDocument();
   });
 
