@@ -32,13 +32,22 @@ function checkRespons(response: Response) {
   }
 }
 
-async function getPokemon(name: string) {
+export async function getPokemon(name: string) {
   const response = await fetch(PATH + name);
 
   checkRespons(response);
 
   const Pokemon = [(await response.json()) as PokemonType];
   return Pokemon;
+}
+
+export async function getPokemonPage(page: number) {
+  const response = await fetch(PATH + `?offset=${20 * (page - 1)}&limit=20`);
+
+  checkRespons(response);
+
+  const pokemonLists: PokemonResponse = await response.json();
+  return getPokemonsType(pokemonLists.results);
 }
 
 async function getAllPokemonPath() {

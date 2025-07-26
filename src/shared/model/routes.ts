@@ -1,5 +1,5 @@
 export const ROUTES = {
   HOME: '/',
-  POKEMONS: '/list',
+  POKEMONS: '/pokedex',
   ABOUT: '/about',
 } as const;

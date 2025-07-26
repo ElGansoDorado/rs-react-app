@@ -11,7 +11,11 @@ function Search() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    navigate(`${ROUTES.POKEMONS}?search=${encodeURIComponent(search)}`);
+    if (search != '') {
+      navigate(`${ROUTES.POKEMONS}?search=${encodeURIComponent(search)}`);
+    } else {
+      navigate(`${ROUTES.POKEMONS}?path=${1}`);
+    }
   };
 
   return (

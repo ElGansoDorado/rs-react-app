@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.POKEMONS,
-        lazy: () => import('@/features/pokemons-list/pokemon-list.page'),
+        lazy: () => import('@/features/pokedex/pokedex.page'),
       },
       {
         path: ROUTES.ABOUT,
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.HOME,
-        loader: () => redirect(ROUTES.ABOUT),
+        loader: () => redirect(ROUTES.POKEMONS),
       },
     ],
   },

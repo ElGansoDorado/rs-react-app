@@ -96,6 +96,15 @@ function About() {
           <ul>
             <li>
               <a
+                href="https://rs.school/courses/reactjs"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                RS School React
+              </a>
+            </li>
+            <li>
+              <a
                 href="https://pokeapi.co/"
                 target="_blank"
                 rel="noopener noreferrer"

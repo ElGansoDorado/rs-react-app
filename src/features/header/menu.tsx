@@ -7,12 +7,12 @@ const links = [
     links: ROUTES.ABOUT,
   },
   {
-    name: 'List',
+    name: 'Pokedex',
     links: ROUTES.POKEMONS,
   },
 ];
 
-export default function Menu() {
+function Menu() {
   return (
     <nav>
       <ul className="menu">
@@ -32,3 +32,5 @@ export default function Menu() {
     </nav>
   );
 }
+
+export default Menu;
