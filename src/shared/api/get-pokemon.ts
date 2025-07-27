@@ -3,20 +3,8 @@ import type {
   Pokemon,
   PokemonType,
 } from '../model/pokemon.type';
-import { setLineSearch } from './search-save';
 
 const PATH = 'https://pokeapi.co/api/v2/pokemon/';
-
-export async function getPokemons(search: string) {
-  try {
-    const list =
-      search === '' ? await getAllPokemonPath() : await getPokemon(search);
-    setLineSearch(search);
-    return list;
-  } catch {
-    return [];
-  }
-}
 
 function checkRespons(response: Response) {
   if (!response.ok) {
@@ -32,29 +20,38 @@ function checkRespons(response: Response) {
   }
 }
 
-async function getPokemon(name: string) {
+export async function getPokemon(name: string) {
   const response = await fetch(PATH + name);
 
   checkRespons(response);
 
-  const Pokemon = [(await response.json()) as PokemonType];
+  const Pokemon = [(await response.json()) as Pokemon];
   return Pokemon;
 }
 
-async function getAllPokemonPath() {
+export async function getPokemonPage(page: number) {
+  const response = await fetch(PATH + `?offset=${20 * (page - 1)}&limit=20`);
+
+  checkRespons(response);
+
+  const pokemonLists: PokemonResponse = await response.json();
+  return pokemonLists.results;
+}
+
+export async function getPokemonNumberPage() {
   const response = await fetch(PATH);
 
   checkRespons(response);
 
   const pokemonLists: PokemonResponse = await response.json();
-  return getPokemonsType(pokemonLists.results);
+  return Math.ceil(pokemonLists.count / 20);
 }
 
-async function getPokemonsType(list: Pokemon[]) {
-  const pokemonTypeList = list.map(async (item) => {
-    const respons = await fetch(item.url);
-    return (await respons.json()) as PokemonType;
-  });
+export async function getPokemonDetail(id: string) {
+  const response = await fetch(PATH + id);
 
-  return await Promise.all(pokemonTypeList);
+  checkRespons(response);
+
+  const pokemonDetail: PokemonType = await response.json();
+  return pokemonDetail;
 }

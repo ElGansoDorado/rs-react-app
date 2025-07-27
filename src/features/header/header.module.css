@@ -38,10 +38,11 @@
 
 .title {
   font:
-    500 24px/120% 'Trebuchet MS',
+    800 24px/120% 'Trebuchet MS',
     'Lucida Sans Unicode',
     'Lucida Grande',
     'Lucida Sans',
     Arial,
     sans-serif;
+  text-transform: uppercase;
 }

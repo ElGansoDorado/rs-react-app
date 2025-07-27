@@ -1,4 +1,4 @@
-import type { PokemonType } from '../../model/pokemon.type';
+import type { PokemonType } from '@/shared/model/pokemon.type';
 
 export const mockPokemonResponse = (pokemon: PokemonType) =>
   ({

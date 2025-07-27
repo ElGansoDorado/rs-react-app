@@ -1,15 +1,19 @@
 import '@testing-library/jest-dom/vitest';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Header from '.';
 
 describe('Header', () => {
-  it('should renders with default title content', () => {
-    render(<Header searchPokemons={async () => {}} />);
-    expect(screen.getByText('Pokemon list')).toBeInTheDocument();
-  });
+  it('should renders', () => {
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    );
 
-  it('should  contains search input field', () => {
+    expect(screen.getByText('Pokemon list')).toBeInTheDocument();
+    expect(screen.getByRole('menu')).toBeInTheDocument();
     expect(screen.getByRole('search')).toBeInTheDocument();
   });
 });
