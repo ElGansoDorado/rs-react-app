@@ -1,6 +1,6 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { usePokemonList } from './usePokemonList';
-import { PokemonCard } from '..';
+import { Card, Loader } from '..';
 
 function PokemonList() {
   const { pokemonsList, isLoading } = usePokemonList();
@@ -19,13 +19,11 @@ function PokemonList() {
   return (
     <div>
       {isLoading ? (
-        <h3>
-          <span className="spinner">߷</span> Loading...
-        </h3>
+        <Loader />
       ) : pokemonsList.length > 0 ? (
         <ul className="list-pokemon">
           {pokemonsList.map((item) => (
-            <PokemonCard
+            <Card
               key={item.name}
               name={item.name}
               active={detailsQuery === item.name}

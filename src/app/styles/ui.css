@@ -57,23 +57,6 @@
   background-color: #e86e68;
 }
 
-.spinner {
-  width: 40px;
-  height: 40px;
-  display: block;
-
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .menu {
   display: flex;
   gap: 12px;
