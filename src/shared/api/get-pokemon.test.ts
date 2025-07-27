@@ -1,69 +1,109 @@
 import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { setLineSearch } from './search-save';
-import { getPokemons } from './get-pokemon';
 import {
-  mockPokemons,
-  mockPokemonPathResponse,
-  mockPokemonArrayResponse,
-  mockPokemonEmptyResponse,
-  mockPokemonResponse,
-} from '../test-utils/mocks/pokemons';
+  getPokemon,
+  getPokemonPage,
+  getPokemonNumberPage,
+  getPokemonDetail,
+} from './get-pokemon';
 
-vi.mock('./search-save', () => ({
-  setLineSearch: vi.fn(),
-}));
+const mockPokemon = {
+  name: 'pikachu',
+  url: 'https://pokeapi.co/api/v2/pokemon/25/',
+};
+
+const mockPokemonDetail = {
+  id: 25,
+  name: 'pikachu',
+  sprites: { front_default: 'pikachu.png' },
+  types: [{ type: { name: 'electric' } }],
+};
+
+const mockPokemonList = {
+  count: 100,
+  results: Array(20).fill(mockPokemon),
+};
 
 describe('Pokemon API', () => {
   beforeEach(() => {
     global.fetch = vi.fn();
-    vi.clearAllMocks();
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('should fetch all pokemons when search is empty', async () => {
-    vi.mocked(fetch).mockResolvedValue(mockPokemonEmptyResponse());
+  describe('getPokemon', () => {
+    it('should return pokemon by name', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockPokemon,
+      } as Response);
 
-    await getPokemons('');
-    expect(fetch).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/');
-    expect(setLineSearch).toHaveBeenCalledWith('');
+      const result = await getPokemon('pikachu');
+      expect(result).toEqual([mockPokemon]);
+      expect(fetch).toHaveBeenCalledWith(
+        'https://pokeapi.co/api/v2/pokemon/pikachu'
+      );
+    });
+
+    it('should throw 404 error', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+      } as Response);
+
+      await expect(getPokemon('unknown')).rejects.toThrow('Resource not found');
+    });
   });
 
-  it('should fetch single pokemon when search is not empty', async () => {
-    vi.mocked(fetch).mockResolvedValue(mockPokemonArrayResponse());
-    const result = await getPokemons('bulbasaur');
+  describe('getPokemonPage', () => {
+    it('should return pokemon list for page', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockPokemonList,
+      } as Response);
 
-    expect(fetch).toHaveBeenCalledWith(
-      'https://pokeapi.co/api/v2/pokemon/bulbasaur'
-    );
-    expect(setLineSearch).toHaveBeenCalledWith('bulbasaur');
-    expect(result).toEqual([mockPokemons[0]]);
+      const result = await getPokemonPage(1);
+      expect(result).toEqual(mockPokemonList.results);
+      expect(fetch).toHaveBeenCalledWith(
+        'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20'
+      );
+    });
   });
 
-  it.each([404, 500, 100])(
-    'should return empty array on error',
-    async (status) => {
-      vi.mocked(fetch).mockResolvedValue({ ok: false, status } as Response);
-      const result = await getPokemons('invalid');
-      expect(result).toEqual([]);
-    }
-  );
+  describe('getPokemonNumberPage', () => {
+    it('should calculate number of pages', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockPokemonList,
+      } as Response);
 
-  it('should fetch all pokemons and their details when search is empty', async () => {
-    vi.mocked(fetch)
-      .mockResolvedValueOnce(mockPokemonPathResponse())
-      .mockResolvedValueOnce(mockPokemonResponse(mockPokemons[0]))
-      .mockResolvedValueOnce(mockPokemonResponse(mockPokemons[1]));
+      const result = await getPokemonNumberPage();
+      expect(result).toBe(5);
+    });
+  });
 
-    const result = await getPokemons('');
+  describe('getPokemonDetail', () => {
+    it('should return pokemon details by id', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockPokemonDetail,
+      } as Response);
 
-    expect(fetch).toHaveBeenCalledTimes(3);
-    expect(fetch).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/');
-    expect(fetch).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/1');
-    expect(fetch).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/2');
-    expect(result).toEqual(mockPokemons);
+      const result = await getPokemonDetail('25');
+      expect(result).toEqual(mockPokemonDetail);
+    });
+
+    it('should throw error for invalid response', async () => {
+      vi.mocked(fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+      } as Response);
+
+      await expect(getPokemonDetail('25')).rejects.toThrow(
+        'Internal Server Error'
+      );
+    });
   });
 });

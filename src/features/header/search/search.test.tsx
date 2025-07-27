@@ -1,36 +1,81 @@
 import '@testing-library/jest-dom/vitest';
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { cleanup, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { ROUTES } from '../../../shared/model/routes';
 import Search from './search';
 
-describe('Pokemon search', () => {
-  const mockSearchPokemons = vi.fn();
+vi.mock('@/shared/hooks/useLineSearch', () => ({
+  useLineSearch: vi.fn(() => ({
+    searchLine: '',
+    setSearchLine: vi.fn(),
+  })),
+}));
 
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual =
+    await vi.importActual<typeof import('react-router-dom')>(
+      'react-router-dom'
+    );
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
+describe('Search Component', () => {
   afterEach(() => {
     cleanup();
   });
 
-  it.each(['first test', '     second test     '])(
-    'should handle input changes correctly',
-    (str) => {
-      render(<Search />);
-      const input = screen.getByPlaceholderText('Search...');
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-      fireEvent.change(input, { target: { value: str } });
+  it('renders correctly', () => {
+    render(
+      <MemoryRouter>
+        <Search />
+      </MemoryRouter>
+    );
 
-      expect(input).toHaveValue(str.trim());
-    }
-  );
+    expect(screen.getByRole('search')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search...')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'search' })).toBeInTheDocument();
+  });
 
-  it('should search for pokemon when submitting form', async () => {
-    render(<Search />);
+  it('updates search input value when typing', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Search />
+      </MemoryRouter>
+    );
+
     const input = screen.getByPlaceholderText('Search...');
+    await user.type(input, 'pikachu');
 
-    await userEvent.type(input, 'pikachu');
-    await userEvent.click(screen.getByRole('button', { name: 'search' }));
+    expect(input).toHaveValue('pikachu');
+  });
 
-    expect(mockSearchPokemons).toHaveBeenCalledTimes(1);
-    expect(mockSearchPokemons).toHaveBeenCalledWith('pikachu');
+  it('navigates to pokemons with search query when form is submitted', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Search />
+      </MemoryRouter>
+    );
+
+    const input = screen.getByPlaceholderText('Search...');
+    const button = screen.getByRole('button', { name: 'search' });
+
+    await user.type(input, 'pikachu');
+    await user.click(button);
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `${ROUTES.POKEMONS}?search=pikachu`
+    );
   });
 });

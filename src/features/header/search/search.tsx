@@ -1,8 +1,8 @@
 import classes from './search.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/shared/model/routes';
-import { useLineSearch } from '@/shared/hooks/useLineSearch';
+import { ROUTES } from '../../../shared/model/routes';
+import { useLineSearch } from '../../../shared/hooks/useLineSearch';
 
 function Search() {
   const { searchLine } = useLineSearch();

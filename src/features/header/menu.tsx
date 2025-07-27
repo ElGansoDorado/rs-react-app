@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { ROUTES } from '@/shared/model/routes';
+import { ROUTES } from '../../shared/model/routes';
 
 const links = [
   {
@@ -14,7 +14,7 @@ const links = [
 
 function Menu() {
   return (
-    <nav>
+    <nav role="menu">
       <ul className="menu">
         {links.map((item) => (
           <li key={item.name}>
