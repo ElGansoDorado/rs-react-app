@@ -6,7 +6,7 @@ import type { PokemonType } from '@/shared/model/pokemon.type';
 export function usePokemonDetail() {
   const [detail, setDetail] = useState<PokemonType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const detailsQuery = searchParams.get('details') || '';
 
@@ -31,5 +31,13 @@ export function usePokemonDetail() {
     fetchData();
   }, [fetchData]);
 
-  return { detail, isLoading };
+  const closeDetail = () => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete('details');
+    setSearchParams(newParams);
+
+    setDetail(null);
+  };
+
+  return { detail, isLoading, closeDetail };
 }

@@ -3,7 +3,7 @@ import { usePokemonDetail } from './usePokemonDetail';
 import { Loader } from '..';
 
 function PokemonDetail() {
-  const { detail, isLoading } = usePokemonDetail();
+  const { detail, isLoading, closeDetail } = usePokemonDetail();
 
   if (isLoading) {
     return <Loader />;
@@ -15,6 +15,10 @@ function PokemonDetail() {
 
   return (
     <section className={classes.container}>
+      <button onClick={closeDetail} className={classes.button}>
+        X
+      </button>
+
       <div className="img">
         <h2>{detail?.name}</h2>
         <img src={detail?.sprites.front_default} alt={detail?.name} />
