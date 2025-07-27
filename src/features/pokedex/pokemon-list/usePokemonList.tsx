@@ -2,8 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { getPokemon, getPokemonPage } from '@/shared/api/get-pokemon';
 import { useSearchParams } from 'react-router-dom';
 import type { Pokemon } from '@/shared/model/pokemon.type';
+import { useLineSearch } from '@/shared/hooks/useLineSearch';
 
 export function usePokemonList() {
+  const { setSearchLine } = useLineSearch();
   const [pokemonsList, setPokemonsList] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
@@ -24,6 +26,9 @@ export function usePokemonList() {
       setPokemonsList([]);
     } finally {
       setIsLoading(false);
+      if (pokemonsList.length > 0) {
+        setSearchLine(searchQuery);
+      }
     }
   }, [pageQuery, searchQuery]);
 

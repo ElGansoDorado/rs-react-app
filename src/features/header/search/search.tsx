@@ -1,18 +1,23 @@
 import classes from './search.module.css';
-import { getLineSearch } from '@/shared/api/search-save';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/shared/model/routes';
+import { useLineSearch } from '@/shared/hooks/useLineSearch';
 
 function Search() {
-  const [search, setSearch] = useState(getLineSearch());
+  const { searchLine } = useLineSearch();
+  const [search, setSearch] = useState(searchLine);
   const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const trimmedSearch = search.trim();
 
-    if (search != '') {
-      navigate(`${ROUTES.POKEMONS}?search=${encodeURIComponent(search)}`);
+    if (trimmedSearch != '') {
+      navigate(
+        `${ROUTES.POKEMONS}?search=${encodeURIComponent(trimmedSearch)}`
+      );
+      setSearch(trimmedSearch);
     } else {
       navigate(`${ROUTES.POKEMONS}?page=${1}`);
     }
@@ -25,7 +30,7 @@ function Search() {
         name="search"
         className={classes.search}
         placeholder="Search..."
-        onChange={(e) => setSearch(e.target.value.trim())}
+        onChange={(e) => setSearch(e.target.value)}
         value={search}
       />
 

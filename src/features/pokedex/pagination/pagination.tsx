@@ -40,6 +40,8 @@ function Pagination() {
   }, []);
 
   useEffect(() => {
+    if (!searchParams.has('page')) return;
+
     const params = Object.fromEntries(searchParams);
     setSearchParams({ ...params, page: `${page}` });
   }, [page]);

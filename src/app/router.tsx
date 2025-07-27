@@ -10,6 +10,7 @@ export const router = createBrowserRouter([
         <App />
       </ErrorBoundary>
     ),
+    errorElement: <div>error page make</div>,
     children: [
       {
         path: ROUTES.POKEMONS,
@@ -21,8 +22,20 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.HOME,
-        loader: () => redirect(ROUTES.POKEMONS + '?page=1'),
+        loader: pokemonsLoader,
       },
     ],
   },
 ]);
+
+function pokemonsLoader() {
+  const savedSearch = localStorage.getItem('SEARCH');
+
+  if (savedSearch && savedSearch.trim() !== '') {
+    return redirect(
+      `${ROUTES.POKEMONS}?search=${encodeURIComponent(savedSearch)}`
+    );
+  }
+
+  return redirect(`${ROUTES.POKEMONS}/?page=1`);
+}
