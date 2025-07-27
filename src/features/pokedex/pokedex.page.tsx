@@ -1,17 +1,19 @@
-import { PokemonList, Pagination } from '.';
+import { PokemonList, PokemonDetail, Pagination } from '.';
 
 export function Pokedex() {
   return (
     <main className="container">
       <h2 className="list-pokemon__title">Result</h2>
 
-      <section>
-        <Pagination />
+      <div className="flex-row">
+        <section>
+          <Pagination />
 
-        <PokemonList />
-      </section>
+          <PokemonList />
+        </section>
 
-      <section></section>
+        <PokemonDetail />
+      </div>
     </main>
   );
 }

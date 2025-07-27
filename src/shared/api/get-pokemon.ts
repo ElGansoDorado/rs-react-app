@@ -3,20 +3,8 @@ import type {
   Pokemon,
   PokemonType,
 } from '../model/pokemon.type';
-import { setLineSearch } from './search-save';
 
 const PATH = 'https://pokeapi.co/api/v2/pokemon/';
-
-export async function getPokemons(search: string) {
-  try {
-    const list =
-      search === '' ? await getAllPokemonPath() : await getPokemon(search);
-    setLineSearch(search);
-    return list;
-  } catch {
-    return [];
-  }
-}
 
 function checkRespons(response: Response) {
   if (!response.ok) {
@@ -50,20 +38,11 @@ export async function getPokemonPage(page: number) {
   return pokemonLists.results;
 }
 
-async function getAllPokemonPath() {
-  const response = await fetch(PATH);
+export async function getPokemonDetail(id: string) {
+  const response = await fetch(PATH + id);
 
   checkRespons(response);
 
-  const pokemonLists: PokemonResponse = await response.json();
-  return getPokemonsType(pokemonLists.results);
-}
-
-async function getPokemonsType(list: Pokemon[]) {
-  const pokemonTypeList = list.map(async (item) => {
-    const respons = await fetch(item.url);
-    return (await respons.json()) as PokemonType;
-  });
-
-  return await Promise.all(pokemonTypeList);
+  const pokemonDetail: PokemonType = await response.json();
+  return pokemonDetail;
 }

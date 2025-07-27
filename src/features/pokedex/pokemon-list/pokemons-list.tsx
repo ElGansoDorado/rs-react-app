@@ -16,11 +16,13 @@ function PokemonList() {
     navigate(`?${newParams.toString()}`);
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div>
-      {isLoading ? (
-        <Loader />
-      ) : pokemonsList.length > 0 ? (
+      {pokemonsList.length > 0 ? (
         <ul className="list-pokemon">
           {pokemonsList.map((item) => (
             <Card
