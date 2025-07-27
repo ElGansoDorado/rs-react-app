@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.HOME,
-        loader: () => redirect(ROUTES.POKEMONS),
+        loader: () => redirect(ROUTES.POKEMONS + '?page=1'),
       },
     ],
   },

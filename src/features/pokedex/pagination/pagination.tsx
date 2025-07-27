@@ -1,18 +1,21 @@
 import classes from './pagination.module.css';
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/shared/model/routes';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { getPokemonNumberPage } from '@/shared/api/get-pokemon';
 
 function Pagination() {
-  const [page, setPage] = useState(1);
-  const navigate = useNavigate();
-  const max = 65;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+  const [max, setMax] = useState(0);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
-    navigate(`${ROUTES.POKEMONS}?page=${page}`);
+  const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setPage(value > max ? max : value);
   };
 
   const switchPage = (value: number) => {
@@ -23,23 +26,52 @@ function Pagination() {
     setPage((prev) => prev + value);
   };
 
+  useEffect(() => {
+    const fetchMaxPage = async () => {
+      try {
+        setMax(await getPokemonNumberPage());
+      } catch (error) {
+        console.error('Failed to fetch max page:', error);
+        setMax(66);
+      }
+    };
+
+    fetchMaxPage();
+  }, []);
+
+  useEffect(() => {
+    const params = Object.fromEntries(searchParams);
+    setSearchParams({ ...params, page: `${page}` });
+  }, [page]);
+
+  if (!searchParams.has('page')) {
+    return null;
+  }
+
   return (
     <form className={classes.container} onSubmit={handleSubmit}>
-      <button onClick={() => setPage(1)}>start</button>
-      <button onClick={() => switchPage(-10)}>-10</button>
-      <button onClick={() => switchPage(-1)}>-1</button>
+      <button disabled={page === 1} onClick={() => setPage(1)}>
+        {'<<'}
+      </button>
+      <button disabled={page < 11} onClick={() => switchPage(-10)}>
+        {'<'}
+      </button>
 
       <input
+        className={classes.input}
         type="number"
         value={page}
-        onChange={(e) => setPage(Number(e.target.value))}
+        onChange={changeInput}
         min="1"
         max={max}
       />
 
-      <button onClick={() => switchPage(1)}>+1</button>
-      <button onClick={() => switchPage(10)}>+10</button>
-      <button onClick={() => setPage(65)}>end</button>
+      <button disabled={page > max - 11} onClick={() => switchPage(10)}>
+        {'>'}
+      </button>
+      <button disabled={page === max} onClick={() => setPage(max)}>
+        {'>>'}
+      </button>
     </form>
   );
 }

@@ -5,12 +5,19 @@ import { Card, Loader } from '..';
 function PokemonList() {
   const { pokemonsList, isLoading } = usePokemonList();
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const detailsQuery = searchParams.get('details') || '';
 
   const handlePokemonClick = (id: string) => {
+    if (detailsQuery === id) {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('details');
+      setSearchParams(newParams);
+      return;
+    }
+
     const newParams = new URLSearchParams(searchParams);
     newParams.set('details', id);
     navigate(`?${newParams.toString()}`);

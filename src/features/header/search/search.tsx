@@ -14,7 +14,7 @@ function Search() {
     if (search != '') {
       navigate(`${ROUTES.POKEMONS}?search=${encodeURIComponent(search)}`);
     } else {
-      navigate(`${ROUTES.POKEMONS}?path=${1}`);
+      navigate(`${ROUTES.POKEMONS}?page=${1}`);
     }
   };
 

@@ -38,6 +38,15 @@ export async function getPokemonPage(page: number) {
   return pokemonLists.results;
 }
 
+export async function getPokemonNumberPage() {
+  const response = await fetch(PATH);
+
+  checkRespons(response);
+
+  const pokemonLists: PokemonResponse = await response.json();
+  return Math.ceil(pokemonLists.count / 20);
+}
+
 export async function getPokemonDetail(id: string) {
   const response = await fetch(PATH + id);
 

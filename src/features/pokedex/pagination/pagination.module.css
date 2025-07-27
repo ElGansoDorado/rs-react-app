@@ -1,12 +1,14 @@
 .container {
+  max-width: 300px;
   margin-bottom: 12px;
   display: flex;
+  justify-content: center;
   gap: 12px;
 }
 
 .container * {
-  height: 30px;
-  padding: 8px;
+  height: 25px;
+  padding: 6px;
   font:
     400 16px/100% 'Segoe UI',
     Tahoma,
@@ -14,7 +16,14 @@
     Verdana,
     sans-serif;
 
+  display: flex;
+  align-items: center;
+
   background-color: #fff;
   border: 1px solid #000;
   border-radius: 6px;
+}
+
+.container button:disabled {
+  background-color: var(--color-placholder);
 }
