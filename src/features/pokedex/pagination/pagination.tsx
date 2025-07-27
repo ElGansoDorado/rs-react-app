@@ -2,7 +2,7 @@ import classes from './pagination.module.css';
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getPokemonNumberPage } from '@/shared/api/get-pokemon';
+import { getPokemonNumberPage } from '../../../shared/api/get-pokemon';
 
 function Pagination() {
   const [searchParams, setSearchParams] = useSearchParams();

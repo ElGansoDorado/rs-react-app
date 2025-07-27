@@ -1,6 +1,7 @@
 import { ROUTES } from '@/shared/model/routes';
 import { createBrowserRouter, redirect } from 'react-router-dom';
 import ErrorBoundary from './error-boundary';
+import ErrorPage from './error-page';
 import App from './app';
 
 export const router = createBrowserRouter([
@@ -10,7 +11,7 @@ export const router = createBrowserRouter([
         <App />
       </ErrorBoundary>
     ),
-    errorElement: <div>error page make</div>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: ROUTES.POKEMONS,
