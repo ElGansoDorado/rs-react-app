@@ -85,19 +85,6 @@
     sans-serif;
 }
 
-.card h3 {
-  margin-bottom: 16px;
-
-  font:
-    800 21px/120% 'Segoe UI',
-    Tahoma,
-    Geneva,
-    Verdana,
-    sans-serif;
-
-  text-transform: uppercase;
-}
-
 .card ul li {
   list-style: inside;
 }

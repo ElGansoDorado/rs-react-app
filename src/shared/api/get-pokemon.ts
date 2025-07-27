@@ -37,7 +37,7 @@ export async function getPokemon(name: string) {
 
   checkRespons(response);
 
-  const Pokemon = [(await response.json()) as PokemonType];
+  const Pokemon = [(await response.json()) as Pokemon];
   return Pokemon;
 }
 
@@ -47,7 +47,7 @@ export async function getPokemonPage(page: number) {
   checkRespons(response);
 
   const pokemonLists: PokemonResponse = await response.json();
-  return getPokemonsType(pokemonLists.results);
+  return pokemonLists.results;
 }
 
 async function getAllPokemonPath() {

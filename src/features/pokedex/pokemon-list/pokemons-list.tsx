@@ -1,36 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import type { PokemonType } from '@/shared/model/pokemon.type';
-import { getPokemon, getPokemonPage } from '@/shared/api/get-pokemon';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { usePokemonList } from './usePokemonList';
 import { PokemonCard } from '..';
 
 function PokemonList() {
-  const [pokemonsList, setPokemonsList] = useState<PokemonType[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { pokemonsList, isLoading } = usePokemonList();
+
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const pageQuery = Number(searchParams.get('page')) || 1;
-  const searchQuery = searchParams.get('search') || '';
+  const detailsQuery = searchParams.get('details') || '';
 
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      setPokemonsList(
-        searchQuery
-          ? await getPokemon(searchQuery)
-          : await getPokemonPage(pageQuery)
-      );
-    } catch {
-      setPokemonsList([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pageQuery, searchQuery]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const handlePokemonClick = (id: string) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('details', id);
+    navigate(`?${newParams.toString()}`);
+  };
 
   return (
     <div>
@@ -41,7 +25,12 @@ function PokemonList() {
       ) : pokemonsList.length > 0 ? (
         <ul className="list-pokemon">
           {pokemonsList.map((item) => (
-            <PokemonCard key={item.name} pokemon={item} />
+            <PokemonCard
+              key={item.name}
+              name={item.name}
+              active={detailsQuery === item.name}
+              showDetail={() => handlePokemonClick(item.name)}
+            />
           ))}
         </ul>
       ) : (

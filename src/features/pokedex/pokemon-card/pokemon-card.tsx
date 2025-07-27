@@ -1,34 +1,20 @@
 import classes from './pokemon-card.module.css';
-import type { PokemonType } from '@/shared/model/pokemon.type';
 
 interface Props {
-  pokemon: PokemonType;
+  name: string;
+  active: boolean;
+  showDetail: () => void;
 }
 
-function PokemonCard({ pokemon }: Props) {
+function PokemonCard({ name, active, showDetail }: Props) {
   return (
-    <article className={classes.container}>
-      <div className={classes.imgBox}>
-        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-        <h3 className={classes.name}>{pokemon.name}</h3>
-      </div>
-      <div className={classes.infoBox}>
-        <div>
-          <p>Dimensions:</p>
-          <p>
-            weight: {pokemon.weight} / height: {pokemon.height}
-          </p>
-        </div>
-
-        <ul className={classes.statsList}>
-          {pokemon.stats.map((stat) => (
-            <li key={pokemon.name + stat.stat.name} className={classes.stat}>
-              {stat.stat.name}: {stat.base_stat}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </article>
+    <li
+      onClick={showDetail}
+      className={`${classes.container} ${active ? classes.active : ''}`}
+    >
+      <p>current</p>
+      <h3>{name}</h3>
+    </li>
   );
 }
 
