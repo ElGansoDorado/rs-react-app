@@ -1,5 +1,5 @@
 import classes from './pokemon-detail.module.css';
-import { usePokemonDetail } from './usePokemonDetail';
+import { usePokemonDetail } from './use-pokemon-detail';
 import { Loader } from '..';
 
 function PokemonDetail() {

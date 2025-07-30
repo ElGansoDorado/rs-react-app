@@ -38,5 +38,5 @@ function pokemonsLoader() {
     );
   }
 
-  return redirect(`${ROUTES.POKEMONS}/?page=1`);
+  return redirect(`${ROUTES.POKEMONS}`);
 }

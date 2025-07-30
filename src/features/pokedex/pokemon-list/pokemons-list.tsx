@@ -1,5 +1,5 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { usePokemonList } from './usePokemonList';
+import { usePokemonList } from './use-pokemon-list';
 import { Card, Loader } from '..';
 
 function PokemonList() {
@@ -11,14 +11,14 @@ function PokemonList() {
   const detailsQuery = searchParams.get('details') || '';
 
   const handlePokemonClick = (id: string) => {
+    const newParams = new URLSearchParams(searchParams);
+
     if (detailsQuery === id) {
-      const newParams = new URLSearchParams(searchParams);
       newParams.delete('details');
       setSearchParams(newParams);
       return;
     }
 
-    const newParams = new URLSearchParams(searchParams);
     newParams.set('details', id);
     navigate(`?${newParams.toString()}`);
   };
