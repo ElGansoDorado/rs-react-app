@@ -34,6 +34,12 @@ const mockPokemonPath = {
   ],
 };
 
+export const mockPokemonsArray = [
+  { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
+  { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+  { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/4/' },
+];
+
 export const mockPokemons: PokemonType[] = [
   {
     id: 1,

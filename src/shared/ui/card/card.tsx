@@ -9,6 +9,7 @@ interface Props {
 function Card({ name, active, showDetail }: Props) {
   return (
     <li
+      data-testid="pokemon-card"
       onClick={showDetail}
       className={`${classes.container} ${active ? classes.active : ''}`}
     >
