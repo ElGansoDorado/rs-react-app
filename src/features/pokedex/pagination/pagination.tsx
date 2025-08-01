@@ -18,7 +18,11 @@ function Pagination() {
   }
 
   return (
-    <form className={classes.container} onSubmit={handleSubmit}>
+    <form
+      className={classes.container}
+      onSubmit={handleSubmit}
+      role="pagination"
+    >
       <button disabled={page === 1} onClick={() => setPage(1)}>
         {'<<'}
       </button>
