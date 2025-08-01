@@ -1,6 +1,6 @@
 import classes from './about.module.css';
 
-function About() {
+export function About() {
   return (
     <main className="container">
       <section className={classes.container}>

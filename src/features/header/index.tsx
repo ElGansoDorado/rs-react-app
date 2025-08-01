@@ -1,6 +1,6 @@
 import classes from './header.module.css';
 import Search from './search/search';
-import Menu from './menu';
+import Menu from './menu/menu';
 
 function Header() {
   return (
