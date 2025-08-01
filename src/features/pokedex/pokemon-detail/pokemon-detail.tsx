@@ -1,9 +1,11 @@
 import classes from './pokemon-detail.module.css';
 import { usePokemonDetail } from './use-pokemon-detail';
 import { Loader } from '..';
+import { useBag } from '../../../shared/hooks/use-bag';
 
 function PokemonDetail() {
   const { detail, isLoading, closeDetail } = usePokemonDetail();
+  const addInBag = useBag((state) => state.addPokemon);
 
   if (isLoading) {
     return <Loader />;
@@ -17,6 +19,10 @@ function PokemonDetail() {
     <section className={classes.container}>
       <button onClick={closeDetail} className={classes.button}>
         X
+      </button>
+
+      <button onClick={() => addInBag(detail)} className={classes.buttonBag}>
+        bag
       </button>
 
       <div className="img">

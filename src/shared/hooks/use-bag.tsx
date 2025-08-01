@@ -3,18 +3,14 @@ import type { PokemonType } from '../model/pokemon.type';
 
 interface BagState {
   list: PokemonType[];
-  getPokemons: () => PokemonType[];
   hasPokemon: (name: string) => boolean;
   addPokemon: (pokemon: PokemonType) => void;
   removePokemon: (name: string) => void;
+  clear: () => void;
 }
 
 export const useBag = create<BagState>((set, get) => ({
   list: [],
-
-  getPokemons: () => {
-    return get().list;
-  },
 
   hasPokemon: (name) => {
     return get().list.some((pokemon) => pokemon.name === name);
@@ -28,5 +24,10 @@ export const useBag = create<BagState>((set, get) => ({
   removePokemon: (name) =>
     set((state) => {
       return { list: state.list.filter((item) => item.name !== name) };
+    }),
+
+  clear: () =>
+    set(() => {
+      return { list: [] };
     }),
 }));

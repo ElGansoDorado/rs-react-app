@@ -1,4 +1,8 @@
 .container {
+  position: relative;
+}
+
+.card {
   width: 300px;
   padding: 8px;
 
@@ -18,20 +22,28 @@
     color 0.15s ease-in-out;
 }
 
-.container p {
+.card p {
   color: var(--color-red);
   opacity: 0;
 }
 
-.container:hover {
+.card:hover {
   background-color: transparent;
 }
 
-.container.active {
+.card.active {
   background-color: var(--color-dark-blue);
   color: #fff;
 }
 
-.container.active p {
+.card.active p {
   opacity: 1;
+}
+
+.icon {
+  width: 25px;
+  position: absolute;
+
+  left: -32px;
+  bottom: 5px;
 }

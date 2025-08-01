@@ -6,7 +6,8 @@ import Card from './card';
 describe('Card Component', () => {
   const mockProps = {
     name: 'Pikachu',
-    active: false,
+    isActive: false,
+    isBag: false,
     showDetail: vi.fn(),
   };
 

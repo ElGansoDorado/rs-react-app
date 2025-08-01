@@ -39,3 +39,15 @@
   border: 1px solid var(--color-dark-blue);
   border-bottom-right-radius: 20px;
 }
+
+.buttonBag {
+  width: max-content;
+  padding: 4px 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  color: var(--color-red);
+  background-color: var(--color-dark-blue);
+  border: 1px solid var(--color-dark-blue);
+}

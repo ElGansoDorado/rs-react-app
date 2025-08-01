@@ -2,19 +2,29 @@ import classes from './card.module.css';
 
 interface Props {
   name: string;
-  active: boolean;
+  isActive: boolean;
+  isBag: boolean;
   showDetail: () => void;
 }
 
-function Card({ name, active, showDetail }: Props) {
+function Card({ name, isActive, isBag, showDetail }: Props) {
   return (
-    <li
-      data-testid="pokemon-card"
-      onClick={showDetail}
-      className={`${classes.container} ${active ? classes.active : ''}`}
-    >
-      <p>current</p>
-      <h3>{name}</h3>
+    <li className={classes.container}>
+      {isBag && (
+        <img
+          className={classes.icon}
+          src="https://www.svgrepo.com/show/525643/bag-2.svg"
+          alt="bag icon"
+        />
+      )}
+      <div
+        data-testid="pokemon-card"
+        onClick={showDetail}
+        className={`${classes.card} ${isActive ? classes.active : ''}`}
+      >
+        <p>current</p>
+        <h3>{name}</h3>
+      </div>
     </li>
   );
 }
