@@ -10,6 +10,10 @@ const links = [
     name: 'Pokedex',
     links: ROUTES.POKEMONS,
   },
+  {
+    name: 'Bag',
+    links: ROUTES.BAG,
+  },
 ];
 
 function Menu() {

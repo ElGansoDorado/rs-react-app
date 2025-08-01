@@ -18,6 +18,10 @@ export const router = createBrowserRouter([
         lazy: () => import('@/features/pokedex/pokedex.page'),
       },
       {
+        path: ROUTES.BAG,
+        lazy: () => import('@/features/bag/bag.page'),
+      },
+      {
         path: ROUTES.ABOUT,
         lazy: () => import('@/features/about/about.page'),
       },
