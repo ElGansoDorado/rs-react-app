@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Pokemon } from '../model/pokemon.type';
 
 interface BagState {
@@ -9,29 +10,36 @@ interface BagState {
   clear: () => void;
 }
 
-export const useBag = create<BagState>((set, get) => ({
-  list: [],
+export const useBag = create<BagState>()(
+  persist(
+    (set, get) => ({
+      list: [],
 
-  hasPokemon: (name) => {
-    return get().list.some((pokemon) => pokemon.name === name);
-  },
+      hasPokemon: (name) => {
+        return get().list.some((pokemon) => pokemon.name === name);
+      },
 
-  addPokemon: (pokemon) =>
-    set((state) => {
-      if (state.hasPokemon(pokemon.name)) {
-        return state;
-      }
+      addPokemon: (pokemon) => {
+        const currentList = get().list;
+        const exists = currentList.some((p) => p.name === pokemon.name);
 
-      return { list: [...state.list, pokemon] };
+        set({
+          list: exists
+            ? currentList.filter((item) => item.name !== pokemon.name)
+            : [...currentList, pokemon],
+        });
+      },
+
+      removePokemon: (name) => {
+        const currentList = get().list;
+        set({ list: currentList.filter((item) => item.name !== name) });
+      },
+
+      clear: () => set({ list: [] }),
     }),
-
-  removePokemon: (name) =>
-    set((state) => {
-      return { list: state.list.filter((item) => item.name !== name) };
-    }),
-
-  clear: () =>
-    set(() => {
-      return { list: [] };
-    }),
-}));
+    {
+      name: 'pokemon-bag-storage',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
