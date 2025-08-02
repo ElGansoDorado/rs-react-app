@@ -52,14 +52,14 @@ function PokemonDetail() {
       </div>
 
       <div className={classes.menu}>
-        <button onClick={closeDetail} className={classes.button}>
+        <button onClick={closeDetail} className={classes.button} role="close">
           <img
             src="https://www.svgrepo.com/show/525281/close-circle.svg"
             alt="close"
           />
         </button>
 
-        <button onClick={handleBagClick} className={classes.button}>
+        <button onClick={handleBagClick} className={classes.button} role="add">
           <img
             src={
               !isInBag

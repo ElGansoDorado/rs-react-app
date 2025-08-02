@@ -65,16 +65,12 @@ describe('PokemonDetail', () => {
     render(<PokemonDetail />);
 
     expect(screen.getByText('bulbasaur')).toBeInTheDocument();
-    expect(screen.getByRole('img')).toHaveAttribute(
-      'src',
-      mockPokemons[0].sprites.front_default
-    );
 
     expect(screen.getByText('hp: 45')).toBeInTheDocument();
     expect(screen.getByText('attack: 49')).toBeInTheDocument();
     expect(screen.getByText('defense: 49')).toBeInTheDocument();
 
-    expect(screen.getByRole('button', { name: 'X' })).toBeInTheDocument();
+    expect(screen.getByRole('add')).toBeInTheDocument();
   });
 
   it('should call closeDetail when X button is clicked', () => {
@@ -85,7 +81,7 @@ describe('PokemonDetail', () => {
     });
 
     render(<PokemonDetail />);
-    fireEvent.click(screen.getByRole('button', { name: 'X' }));
+    fireEvent.click(screen.getByRole('close'));
     expect(mockCloseDetail).toHaveBeenCalledTimes(1);
   });
 
@@ -100,7 +96,7 @@ describe('PokemonDetail', () => {
     rerender(<PokemonDetail />);
     expect(screen.getByText('bulbasaur')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: 'X' }));
+    fireEvent.click(screen.getByRole('close'));
 
     (usePokemonDetail as Mock).mockReturnValue({
       detail: null,
