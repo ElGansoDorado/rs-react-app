@@ -1,8 +1,8 @@
 import classes from './bag-card.module.css';
-import type { PokemonType } from '@/shared/model/pokemon.type';
+import type { Pokemon } from '@/shared/model/pokemon.type';
 
 type Props = {
-  pokemon: PokemonType;
+  pokemon: Pokemon;
   close: (name: string) => void;
 };
 

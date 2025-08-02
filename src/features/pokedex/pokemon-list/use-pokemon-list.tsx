@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getPokemon, getPokemonPage } from '../../../shared/api/get-pokemon';
 import { useSearchParams } from 'react-router-dom';
-import type { Pokemon } from '../../../shared/model/pokemon.type';
+import type { PokemonPath } from '../../../shared/model/pokemon.type';
 import { useLineSearch } from '../../../shared/hooks/use-line-search';
 
 export function usePokemonList() {
-  const [pokemonsList, setPokemonsList] = useState<Pokemon[]>([]);
+  const [pokemonsList, setPokemonsList] = useState<PokemonPath[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();

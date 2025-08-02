@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getPokemonDetail } from '../../../shared/api/get-pokemon';
 import { useSearchParams } from 'react-router-dom';
-import type { PokemonType } from '../../../shared/model/pokemon.type';
+import type { Pokemon } from '../../../shared/model/pokemon.type';
 
 export function usePokemonDetail() {
-  const [detail, setDetail] = useState<PokemonType | null>(null);
+  const [detail, setDetail] = useState<Pokemon | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 

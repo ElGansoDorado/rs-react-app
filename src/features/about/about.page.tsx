@@ -72,6 +72,7 @@ export function About() {
           <ul>
             <li>React</li>
             <li>React router</li>
+            <li>Zustand</li>
             <li>Vitest</li>
             <li>TypeScript</li>
             <li>HTML</li>

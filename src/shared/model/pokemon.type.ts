@@ -1,4 +1,4 @@
-export type Pokemon = {
+export type PokemonPath = {
   name: string;
   url: string;
 };
@@ -7,7 +7,7 @@ export type PokemonResponse = {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Pokemon[];
+  results: PokemonPath[];
 };
 
 export type PokemonSprites = {
@@ -15,22 +15,23 @@ export type PokemonSprites = {
   front_default?: string;
 };
 
-interface Stat {
-  name: string;
-  url: string;
-}
-
 interface PokemonStat {
   base_stat: number;
   effort: number;
-  stat: Stat;
+  stat: PokemonPath;
 }
 
-export type PokemonType = {
+interface PokemonType {
+  slot: number;
+  type: PokemonPath;
+}
+
+export type Pokemon = {
   id: number;
   name: string;
   weight: number;
   height: number;
-  stats: PokemonStat[];
   sprites: PokemonSprites;
+  stats: PokemonStat[];
+  types: PokemonType[];
 };
