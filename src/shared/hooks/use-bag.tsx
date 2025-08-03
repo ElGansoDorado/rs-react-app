@@ -20,25 +20,21 @@ export const useBag = create<BagState>()(
       },
 
       addPokemon: (pokemon) => {
-        const currentList = get().list;
-        const exists = currentList.some((p) => p.name === pokemon.name);
-
         set({
-          list: exists
-            ? currentList.filter((item) => item.name !== pokemon.name)
-            : [...currentList, pokemon],
+          list: get().hasPokemon(pokemon.name)
+            ? get().list.filter((item) => item.name !== pokemon.name)
+            : [...get().list, pokemon],
         });
       },
 
       removePokemon: (name) => {
-        const currentList = get().list;
-        set({ list: currentList.filter((item) => item.name !== name) });
+        set({ list: get().list.filter((item) => item.name !== name) });
       },
 
       clear: () => set({ list: [] }),
     }),
     {
-      name: 'pokemon-bag-storage',
+      name: 'POKEMON-BAG-STORAGE',
       storage: createJSONStorage(() => localStorage),
     }
   )

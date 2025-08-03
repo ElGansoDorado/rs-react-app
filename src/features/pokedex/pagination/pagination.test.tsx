@@ -133,7 +133,6 @@ describe('Pagination', () => {
   });
 
   it('should disable navigation buttons when on boundaries', () => {
-    // Первая страница
     (usePagination as Mock).mockReturnValue({
       page: 1,
       maxPage: 100,
