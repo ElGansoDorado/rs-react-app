@@ -1,12 +1,16 @@
 .menu {
   padding: 8px 0;
-  border-bottom: 1px solid var(--color-dark-blue);
 
   display: flex;
   justify-content: space-between;
 }
 
-.buttonBox {
+.box {
   display: flex;
   gap: 8px;
+}
+
+.button {
+  width: 25px;
+  height: 25px;
 }

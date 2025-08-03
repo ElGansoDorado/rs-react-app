@@ -1,5 +1,5 @@
 import classes from './bag-menu.module.css';
-import { useBag } from '@/shared/hooks/use-bag';
+import { useBag } from '../../../shared/hooks/use-bag';
 import { useCSVDowload } from './use-csv-dowload';
 
 function BagMenu() {
@@ -8,15 +8,26 @@ function BagMenu() {
 
   const { downloadLinkRef, exportToCSV } = useCSVDowload();
 
+  const handleDownloadClick = () => {
+    exportToCSV(list);
+    clear();
+  };
+
   return (
     <div className={classes.menu}>
-      <p>count: {list.length}</p>
-      <div className={classes.buttonBox}>
-        <button className="button" onClick={() => clear()}>
-          remove
+      <p>selected items: {list.length}</p>
+      <div className={classes.Box}>
+        <button className={classes.button} onClick={() => clear()}>
+          <img
+            src="https://www.svgrepo.com/show/502608/delete-2.svg"
+            alt="clear"
+          />
         </button>
-        <button className="button" onClick={() => exportToCSV(list)}>
-          download
+        <button className={classes.button} onClick={handleDownloadClick}>
+          <img
+            src="https://www.svgrepo.com/show/525323/download-square.svg"
+            alt="dowload"
+          />
         </button>
         <a ref={downloadLinkRef} style={{ display: 'none' }} />
       </div>

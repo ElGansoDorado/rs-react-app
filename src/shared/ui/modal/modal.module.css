@@ -1,0 +1,19 @@
+.modal {
+  min-width: 300px;
+  min-height: 30px;
+
+  width: max-content;
+  height: max-content;
+
+  padding: 8px 12px;
+  border-radius: 16px;
+
+  position: fixed;
+  bottom: 30px;
+  left: 50px;
+
+  background-color: #fff;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}

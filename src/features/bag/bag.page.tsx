@@ -1,7 +1,11 @@
 import classes from './bag.module.css';
-import { BagList, BagMenu } from '.';
+import { useBag } from '@/shared/hooks/use-bag';
+import { BagCard, BagMenu } from '.';
 
 function Bag() {
+  const list = useBag((state) => state.list);
+  const removePokemon = useBag((state) => state.removePokemon);
+
   return (
     <main className="container">
       <div className={classes.container}>
@@ -9,7 +13,15 @@ function Bag() {
 
         <BagMenu />
 
-        <BagList />
+        <div className={classes.list}>
+          {list.length > 0 ? (
+            list.map((item) => (
+              <BagCard key={item.name} pokemon={item} close={removePokemon} />
+            ))
+          ) : (
+            <p>Your inventory is empty, it s time to catch new Pokemon!</p>
+          )}
+        </div>
       </div>
     </main>
   );
