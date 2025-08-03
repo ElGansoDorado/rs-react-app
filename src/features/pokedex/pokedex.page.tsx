@@ -1,6 +1,6 @@
 import { PokemonList, PokemonDetail, Pagination } from '.';
 
-export function Pokedex() {
+function Pokedex() {
   return (
     <main className="container">
       <h2 className="list-pokemon__title">Result</h2>

@@ -7,21 +7,11 @@ import {
   getPokemonDetail,
 } from './get-pokemon';
 
-const mockPokemon = {
-  name: 'pikachu',
-  url: 'https://pokeapi.co/api/v2/pokemon/25/',
-};
-
-const mockPokemonDetail = {
-  id: 25,
-  name: 'pikachu',
-  sprites: { front_default: 'pikachu.png' },
-  types: [{ type: { name: 'electric' } }],
-};
+import { mockPokemonsArray, mockPokemons } from '../test-utils/mocks/pokemons';
 
 const mockPokemonList = {
   count: 100,
-  results: Array(20).fill(mockPokemon),
+  results: Array(20).fill(mockPokemonsArray[0]),
 };
 
 describe('Pokemon API', () => {
@@ -37,11 +27,11 @@ describe('Pokemon API', () => {
     it('should return pokemon by name', async () => {
       vi.mocked(fetch).mockResolvedValueOnce({
         ok: true,
-        json: async () => mockPokemon,
+        json: async () => mockPokemonsArray[0],
       } as Response);
 
       const result = await getPokemon('pikachu');
-      expect(result).toEqual([mockPokemon]);
+      expect(result).toEqual([mockPokemonsArray[0]]);
       expect(fetch).toHaveBeenCalledWith(
         'https://pokeapi.co/api/v2/pokemon/pikachu'
       );
@@ -88,11 +78,11 @@ describe('Pokemon API', () => {
     it('should return pokemon details by id', async () => {
       vi.mocked(fetch).mockResolvedValueOnce({
         ok: true,
-        json: async () => mockPokemonDetail,
+        json: async () => mockPokemons[0],
       } as Response);
 
-      const result = await getPokemonDetail('25');
-      expect(result).toEqual(mockPokemonDetail);
+      const result = await getPokemonDetail('1');
+      expect(result).toEqual(mockPokemons[0]);
     });
 
     it('should throw error for invalid response', async () => {
