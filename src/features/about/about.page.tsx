@@ -1,6 +1,6 @@
 import classes from './about.module.css';
 
-function About() {
+export function About() {
   return (
     <main className="container">
       <section className={classes.container}>
@@ -72,6 +72,7 @@ function About() {
           <ul>
             <li>React</li>
             <li>React router</li>
+            <li>Zustand</li>
             <li>Vitest</li>
             <li>TypeScript</li>
             <li>HTML</li>

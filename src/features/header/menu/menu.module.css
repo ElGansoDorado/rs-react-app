@@ -1,0 +1,25 @@
+.menu {
+  display: flex;
+  gap: 12px;
+}
+
+.item {
+  height: 32px;
+  font:
+    400 21px/100% 'Segoe UI',
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
+  color: var(--color-text);
+  border-bottom: 2px solid transparent;
+}
+
+.active,
+.item:hover {
+  border-bottom-color: var(--color-dark-blue);
+}
+
+.item:active {
+  border-bottom-color: var(--color-ocean);
+}

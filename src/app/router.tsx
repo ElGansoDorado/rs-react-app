@@ -1,14 +1,17 @@
 import { ROUTES } from '@/shared/model/routes';
 import { createBrowserRouter, redirect } from 'react-router-dom';
-import ErrorBoundary from './error-boundary';
-import ErrorPage from './error-page';
+import { ThemeProvider } from '../shared/hooks/use-theme';
+import ErrorBoundary from './errors/error-boundary';
+import ErrorPage from './errors/error-page';
 import App from './app';
 
 export const router = createBrowserRouter([
   {
     element: (
       <ErrorBoundary>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </ErrorBoundary>
     ),
     errorElement: <ErrorPage />,
@@ -16,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.POKEMONS,
         lazy: () => import('@/features/pokedex/pokedex.page'),
+      },
+      {
+        path: ROUTES.BAG,
+        lazy: () => import('@/features/bag/bag.page'),
       },
       {
         path: ROUTES.ABOUT,
@@ -38,5 +45,5 @@ function pokemonsLoader() {
     );
   }
 
-  return redirect(`${ROUTES.POKEMONS}/?page=1`);
+  return redirect(`${ROUTES.POKEMONS}`);
 }

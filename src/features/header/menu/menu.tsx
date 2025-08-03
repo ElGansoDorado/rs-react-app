@@ -1,5 +1,6 @@
+import classes from './menu.module.css';
 import { NavLink } from 'react-router-dom';
-import { ROUTES } from '../../shared/model/routes';
+import { ROUTES } from '../../../shared/model/routes';
 
 const links = [
   {
@@ -10,18 +11,23 @@ const links = [
     name: 'Pokedex',
     links: ROUTES.POKEMONS,
   },
+  {
+    name: 'Bag',
+    links: ROUTES.BAG,
+  },
 ];
 
 function Menu() {
   return (
     <nav role="menu">
-      <ul className="menu">
+      <ul className={classes.menu}>
         {links.map((item) => (
           <li key={item.name}>
             <NavLink
               to={item.links}
+              data-testid={`nav-link-${item.links}`}
               className={({ isActive }) =>
-                isActive ? 'menu__item menu__item-active' : 'menu__item'
+                isActive ? `${classes.active} ${classes.item}` : classes.item
               }
             >
               {item.name}

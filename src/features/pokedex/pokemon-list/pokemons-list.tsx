@@ -1,9 +1,11 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { usePokemonList } from './usePokemonList';
+import { usePokemonList } from './use-pokemon-list';
 import { Card, Loader } from '..';
+import { useBag } from '../../../shared/hooks/use-bag';
 
 function PokemonList() {
   const { pokemonsList, isLoading } = usePokemonList();
+  const hasPokemon = useBag((state) => state.hasPokemon);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -11,14 +13,14 @@ function PokemonList() {
   const detailsQuery = searchParams.get('details') || '';
 
   const handlePokemonClick = (id: string) => {
+    const newParams = new URLSearchParams(searchParams);
+
     if (detailsQuery === id) {
-      const newParams = new URLSearchParams(searchParams);
       newParams.delete('details');
       setSearchParams(newParams);
       return;
     }
 
-    const newParams = new URLSearchParams(searchParams);
     newParams.set('details', id);
     navigate(`?${newParams.toString()}`);
   };
@@ -35,7 +37,8 @@ function PokemonList() {
             <Card
               key={item.name}
               name={item.name}
-              active={detailsQuery === item.name}
+              isActive={detailsQuery === item.name}
+              isBag={hasPokemon(item.name)}
               showDetail={() => handlePokemonClick(item.name)}
             />
           ))}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const SEARCH = 'SEARCH';
 
-export function useLineSearch() {
+export const useLineSearch = () => {
   const [searchLine, setSearchLine] = useState<string>(() => {
     return localStorage.getItem(SEARCH) || '';
   });
@@ -12,4 +12,4 @@ export function useLineSearch() {
   }, [searchLine]);
 
   return { searchLine, setSearchLine };
-}
+};

@@ -1,40 +1,12 @@
-import type { PokemonType } from '@/shared/model/pokemon.type';
+import type { Pokemon, PokemonPath } from '@/shared/model/pokemon.type';
 
-export const mockPokemonResponse = (pokemon: PokemonType) =>
-  ({
-    ok: true,
-    json: () => Promise.resolve(pokemon),
-    status: 200,
-  }) as Response;
+export const mockPokemonsArray: PokemonPath[] = [
+  { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
+  { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+  { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/4/' },
+];
 
-export const mockPokemonArrayResponse = () =>
-  ({
-    ok: true,
-    json: () => Promise.resolve(mockPokemons[0]),
-    status: 200,
-  }) as Response;
-
-export const mockPokemonEmptyResponse = () =>
-  ({
-    ok: true,
-    json: () => Promise.resolve({ results: [] }),
-    status: 200,
-  }) as Response;
-
-export const mockPokemonPathResponse = () =>
-  ({
-    ok: true,
-    json: () => Promise.resolve(mockPokemonPath),
-  }) as Response;
-
-const mockPokemonPath = {
-  results: [
-    { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1' },
-    { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/2' },
-  ],
-};
-
-export const mockPokemons: PokemonType[] = [
+export const mockPokemons: Pokemon[] = [
   {
     id: 1,
     name: 'bulbasaur',
@@ -72,6 +44,15 @@ export const mockPokemons: PokemonType[] = [
         },
       },
     ],
+    types: [
+      {
+        slot: 1,
+        type: {
+          name: 'fire',
+          url: 'https://pokeapi.co/api/v2/type/10/',
+        },
+      },
+    ],
   },
   {
     id: 2,
@@ -99,6 +80,15 @@ export const mockPokemons: PokemonType[] = [
         stat: {
           name: 'attack',
           url: 'https://pokeapi.co/api/v2/stat/2/',
+        },
+      },
+    ],
+    types: [
+      {
+        slot: 1,
+        type: {
+          name: 'fire',
+          url: 'https://pokeapi.co/api/v2/type/10/',
         },
       },
     ],

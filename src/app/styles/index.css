@@ -3,10 +3,7 @@
 @import './ui.css';
 @import './text.css';
 
-body {
-  background-color: #f3f3f2;
-}
-
+#root,
 body,
 html {
   height: 100%;
@@ -17,12 +14,14 @@ html {
   overflow-x: hidden;
 }
 
-#root {
+.color {
   min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
 
+.color.light {
   --color-dark-blue: #0f1f38;
   --color-orange: #f55449;
   --color-red: #e74170;
@@ -30,6 +29,28 @@ html {
   --color-ocean-light: #afd4e0;
   --color-brown: #8e7970;
   --color-placeholder: #d3d3d3;
+  --color-wd: #fff;
+
+  --color-text: #0f1f38;
+  --color-back: #fff;
+  --color-header: #fff;
+  background-color: #f3f3f2;
+}
+
+.color.dark {
+  --color-dark-blue: #0f1f38;
+  --color-orange: #f55449;
+  --color-red: #e74170;
+  --color-ocean: #6ba7c0;
+  --color-ocean-light: #1a4d5f;
+  --color-brown: #c9b8b0;
+  --color-placeholder: #5a5a5a;
+  --color-wd: #121212;
+
+  --color-text: #fff;
+  --color-back: #1d1c1c;
+  --color-header: #000;
+  background-color: #232323;
 }
 
 main {

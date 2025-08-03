@@ -1,0 +1,16 @@
+.menu {
+  padding: 8px 0;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.box {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  width: 25px;
+  height: 25px;
+}

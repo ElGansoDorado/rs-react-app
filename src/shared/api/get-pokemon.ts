@@ -1,7 +1,7 @@
 import type {
   PokemonResponse,
+  PokemonPath,
   Pokemon,
-  PokemonType,
 } from '../model/pokemon.type';
 
 const PATH = 'https://pokeapi.co/api/v2/pokemon/';
@@ -25,7 +25,7 @@ export async function getPokemon(name: string) {
 
   checkRespons(response);
 
-  const Pokemon = [(await response.json()) as Pokemon];
+  const Pokemon = [(await response.json()) as PokemonPath];
   return Pokemon;
 }
 
@@ -52,6 +52,6 @@ export async function getPokemonDetail(id: string) {
 
   checkRespons(response);
 
-  const pokemonDetail: PokemonType = await response.json();
+  const pokemonDetail: Pokemon = await response.json();
   return pokemonDetail;
 }
