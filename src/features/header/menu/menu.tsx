@@ -25,8 +25,9 @@ function Menu() {
           <li key={item.name}>
             <NavLink
               to={item.links}
+              data-testid={`nav-link-${item.links}`}
               className={({ isActive }) =>
-                isActive ? `${classes.item} ${classes.active}` : classes.item
+                isActive ? `${classes.active} ${classes.item}` : classes.item
               }
             >
               {item.name}
