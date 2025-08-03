@@ -1,4 +1,4 @@
 import BagCard from './bag-card/bag-card';
-import BagMenu from './bag-menu/bag-menu';
+import ExportControls from '../../shared/ui/export-controls/export-controls';
 
-export { BagCard, BagMenu };
+export { BagCard, ExportControls };

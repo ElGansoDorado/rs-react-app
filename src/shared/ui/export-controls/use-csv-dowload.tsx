@@ -13,7 +13,6 @@ export function useCSVDowload() {
       headers.join(','),
       ...rows.map((r) => r.join(',')),
     ].join('\n');
-    console.log('CSV Content:', csvContent);
 
     const blob = new Blob(['\uFEFF' + csvContent], {
       type: 'text/csv;charset=utf-8;',

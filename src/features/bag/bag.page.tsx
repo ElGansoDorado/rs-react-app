@@ -1,6 +1,6 @@
 import classes from './bag.module.css';
 import { useBag } from '@/shared/hooks/use-bag';
-import { BagCard, BagMenu } from '.';
+import { BagCard, ExportControls } from '.';
 
 function Bag() {
   const list = useBag((state) => state.list);
@@ -11,7 +11,7 @@ function Bag() {
       <div className={classes.container}>
         <h3 className={classes.title}>Bag page</h3>
 
-        <BagMenu />
+        <ExportControls />
 
         <div className={classes.list}>
           {list.length > 0 ? (

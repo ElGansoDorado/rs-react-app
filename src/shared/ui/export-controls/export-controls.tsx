@@ -1,8 +1,8 @@
-import classes from './bag-menu.module.css';
-import { useBag } from '../../../shared/hooks/use-bag';
+import classes from './export-controls.module.css';
+import { useBag } from '../../hooks/use-bag';
 import { useCSVDowload } from './use-csv-dowload';
 
-function BagMenu() {
+function ExportControls() {
   const list = useBag((state) => state.list);
   const clear = useBag((state) => state.clear);
 
@@ -35,4 +35,4 @@ function BagMenu() {
   );
 }
 
-export default BagMenu;
+export default ExportControls;
