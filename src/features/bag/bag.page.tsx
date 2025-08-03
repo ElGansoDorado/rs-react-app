@@ -9,7 +9,7 @@ function Bag() {
   return (
     <main className="container">
       <div className={classes.container}>
-        <h3>Bag page</h3>
+        <h3 className={classes.title}>Bag page</h3>
 
         <BagMenu />
 

@@ -26,7 +26,7 @@
     sans-serif;
 
   text-transform: uppercase;
-  color: var(--color-dark-blue);
+  color: var(--color-text);
 }
 
 .name {
@@ -50,7 +50,7 @@
     Verdana,
     sans-serif;
 
-  color: var(--color-dark-blue);
+  color: var(--color-text);
 }
 
 .links {

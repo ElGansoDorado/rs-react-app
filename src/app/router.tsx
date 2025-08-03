@@ -1,5 +1,6 @@
 import { ROUTES } from '@/shared/model/routes';
 import { createBrowserRouter, redirect } from 'react-router-dom';
+import { ThemeProvider } from './theme-context';
 import ErrorBoundary from './error-boundary';
 import ErrorPage from './error-page';
 import App from './app';
@@ -8,7 +9,9 @@ export const router = createBrowserRouter([
   {
     element: (
       <ErrorBoundary>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </ErrorBoundary>
     ),
     errorElement: <ErrorPage />,

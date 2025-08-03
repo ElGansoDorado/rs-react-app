@@ -3,7 +3,7 @@
   height: 250px;
 
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--color-back);
 
   position: relative;
   display: flex;
@@ -25,4 +25,8 @@
   position: absolute;
   top: 12px;
   right: 12px;
+}
+
+.name {
+  color: var(--color-red);
 }

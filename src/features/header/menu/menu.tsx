@@ -1,3 +1,4 @@
+import classes from './menu.module.css';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../../shared/model/routes';
 
@@ -19,13 +20,13 @@ const links = [
 function Menu() {
   return (
     <nav role="menu">
-      <ul className="menu">
+      <ul className={classes.menu}>
         {links.map((item) => (
           <li key={item.name}>
             <NavLink
               to={item.links}
               className={({ isActive }) =>
-                isActive ? 'menu__item menu__item-active' : 'menu__item'
+                isActive ? `${classes.item} ${classes.active}` : classes.item
               }
             >
               {item.name}

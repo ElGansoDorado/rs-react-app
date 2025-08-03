@@ -1,8 +1,10 @@
 import classes from './header.module.css';
 import Search from './search/search';
 import Menu from './menu/menu';
+import { useTheme } from '../../app/theme-context';
 
 function Header() {
+  const { theme, toggleTheme } = useTheme();
   return (
     <header className={classes.header}>
       <div className={`container ${classes.container}`}>
@@ -10,7 +12,19 @@ function Header() {
 
         <Menu />
 
-        <Search />
+        <div className={classes.functional}>
+          <Search />
+          <button onClick={toggleTheme}>
+            <img
+              src={
+                theme === 'dark'
+                  ? 'https://www.svgrepo.com/show/529971/sun-2.svg'
+                  : 'https://www.svgrepo.com/show/529729/moon.svg'
+              }
+              alt="toggle theme img"
+            />
+          </button>
+        </div>
       </div>
     </header>
   );
