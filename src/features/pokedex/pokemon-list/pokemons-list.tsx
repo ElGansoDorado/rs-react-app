@@ -1,7 +1,7 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { usePokemonList } from './use-pokemon-list';
-import { Card, Loader } from '..';
 import { useBag } from '@/shared/hooks/use-bag';
+import { Card, Loader } from '..';
 
 function PokemonList() {
   const { pokemonsList, isLoading } = usePokemonList();

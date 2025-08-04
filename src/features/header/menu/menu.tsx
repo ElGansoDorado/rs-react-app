@@ -9,7 +9,7 @@ const links = [
   },
   {
     name: 'Pokedex',
-    links: ROUTES.POKEMONS,
+    links: ROUTES.POKEMONS + '?page=1',
   },
   {
     name: 'Bag',
