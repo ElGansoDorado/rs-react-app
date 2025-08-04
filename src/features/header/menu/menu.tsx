@@ -1,6 +1,6 @@
 import classes from './menu.module.css';
 import { NavLink } from 'react-router-dom';
-import { ROUTES } from '../../../shared/model/routes';
+import { ROUTES } from '@/shared/model/routes';
 
 const links = [
   {

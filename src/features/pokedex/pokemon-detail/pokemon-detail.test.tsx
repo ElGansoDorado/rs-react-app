@@ -1,17 +1,7 @@
-import '@testing-library/jest-dom/vitest';
-import {
-  describe,
-  vi,
-  it,
-  expect,
-  beforeEach,
-  type Mock,
-  afterEach,
-} from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-
+import { describe, vi, it, expect, beforeEach, type Mock } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PokemonDetail from './pokemon-detail';
-import { mockPokemons } from '../../../shared/test-utils/mocks/pokemons';
+import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
 import { usePokemonDetail } from './use-pokemon-detail';
 
 vi.mock('./use-pokemon-detail', () => ({
@@ -27,10 +17,6 @@ describe('PokemonDetail', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 
   it('should not render when detail is null', () => {

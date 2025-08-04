@@ -1,9 +1,9 @@
-import { useBag } from '../shared/hooks/use-bag';
-import Header from '../features/header';
+import Header from '@/features/header';
+import Modal from '@/shared/ui/modal/modal';
+import ExportControls from '@/shared/ui/export-controls/export-controls';
 import { Outlet } from 'react-router-dom';
-import Modal from '../shared/ui/modal/modal';
-import ExportControls from '../shared/ui/export-controls/export-controls';
-import { useTheme } from '../shared/hooks/use-theme';
+import { useTheme } from '@/shared/hooks/use-theme';
+import { useBag } from '@/shared/hooks/use-bag';
 
 function App() {
   const length = useBag((state) => state.list.length);

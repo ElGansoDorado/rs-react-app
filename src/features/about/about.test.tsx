@@ -1,7 +1,6 @@
-import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
-import { About } from './about.page';
 import { describe, expect, it } from 'vitest';
+import { About } from './about.page';
 
 describe('About Component', () => {
   it('should render all critical sections and content', () => {

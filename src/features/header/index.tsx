@@ -1,7 +1,7 @@
 import classes from './header.module.css';
 import Search from './search/search';
 import Menu from './menu/menu';
-import { useTheme } from '../../shared/hooks/use-theme';
+import { useTheme } from '@/shared/hooks/use-theme';
 
 function Header() {
   const { theme, toggleTheme } = useTheme();

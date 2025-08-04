@@ -1,8 +1,7 @@
-import '@testing-library/jest-dom/vitest';
 import { renderHook, act } from '@testing-library/react';
 import { usePokemonDetail } from './use-pokemon-detail';
 import { useSearchParams } from 'react-router-dom';
-import { getPokemonDetail } from '../../../shared/api/get-pokemon';
+import { getPokemonDetail } from '@/shared/api/get-pokemon';
 import {
   describe,
   vi,
@@ -13,13 +12,13 @@ import {
   afterAll,
   type Mock,
 } from 'vitest';
-import { mockPokemons } from '../../../shared/test-utils/mocks/pokemons';
+import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
 
 vi.mock('react-router-dom', () => ({
   useSearchParams: vi.fn(),
 }));
 
-vi.mock('../../../shared/api/get-pokemon', () => ({
+vi.mock('@/shared/api/get-pokemon', () => ({
   getPokemonDetail: vi.fn(),
 }));
 

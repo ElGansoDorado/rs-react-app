@@ -1,6 +1,6 @@
 import { ROUTES } from '@/shared/model/routes';
 import { createBrowserRouter, redirect } from 'react-router-dom';
-import { ThemeProvider } from '../shared/hooks/use-theme';
+import { ThemeProvider } from '@/shared/hooks/use-theme';
 import ErrorBoundary from './errors/error-boundary';
 import ErrorPage from './errors/error-page';
 import App from './app';

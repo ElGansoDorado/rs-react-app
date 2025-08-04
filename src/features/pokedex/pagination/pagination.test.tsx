@@ -1,16 +1,7 @@
-import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Pagination from './pagination';
 import { usePagination } from './use-pagination';
-import {
-  describe,
-  vi,
-  it,
-  expect,
-  beforeEach,
-  type Mock,
-  afterEach,
-} from 'vitest';
+import { describe, vi, it, expect, beforeEach, type Mock } from 'vitest';
 
 vi.mock('./use-pagination', () => ({
   usePagination: vi.fn(),
@@ -30,10 +21,6 @@ describe('Pagination', () => {
       switchPage: mockSwitchPage,
       hasPageParam: false,
     });
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 
   it('should not render when hasPageParam is true', () => {

@@ -1,7 +1,6 @@
-import '@testing-library/jest-dom/vitest';
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import ErrorBoundary from './error-boundary';
 import ErrorPage from './error-page';
 

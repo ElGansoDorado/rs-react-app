@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getPokemonNumberPage } from '../../../shared/api/get-pokemon';
+import { getPokemonNumberPage } from '@/shared/api/get-pokemon';
 
 export function usePagination() {
   const [searchParams, setSearchParams] = useSearchParams();

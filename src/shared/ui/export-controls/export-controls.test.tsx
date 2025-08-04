@@ -1,14 +1,5 @@
-import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import {
-  vi,
-  describe,
-  it,
-  expect,
-  beforeEach,
-  type Mock,
-  afterEach,
-} from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { vi, describe, it, expect, beforeEach, type Mock } from 'vitest';
 import ExportControls from './export-controls';
 import { useCSVDowload } from './use-csv-dowload';
 
@@ -41,10 +32,6 @@ beforeEach(() => {
 });
 
 describe('ExportControls Component', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   it('should render correctly with item count', () => {
     render(<ExportControls />);
 

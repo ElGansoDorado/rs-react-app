@@ -1,8 +1,7 @@
-import '@testing-library/jest-dom/vitest';
 import { renderHook, act } from '@testing-library/react';
 import { usePagination } from './use-pagination';
 import { useSearchParams } from 'react-router-dom';
-import { getPokemonNumberPage } from '../../../shared/api/get-pokemon';
+import { getPokemonNumberPage } from '@/shared/api/get-pokemon';
 import {
   describe,
   vi,
@@ -17,7 +16,7 @@ vi.mock('react-router-dom', () => ({
   useSearchParams: vi.fn(),
 }));
 
-vi.mock('../../../shared/api/get-pokemon', () => ({
+vi.mock('@/shared/api/get-pokemon', () => ({
   getPokemonNumberPage: vi.fn(),
 }));
 

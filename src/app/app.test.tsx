@@ -1,22 +1,17 @@
-import '@testing-library/jest-dom/vitest';
-import { describe, it, expect, vi, afterEach, type Mock } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { useTheme } from '../shared/hooks/use-theme';
+import { describe, it, expect, vi, type Mock } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { useTheme } from '@/shared/hooks/use-theme';
 import App from './app';
 
-vi.mock('../features/header', () => ({
+vi.mock('@/features/header', () => ({
   default: () => <header data-testid="header">Header</header>,
 }));
 
-vi.mock('../shared/hooks/use-theme', () => ({
+vi.mock('@/shared/hooks/use-theme', () => ({
   useTheme: vi.fn(() => ({ theme: 'light' })),
 }));
 
 describe('App Component', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   it('should render all main elements', () => {
     render(<App />);
 

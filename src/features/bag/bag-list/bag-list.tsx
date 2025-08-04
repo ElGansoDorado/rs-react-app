@@ -1,5 +1,5 @@
 import classes from './bag-list.module.css';
-import { useBag } from '../../../shared/hooks/use-bag';
+import { useBag } from '@/shared/hooks/use-bag';
 import { BagCard } from '..';
 
 function BagList() {

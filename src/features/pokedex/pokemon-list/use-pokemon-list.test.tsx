@@ -1,21 +1,20 @@
-import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useSearchParams } from 'react-router-dom';
 import { usePokemonList } from './use-pokemon-list';
-import { useLineSearch } from '../../../shared/hooks/use-line-search';
-import { mockPokemonsArray } from '../../../shared/test-utils/mocks/pokemons';
+import { useLineSearch } from '@/shared/hooks/use-line-search';
+import { mockPokemonsArray } from '@/shared/test-utils/mocks/pokemons';
 
 vi.mock('react-router-dom', () => ({
   useSearchParams: vi.fn(),
 }));
 
-vi.mock('../../../shared/api/get-pokemon', () => ({
+vi.mock('@/shared/api/get-pokemon', () => ({
   getPokemon: vi.fn(),
   getPokemonPage: vi.fn(),
 }));
 
-vi.mock('../../../shared/hooks/use-line-search', () => ({
+vi.mock('@/shared/hooks/use-line-search', () => ({
   useLineSearch: vi.fn(),
 }));
 

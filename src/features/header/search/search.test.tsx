@@ -1,9 +1,8 @@
-import '@testing-library/jest-dom/vitest';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { ROUTES } from '../../../shared/model/routes';
+import { ROUTES } from '@/shared/model/routes';
 import Search from './search';
 
 vi.mock('@/shared/hooks/useLineSearch', () => ({
@@ -26,10 +25,6 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Search Component', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   beforeEach(() => {
     vi.clearAllMocks();
   });

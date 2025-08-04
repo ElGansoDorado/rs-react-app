@@ -1,10 +1,9 @@
-import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import PokemonList from './pokemons-list';
+import { mockPokemonsArray } from '@/shared/test-utils/mocks/pokemons';
 import { usePokemonList } from './use-pokemon-list';
-import { mockPokemonsArray } from '../../../shared/test-utils/mocks/pokemons';
+import PokemonList from './pokemons-list';
 
 vi.mock('./use-pokemon-list');
 vi.mock('react-router-dom');
@@ -34,7 +33,6 @@ describe('PokemonList', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    cleanup();
   });
 
   it('should render loader when loading', () => {

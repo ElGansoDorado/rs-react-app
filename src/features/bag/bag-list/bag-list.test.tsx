@@ -1,8 +1,7 @@
-import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
 import BagList from './bag-list';
-import { mockPokemons } from '../../../shared/test-utils/mocks/pokemons';
 
 const mockBagState = {
   list: mockPokemons,
@@ -12,7 +11,7 @@ const mockBagState = {
   clear: vi.fn(),
 };
 
-vi.mock('../../../shared/hooks/use-bag', () => ({
+vi.mock('@/shared/hooks/use-bag', () => ({
   useBag: vi.fn((selector) => selector(mockBagState)),
 }));
 
