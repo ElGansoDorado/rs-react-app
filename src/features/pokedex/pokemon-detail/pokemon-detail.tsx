@@ -14,7 +14,13 @@ function PokemonDetail() {
   }
 
   if (!detail) {
-    return null;
+    return (
+      <div className={classes.container}>
+        <p className={classes.card}>
+          Pokemon details were not found, maybe it hasn t been added yet...
+        </p>
+      </div>
+    );
   }
 
   return (

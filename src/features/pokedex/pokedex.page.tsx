@@ -1,18 +1,21 @@
 import { PokemonList, PokemonDetail, Pagination } from '.';
+import { useSearchParams } from 'react-router-dom';
 
 function Pokedex() {
+  const [searchParams] = useSearchParams();
+
   return (
     <main className="container">
       <h2 className="list-pokemon__title">Result</h2>
 
       <div className="flex-row">
         <section>
-          <Pagination />
+          {searchParams.has('page') && <Pagination />}
 
           <PokemonList />
         </section>
 
-        <PokemonDetail />
+        {searchParams.has('details') && <PokemonDetail />}
       </div>
     </main>
   );

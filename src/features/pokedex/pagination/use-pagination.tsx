@@ -7,8 +7,6 @@ export function usePagination() {
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
   const [maxPage, setMaxPage] = useState(0);
 
-  const hasPageParam = !searchParams.has('page');
-
   const switchPage = (value: number) => {
     if (page + value < 1 || page + value > maxPage) {
       return;
@@ -31,11 +29,11 @@ export function usePagination() {
   }, []);
 
   useEffect(() => {
-    if (hasPageParam) return;
+    if (!searchParams.has('page')) return;
 
     const params = Object.fromEntries(searchParams);
     setSearchParams({ ...params, page: `${page}` });
   }, [page]);
 
-  return { page, maxPage, setPage, switchPage, hasPageParam };
+  return { page, maxPage, setPage, switchPage };
 }

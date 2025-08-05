@@ -2,7 +2,7 @@ import classes from './pagination.module.css';
 import { usePagination } from './use-pagination';
 
 function Pagination() {
-  const { page, maxPage, setPage, switchPage, hasPageParam } = usePagination();
+  const { page, maxPage, setPage, switchPage } = usePagination();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -12,10 +12,6 @@ function Pagination() {
     const value = Number(e.target.value);
     setPage(value > maxPage ? maxPage : value);
   };
-
-  if (hasPageParam) {
-    return null;
-  }
 
   return (
     <form
