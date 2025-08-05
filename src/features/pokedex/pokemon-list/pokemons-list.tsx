@@ -1,14 +1,19 @@
-import { useDetailQuery, usePokemonList } from './use-pokemon-list';
+import { useDetailQuery } from './use-detail-query';
+import { useFetchPokemonList } from './queries';
 import { useBag } from '@/shared/hooks/use-bag';
 import { Card, Loader } from '..';
 
 function PokemonList() {
-  const { pokemonsList, isLoading } = usePokemonList();
+  const { pokemonsList, isLoading, isError } = useFetchPokemonList();
   const { detailsQuery, handlePokemonClick } = useDetailQuery();
   const list = useBag((state) => state.list);
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (isError) {
+    return <p>Error</p>;
   }
 
   return (
