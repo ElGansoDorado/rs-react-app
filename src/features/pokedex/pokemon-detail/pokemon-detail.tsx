@@ -1,10 +1,10 @@
 import classes from './pokemon-detail.module.css';
-import { usePokemonDetail } from './use-pokemon-detail';
+import { useFetchPokemonDetail } from './queries';
 import { useBag } from '@/shared/hooks/use-bag';
 import { Loader } from '..';
 
 function PokemonDetail() {
-  const { detail, isLoading, closeDetail } = usePokemonDetail();
+  const { detail, isLoading, closeDetail } = useFetchPokemonDetail();
 
   const addInBag = useBag((state) => state.addPokemon);
   const list = useBag((state) => state.list);

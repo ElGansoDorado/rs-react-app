@@ -2,7 +2,7 @@ import { describe, vi, it, expect, beforeEach, type Mock } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import PokemonDetail from './pokemon-detail';
 import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
-import { usePokemonDetail } from './use-pokemon-detail';
+import { useFetchPokemonDetail } from './queries';
 
 vi.mock('./use-pokemon-detail', () => ({
   usePokemonDetail: vi.fn(),
@@ -20,7 +20,7 @@ describe('PokemonDetail', () => {
   });
 
   it('should not render when detail is null', () => {
-    (usePokemonDetail as Mock).mockReturnValue({
+    (useFetchPokemonDetail as Mock).mockReturnValue({
       detail: null,
       isLoading: false,
       closeDetail: mockCloseDetail,
@@ -31,7 +31,7 @@ describe('PokemonDetail', () => {
   });
 
   it('should render Loader when isLoading is true', () => {
-    (usePokemonDetail as Mock).mockReturnValue({
+    (useFetchPokemonDetail as Mock).mockReturnValue({
       detail: null,
       isLoading: true,
       closeDetail: mockCloseDetail,
@@ -42,7 +42,7 @@ describe('PokemonDetail', () => {
   });
 
   it('should render pokemon details when detail exists', () => {
-    (usePokemonDetail as Mock).mockReturnValue({
+    (useFetchPokemonDetail as Mock).mockReturnValue({
       detail: mockPokemons[0],
       isLoading: false,
       closeDetail: mockCloseDetail,
@@ -60,7 +60,7 @@ describe('PokemonDetail', () => {
   });
 
   it('should call closeDetail when X button is clicked', () => {
-    (usePokemonDetail as Mock).mockReturnValue({
+    (useFetchPokemonDetail as Mock).mockReturnValue({
       detail: mockPokemons[0],
       isLoading: false,
       closeDetail: mockCloseDetail,
@@ -74,7 +74,7 @@ describe('PokemonDetail', () => {
   it('should disappear after closeDetail is called', () => {
     const { rerender } = render(<PokemonDetail />);
 
-    (usePokemonDetail as Mock).mockReturnValue({
+    (useFetchPokemonDetail as Mock).mockReturnValue({
       detail: mockPokemons[0],
       isLoading: false,
       closeDetail: () => {},
@@ -84,7 +84,7 @@ describe('PokemonDetail', () => {
 
     fireEvent.click(screen.getByRole('close'));
 
-    (usePokemonDetail as Mock).mockReturnValue({
+    (useFetchPokemonDetail as Mock).mockReturnValue({
       detail: null,
       isLoading: false,
       closeDetail: () => {},

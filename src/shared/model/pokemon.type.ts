@@ -5,9 +5,12 @@ export type PokemonPath = {
 
 export type PokemonResponse = {
   count: number;
-  next: string | null;
-  previous: string | null;
   results: PokemonPath[];
+};
+
+export type PokemonResultsRespons = {
+  list: PokemonPath[];
+  page: number;
 };
 
 export type PokemonSprites = {

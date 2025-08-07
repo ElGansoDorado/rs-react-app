@@ -1,23 +1,10 @@
 import { renderHook, act } from '@testing-library/react';
 import { usePagination } from './use-pagination';
 import { useSearchParams } from 'react-router-dom';
-import { getPokemonNumberPage } from '@/shared/api/get-pokemon';
-import {
-  describe,
-  vi,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  type Mock,
-} from 'vitest';
+import { describe, vi, it, expect, beforeEach, type Mock } from 'vitest';
 
 vi.mock('react-router-dom', () => ({
   useSearchParams: vi.fn(),
-}));
-
-vi.mock('@/shared/api/get-pokemon', () => ({
-  getPokemonNumberPage: vi.fn(),
 }));
 
 describe('usePagination', () => {
@@ -26,8 +13,6 @@ describe('usePagination', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers();
-
     mockSearchParams = new URLSearchParams();
     (useSearchParams as Mock).mockReturnValue([
       mockSearchParams,
@@ -35,73 +20,56 @@ describe('usePagination', () => {
     ]);
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
   it('should initialize with page from URL or default to 1', () => {
     mockSearchParams.set('page', '3');
-    const { result } = renderHook(() => usePagination());
+    const { result } = renderHook(() => usePagination(10));
     expect(result.current.page).toBe(3);
+    expect(result.current.max).toBe(10);
 
     mockSearchParams.delete('page');
-    const { result: result2 } = renderHook(() => usePagination());
+    const { result: result2 } = renderHook(() => usePagination(10));
     expect(result2.current.page).toBe(1);
-    expect(result2.current.hasPageParam).toBe(true);
+    expect(result2.current.max).toBe(10);
   });
 
-  it('should correctly handle page switching', async () => {
-    mockSearchParams.set('page', '2');
-    (getPokemonNumberPage as Mock).mockResolvedValue(5);
-
-    const { result } = renderHook(() => usePagination());
-    await act(async () => {
-      await vi.runAllTimersAsync();
-    });
+  it('should correctly handle page switching', () => {
+    const { result } = renderHook(() => usePagination(5));
 
     act(() => result.current.switchPage(2));
-    expect(result.current.page).toBe(4);
+    expect(result.current.page).toBe(3);
+    expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '3' });
 
     act(() => result.current.switchPage(10));
-    expect(result.current.page).toBe(4);
+    expect(result.current.page).toBe(3);
 
-    act(() => result.current.setPage(1));
+    act(() => result.current.switchPage(-2));
+    expect(result.current.page).toBe(1);
+    expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '1' });
+
     act(() => result.current.switchPage(-5));
     expect(result.current.page).toBe(1);
   });
 
-  it('should fetch and set maxPage correctly', async () => {
-    mockSearchParams.set('page', '1');
-    (getPokemonNumberPage as Mock).mockResolvedValue(42);
+  it('should update URL when page changes', () => {
+    const { result } = renderHook(() => usePagination(10));
 
-    const { result } = renderHook(() => usePagination());
-    expect(result.current.maxPage).toBe(0);
+    act(() => result.current.setPage(4));
+    expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '4' });
 
-    await act(async () => {
-      await vi.runAllTimersAsync();
-    });
-    expect(result.current.maxPage).toBe(42);
+    act(() => result.current.setPage(2));
+    expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '2' });
   });
 
-  it('should use fallback maxPage on API error', async () => {
-    mockSearchParams.set('page', '1');
-    (getPokemonNumberPage as Mock).mockRejectedValue(new Error('API error'));
+  it('should respect max limit when setting page directly', () => {
+    const { result } = renderHook(() => usePagination(5));
 
-    const consoleErrorMock = vi
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    act(() => result.current.setPage(3));
+    expect(result.current.page).toBe(3);
 
-    const { result } = renderHook(() => usePagination());
-    await act(async () => {
-      await vi.runAllTimersAsync();
-    });
+    act(() => result.current.setPage(10));
+    expect(result.current.page).toBe(3);
 
-    expect(result.current.maxPage).toBe(66);
-    expect(consoleErrorMock).toHaveBeenCalledWith(
-      'Failed to fetch max page:',
-      expect.any(Error)
-    );
-
-    consoleErrorMock.mockRestore();
+    act(() => result.current.setPage(-2));
+    expect(result.current.page).toBe(3);
   });
 });

@@ -1,8 +1,12 @@
 import classes from './pagination.module.css';
 import { usePagination } from './use-pagination';
 
-function Pagination() {
-  const { page, maxPage, setPage, switchPage } = usePagination();
+type Props = {
+  max: number;
+};
+
+function Pagination({ max }: Props) {
+  const { page, setPage, switchPage } = usePagination(max);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -10,7 +14,7 @@ function Pagination() {
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    setPage(value > maxPage ? maxPage : value);
+    setPage(value > max ? max : value);
   };
 
   return (
@@ -32,13 +36,13 @@ function Pagination() {
         value={page}
         onChange={changeInput}
         min="1"
-        max={maxPage}
+        max={max}
       />
 
-      <button disabled={page > maxPage - 11} onClick={() => switchPage(10)}>
+      <button disabled={page > max - 11} onClick={() => switchPage(10)}>
         {'>'}
       </button>
-      <button disabled={page === maxPage} onClick={() => setPage(maxPage)}>
+      <button disabled={page === max} onClick={() => setPage(max)}>
         {'>>'}
       </button>
     </form>

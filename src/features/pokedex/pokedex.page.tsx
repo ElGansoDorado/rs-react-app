@@ -1,7 +1,9 @@
-import { PokemonList, PokemonDetail, Pagination } from '.';
+import { PokemonList, PokemonDetail, Pagination, Loader } from '.';
 import { useSearchParams } from 'react-router-dom';
+import { useFetchPokemonList } from './queries';
 
 function Pokedex() {
+  const { data, isLoading } = useFetchPokemonList();
   const [searchParams] = useSearchParams();
 
   return (
@@ -10,9 +12,9 @@ function Pokedex() {
 
       <div className="flex-row">
         <section>
-          {searchParams.has('page') && <Pagination />}
+          {searchParams.has('page') && <Pagination max={data.page} />}
 
-          <PokemonList />
+          {isLoading ? <Loader /> : <PokemonList pokemons={data.list} />}
         </section>
 
         {searchParams.has('details') && <PokemonDetail />}
