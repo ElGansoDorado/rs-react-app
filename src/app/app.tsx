@@ -1,6 +1,5 @@
 import Header from '@/features/header';
-import Modal from '@/shared/ui/modal/modal';
-import ExportControls from '@/shared/ui/export-controls/export-controls';
+import { Modal, ExportControls } from '@/shared/ui';
 import { Outlet } from 'react-router-dom';
 import { useTheme } from '@/shared/hooks/use-theme';
 import { useBag } from '@/shared/hooks/use-bag';

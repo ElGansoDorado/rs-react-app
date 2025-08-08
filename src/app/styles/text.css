@@ -1,3 +1,7 @@
+p {
+  color: var(--color-text);
+}
+
 h3 {
   font:
     800 21px/120% 'Segoe UI',

@@ -1,5 +1,4 @@
-import Card from '@/shared/ui/card/card';
-import Loader from '@/shared/ui/loader/loader';
+import { Card, Loader } from '@/shared/ui';
 import PokemonList from './pokemon-list/pokemons-list';
 import Pagination from './pagination/pagination';
 import PokemonDetail from './pokemon-detail/pokemon-detail';

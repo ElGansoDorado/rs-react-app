@@ -1,9 +1,8 @@
 import { ROUTES } from '@/shared/model/routes';
 import { createBrowserRouter, redirect } from 'react-router-dom';
-import { ThemeProvider } from '@/shared/hooks/use-theme';
 import ErrorBoundary from './errors/error-boundary';
 import ErrorPage from './errors/error-page';
-import { Provider } from './providers';
+import { Provider } from './providers/providers';
 import App from './app';
 
 export const router = createBrowserRouter([
@@ -11,9 +10,7 @@ export const router = createBrowserRouter([
     element: (
       <ErrorBoundary>
         <Provider>
-          <ThemeProvider>
-            <App />
-          </ThemeProvider>
+          <App />
         </Provider>
       </ErrorBoundary>
     ),
