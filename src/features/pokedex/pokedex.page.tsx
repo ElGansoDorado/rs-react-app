@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useFetchPokemonList } from './queries';
 
 function Pokedex() {
-  const { data, isLoading } = useFetchPokemonList();
+  const { data, isLoading, isError } = useFetchPokemonList();
   const [searchParams] = useSearchParams();
 
   return (
@@ -11,11 +11,15 @@ function Pokedex() {
       <h2 className="list-pokemon__title">Result</h2>
 
       <div className="flex-row">
-        <section>
-          {searchParams.has('page') && <Pagination max={data.page} />}
+        {isError ? (
+          <p>Oooopsss... There was an error in your request.</p>
+        ) : (
+          <section>
+            {searchParams.has('page') && <Pagination max={data.page} />}
 
-          {isLoading ? <Loader /> : <PokemonList pokemons={data.list} />}
-        </section>
+            {isLoading ? <Loader /> : <PokemonList pokemons={data.list} />}
+          </section>
+        )}
 
         {searchParams.has('details') && <PokemonDetail />}
       </div>

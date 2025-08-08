@@ -9,7 +9,11 @@ export function useFetchPokemonDetail() {
 
   const queryKey = ['detail', detailsQuery];
 
-  const { data: detail, isLoading } = useQuery({
+  const {
+    data: detail,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey,
     queryFn: async () => await getPokemonDetail(detailsQuery),
   });
@@ -20,5 +24,5 @@ export function useFetchPokemonDetail() {
     setSearchParams(newParams);
   };
 
-  return { detail, isLoading, closeDetail };
+  return { detail, isLoading, isError, closeDetail };
 }

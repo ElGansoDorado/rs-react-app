@@ -4,7 +4,7 @@ import { useBag } from '@/shared/hooks/use-bag';
 import { Loader } from '..';
 
 function PokemonDetail() {
-  const { detail, isLoading, closeDetail } = useFetchPokemonDetail();
+  const { detail, isLoading, isError, closeDetail } = useFetchPokemonDetail();
 
   const addInBag = useBag((state) => state.addPokemon);
   const list = useBag((state) => state.list);
@@ -13,7 +13,7 @@ function PokemonDetail() {
     return <Loader />;
   }
 
-  if (!detail) {
+  if (!detail || isError) {
     return (
       <div className={classes.container}>
         <p className={classes.card}>
