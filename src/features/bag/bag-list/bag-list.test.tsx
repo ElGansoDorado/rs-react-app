@@ -1,63 +1,68 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
+import { mockUseBag } from '@/shared/test-utils/mocks/hooks';
 import BagList from './bag-list';
 
-const mockBagState = {
-  list: mockPokemons,
-  removePokemon: vi.fn(),
-  hasPokemon: vi.fn(),
-  addPokemon: vi.fn(),
-  clear: vi.fn(),
-};
-
 vi.mock('@/shared/hooks/use-bag', () => ({
-  useBag: vi.fn((selector) => selector(mockBagState)),
+  useBag: vi.fn((selector) => selector(mockUseBag)),
 }));
 
 describe('BagList Component', () => {
+  const user = userEvent.setup();
+
   beforeEach(() => {
     vi.clearAllMocks();
-
-    mockBagState.list = [...mockPokemons];
-    mockBagState.removePokemon.mockImplementation((name: string) => {
-      mockBagState.list = mockBagState.list.filter((p) => p.name !== name);
+    mockUseBag.list = [...mockPokemons];
+    mockUseBag.removePokemon.mockImplementation((name: string) => {
+      mockUseBag.list = mockUseBag.list.filter((p) => p.name !== name);
     });
   });
 
   it('should render empty state when bag is empty', () => {
-    mockBagState.list = [];
+    mockUseBag.list = [];
     render(<BagList />);
 
-    expect(screen.getByText(/Your inventory is empty/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Your inventory is empty, it s time to catch new Pokemon!/i
+      )
+    ).toBeInTheDocument();
     expect(screen.queryByRole('article')).not.toBeInTheDocument();
   });
 
   it('should render pokemon cards when bag is not empty', () => {
     render(<BagList />);
 
-    expect(screen.getAllByRole('article')).toHaveLength(2);
-    expect(screen.getByText('bulbasaur')).toBeInTheDocument();
-    expect(screen.getByText('charmander')).toBeInTheDocument();
+    const cards = screen.getAllByRole('article');
+    expect(cards).toHaveLength(mockPokemons.length);
+    expect(screen.getByText(mockPokemons[0].name)).toBeInTheDocument();
+    expect(screen.getByText(mockPokemons[1].name)).toBeInTheDocument();
   });
 
-  it('should call removePokemon when close button is clicked', () => {
+  it('should call removePokemon when close button is clicked', async () => {
     render(<BagList />);
 
-    const closeButtons = screen.getAllByAltText('close card img');
-    fireEvent.click(closeButtons[0]);
+    const closeButtons = screen.getAllByRole('button', { name: /close card/i });
+    await user.click(closeButtons[0]);
 
-    expect(mockBagState.removePokemon).toHaveBeenCalledTimes(1);
-    expect(mockBagState.removePokemon).toHaveBeenCalledWith('bulbasaur');
+    expect(mockUseBag.removePokemon).toHaveBeenCalledTimes(1);
+    expect(mockUseBag.removePokemon).toHaveBeenCalledWith(mockPokemons[0].name);
   });
 
-  it('should display pokemon images', () => {
+  it('should display pokemon images with correct attributes', () => {
     render(<BagList />);
 
-    const images = screen.getAllByRole('img', { name: /front img/ });
-    expect(images[0]).toHaveAttribute(
-      'src',
-      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
-    );
+    const images = screen.getAllByRole('img', { name: /front img/i });
+    expect(images).toHaveLength(mockPokemons.length);
+
+    mockPokemons.forEach((pokemon, index) => {
+      expect(images[index]).toHaveAttribute(
+        'src',
+        pokemon.sprites.front_default
+      );
+      expect(images[index]).toHaveAttribute('alt', `front img ${pokemon.name}`);
+    });
   });
 });

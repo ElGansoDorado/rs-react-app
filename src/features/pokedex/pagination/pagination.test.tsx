@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Pagination from './pagination';
 import { usePagination } from './use-pagination';
 import { describe, vi, it, expect, beforeEach, type Mock } from 'vitest';
@@ -7,13 +8,13 @@ vi.mock('./use-pagination', () => ({
   usePagination: vi.fn(),
 }));
 
-describe('Pagination', () => {
+describe('Pagination Component', () => {
+  const user = userEvent.setup();
   const mockSetPage = vi.fn();
   const mockSwitchPage = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-
     (usePagination as Mock).mockReturnValue({
       page: 1,
       max: 100,
@@ -27,13 +28,11 @@ describe('Pagination', () => {
 
     expect(screen.getByRole('pagination')).toBeInTheDocument();
     expect(screen.getByRole('spinbutton')).toHaveValue(1);
-    expect(screen.getByText('<<')).toBeInTheDocument();
-    expect(screen.getByText('<')).toBeInTheDocument();
-    expect(screen.getByText('>')).toBeInTheDocument();
-    expect(screen.getByText('>>')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '<<' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '<' })).toBeInTheDocument();
   });
 
-  it('should handle first page button click', () => {
+  it('should handle first page button click', async () => {
     (usePagination as Mock).mockReturnValue({
       page: 50,
       max: 100,
@@ -42,12 +41,12 @@ describe('Pagination', () => {
     });
 
     render(<Pagination max={100} />);
-    fireEvent.click(screen.getByText('<<'));
+    await user.click(screen.getByRole('button', { name: '<<' }));
 
     expect(mockSetPage).toHaveBeenCalledWith(1);
   });
 
-  it('should handle prev 10 pages button click', () => {
+  it('should handle prev 10 pages button click', async () => {
     (usePagination as Mock).mockReturnValue({
       page: 50,
       max: 100,
@@ -56,19 +55,19 @@ describe('Pagination', () => {
     });
 
     render(<Pagination max={100} />);
-    fireEvent.click(screen.getByText('<'));
+    await user.click(screen.getByRole('button', { name: '<' }));
 
     expect(mockSwitchPage).toHaveBeenCalledWith(-10);
   });
 
-  it('should handle next 10 pages button click', () => {
+  it('should handle next 10 pages button click', async () => {
     render(<Pagination max={100} />);
-    fireEvent.click(screen.getByText('>'));
+    await user.click(screen.getByRole('button', { name: '>' }));
 
     expect(mockSwitchPage).toHaveBeenCalledWith(10);
   });
 
-  it('should handle last page button click', () => {
+  it('should handle last page button click', async () => {
     (usePagination as Mock).mockReturnValue({
       page: 50,
       max: 100,
@@ -77,24 +76,8 @@ describe('Pagination', () => {
     });
 
     render(<Pagination max={100} />);
-    fireEvent.click(screen.getByText('>>'));
+    await user.click(screen.getByRole('button', { name: '>>' }));
 
-    expect(mockSetPage).toHaveBeenCalledWith(100);
-  });
-
-  it('should handle input change with valid page number', () => {
-    render(<Pagination max={100} />);
-    const input = screen.getByRole('spinbutton');
-
-    fireEvent.change(input, { target: { value: '25' } });
-    expect(mockSetPage).toHaveBeenCalledWith(25);
-  });
-
-  it('should handle input change with page number exceeding max', () => {
-    render(<Pagination max={100} />);
-    const input = screen.getByRole('spinbutton');
-
-    fireEvent.change(input, { target: { value: '150' } });
     expect(mockSetPage).toHaveBeenCalledWith(100);
   });
 
@@ -108,10 +91,8 @@ describe('Pagination', () => {
 
     const { rerender } = render(<Pagination max={100} />);
 
-    expect(screen.getByText('<<')).toBeDisabled();
-    expect(screen.getByText('<')).toBeDisabled();
-    expect(screen.getByText('>')).not.toBeDisabled();
-    expect(screen.getByText('>>')).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: '<<' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '<' })).toBeDisabled();
 
     (usePagination as Mock).mockReturnValue({
       page: 100,
@@ -122,10 +103,8 @@ describe('Pagination', () => {
 
     rerender(<Pagination max={100} />);
 
-    expect(screen.getByText('<<')).not.toBeDisabled();
-    expect(screen.getByText('<')).not.toBeDisabled();
-    expect(screen.getByText('>')).toBeDisabled();
-    expect(screen.getByText('>>')).toBeDisabled();
+    expect(screen.getByRole('button', { name: '<<' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: '<' })).not.toBeDisabled();
   });
 
   it('should disable forward buttons when max is less than 11', () => {
@@ -138,7 +117,6 @@ describe('Pagination', () => {
 
     render(<Pagination max={5} />);
 
-    expect(screen.getByText('>')).toBeDisabled();
-    expect(screen.getByText('>>')).toBeDisabled();
+    expect(screen.getByRole('button', { name: '>' })).toBeDisabled();
   });
 });

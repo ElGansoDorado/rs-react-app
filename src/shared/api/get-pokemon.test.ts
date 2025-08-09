@@ -1,19 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import {
-  getPokemon,
-  getPokemonPage,
-  getPokemonNumberPage,
-  getPokemonDetail,
-} from './get-pokemon';
-
+import { getPokemon, getPokemonDetail } from './get-pokemon';
 import { mockPokemonsArray, mockPokemons } from '../test-utils/mocks/pokemons';
 
-const mockPokemonList = {
-  count: 100,
-  results: Array(20).fill(mockPokemonsArray[0]),
-};
-
-describe('Pokemon API', () => {
+describe('Pokemon API Functions', () => {
   beforeEach(() => {
     global.fetch = vi.fn();
   });
@@ -23,20 +12,24 @@ describe('Pokemon API', () => {
   });
 
   describe('getPokemon', () => {
-    it('should return pokemon by name', async () => {
+    it('should return pokemon by name with correct structure', async () => {
       vi.mocked(fetch).mockResolvedValueOnce({
         ok: true,
         json: async () => mockPokemonsArray[0],
       } as Response);
 
       const result = await getPokemon('pikachu');
-      expect(result).toEqual([mockPokemonsArray[0]]);
+
+      expect(result).toEqual({
+        list: [mockPokemonsArray[0]],
+        page: 1,
+      });
       expect(fetch).toHaveBeenCalledWith(
         'https://pokeapi.co/api/v2/pokemon/pikachu'
       );
     });
 
-    it('should throw 404 error', async () => {
+    it('should throw 404 error when pokemon not found', async () => {
       vi.mocked(fetch).mockResolvedValueOnce({
         ok: false,
         status: 404,
@@ -44,32 +37,10 @@ describe('Pokemon API', () => {
 
       await expect(getPokemon('unknown')).rejects.toThrow('Resource not found');
     });
-  });
 
-  describe('getPokemonPage', () => {
-    it('should return pokemon list for page', async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockPokemonList,
-      } as Response);
-
-      const result = await getPokemonPage(1);
-      expect(result).toEqual(mockPokemonList.results);
-      expect(fetch).toHaveBeenCalledWith(
-        'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20'
-      );
-    });
-  });
-
-  describe('getPokemonNumberPage', () => {
-    it('should calculate number of pages', async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockPokemonList,
-      } as Response);
-
-      const result = await getPokemonNumberPage();
-      expect(result).toBe(5);
+    it('should handle network errors', async () => {
+      vi.mocked(fetch).mockRejectedValueOnce(new Error('Network error'));
+      await expect(getPokemon('pikachu')).rejects.toThrow('Network error');
     });
   });
 
@@ -82,6 +53,7 @@ describe('Pokemon API', () => {
 
       const result = await getPokemonDetail('1');
       expect(result).toEqual(mockPokemons[0]);
+      expect(fetch).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/1');
     });
 
     it('should throw error for invalid response', async () => {

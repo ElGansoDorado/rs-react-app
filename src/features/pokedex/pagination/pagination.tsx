@@ -31,6 +31,7 @@ function Pagination({ max }: Props) {
       </button>
 
       <input
+        data-testid="page-input"
         className={classes.input}
         type="number"
         value={page}

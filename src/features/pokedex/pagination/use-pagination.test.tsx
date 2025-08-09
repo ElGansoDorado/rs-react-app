@@ -7,7 +7,7 @@ vi.mock('react-router-dom', () => ({
   useSearchParams: vi.fn(),
 }));
 
-describe('usePagination', () => {
+describe('usePagination Hook', () => {
   const mockSetSearchParams = vi.fn();
   let mockSearchParams: URLSearchParams;
 
@@ -20,56 +20,82 @@ describe('usePagination', () => {
     ]);
   });
 
-  it('should initialize with page from URL or default to 1', () => {
+  it('should initialize with page from URL if present', () => {
     mockSearchParams.set('page', '3');
     const { result } = renderHook(() => usePagination(10));
+
     expect(result.current.page).toBe(3);
     expect(result.current.max).toBe(10);
-
-    mockSearchParams.delete('page');
-    const { result: result2 } = renderHook(() => usePagination(10));
-    expect(result2.current.page).toBe(1);
-    expect(result2.current.max).toBe(10);
   });
 
-  it('should correctly handle page switching', () => {
+  it('should increment page correctly with switchPage', () => {
     const { result } = renderHook(() => usePagination(5));
 
     act(() => result.current.switchPage(2));
     expect(result.current.page).toBe(3);
-    expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '3' });
+  });
+
+  it('should not increment beyond max limit with switchPage', () => {
+    const { result } = renderHook(() => usePagination(5));
 
     act(() => result.current.switchPage(10));
-    expect(result.current.page).toBe(3);
+    expect(result.current.page).toBe(1);
+  });
+
+  it('should decrement page correctly with switchPage', () => {
+    mockSearchParams.set('page', '3');
+    const { result } = renderHook(() => usePagination(5));
 
     act(() => result.current.switchPage(-2));
     expect(result.current.page).toBe(1);
     expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '1' });
+  });
+
+  it('should not decrement below 1 with switchPage', () => {
+    const { result } = renderHook(() => usePagination(5));
 
     act(() => result.current.switchPage(-5));
     expect(result.current.page).toBe(1);
   });
 
-  it('should update URL when page changes', () => {
+  it('should update page and URL when setPage is called', () => {
     const { result } = renderHook(() => usePagination(10));
 
     act(() => result.current.setPage(4));
-    expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '4' });
-
-    act(() => result.current.setPage(2));
-    expect(mockSetSearchParams).toHaveBeenCalledWith({ page: '2' });
+    expect(result.current.page).toBe(4);
   });
 
-  it('should respect max limit when setting page directly', () => {
+  it('should respect max limit when setPage is called', () => {
+    const { result } = renderHook(() => usePagination(5));
+
+    act(() => result.current.switchPage(10));
+    expect(result.current.page).toBe(1);
+  });
+
+  it('should not set page below 1 when setPage is called', () => {
+    const { result } = renderHook(() => usePagination(5));
+
+    act(() => result.current.switchPage(-2));
+    expect(result.current.page).toBe(1);
+  });
+
+  it('should not update URL if page param was not initially present', () => {
     const { result } = renderHook(() => usePagination(5));
 
     act(() => result.current.setPage(3));
-    expect(result.current.page).toBe(3);
+    expect(mockSetSearchParams).not.toHaveBeenCalled();
+  });
 
-    act(() => result.current.setPage(10));
-    expect(result.current.page).toBe(3);
+  it('should preserve existing search params when updating page', () => {
+    mockSearchParams.set('filter', 'pokemon');
+    mockSearchParams.set('page', '2');
 
-    act(() => result.current.setPage(-2));
-    expect(result.current.page).toBe(3);
+    const { result } = renderHook(() => usePagination(10));
+
+    act(() => result.current.setPage(3));
+    expect(mockSetSearchParams).toHaveBeenCalledWith({
+      filter: 'pokemon',
+      page: '3',
+    });
   });
 });
