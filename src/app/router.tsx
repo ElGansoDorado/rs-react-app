@@ -1,17 +1,17 @@
 import { ROUTES } from '@/shared/model/routes';
 import { createBrowserRouter, redirect } from 'react-router-dom';
-import { ThemeProvider } from '../shared/hooks/use-theme';
 import ErrorBoundary from './errors/error-boundary';
 import ErrorPage from './errors/error-page';
+import { Provider } from './providers/providers';
 import App from './app';
 
 export const router = createBrowserRouter([
   {
     element: (
       <ErrorBoundary>
-        <ThemeProvider>
+        <Provider>
           <App />
-        </ThemeProvider>
+        </Provider>
       </ErrorBoundary>
     ),
     errorElement: <ErrorPage />,
@@ -45,5 +45,5 @@ function pokemonsLoader() {
     );
   }
 
-  return redirect(`${ROUTES.POKEMONS}`);
+  return redirect(`${ROUTES.POKEMONS}?page=1`);
 }

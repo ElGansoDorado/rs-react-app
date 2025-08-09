@@ -1,6 +1,6 @@
 import classes from './menu.module.css';
 import { NavLink } from 'react-router-dom';
-import { ROUTES } from '../../../shared/model/routes';
+import { ROUTES } from '@/shared/model/routes';
 
 const links = [
   {
@@ -9,7 +9,7 @@ const links = [
   },
   {
     name: 'Pokedex',
-    links: ROUTES.POKEMONS,
+    links: ROUTES.POKEMONS + '?page=1',
   },
   {
     name: 'Bag',

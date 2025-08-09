@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getPokemonNumberPage } from '../../../shared/api/get-pokemon';
 
-export function usePagination() {
+export function usePagination(max: number) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
-  const [maxPage, setMaxPage] = useState(0);
-
-  const hasPageParam = !searchParams.has('page');
 
   const switchPage = (value: number) => {
-    if (page + value < 1 || page + value > maxPage) {
+    if (page + value < 1 || page + value > max) {
       return;
     }
 
@@ -18,24 +14,11 @@ export function usePagination() {
   };
 
   useEffect(() => {
-    const fetchMaxPage = async () => {
-      try {
-        setMaxPage(await getPokemonNumberPage());
-      } catch (error) {
-        console.error('Failed to fetch max page:', error);
-        setMaxPage(66);
-      }
-    };
-
-    fetchMaxPage();
-  }, []);
-
-  useEffect(() => {
-    if (hasPageParam) return;
+    if (!searchParams.has('page')) return;
 
     const params = Object.fromEntries(searchParams);
     setSearchParams({ ...params, page: `${page}` });
   }, [page]);
 
-  return { page, maxPage, setPage, switchPage, hasPageParam };
+  return { page, max, setPage, switchPage };
 }

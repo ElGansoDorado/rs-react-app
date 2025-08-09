@@ -1,28 +1,27 @@
-import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import PokemonList from './pokemons-list';
-import { usePokemonList } from './use-pokemon-list';
-import { mockPokemonsArray } from '../../../shared/test-utils/mocks/pokemons';
+import { useDetailQuery } from './use-detail-query';
+import {
+  mockPokemons,
+  mockPokemonsArray,
+} from '@/shared/test-utils/mocks/pokemons';
+import { mockUseBag } from '@/shared/test-utils/mocks/hooks';
 
-vi.mock('./use-pokemon-list');
 vi.mock('react-router-dom');
-vi.mock('../Loader', () => ({
-  default: () => <div data-testid="loader">loader</div>,
-}));
-vi.mock('../Card', () => ({
-  default: ({ name, showDetail }: { name: string; showDetail: () => void }) => (
-    <li className="container" data-testid="pokemon-card" onClick={showDetail}>
-      <p>current</p>
-      <h3>{name}</h3>
-    </li>
-  ),
+vi.mock('./use-detail-query');
+vi.mock('@/shared/hooks/use-bag', () => ({
+  useBag: vi.fn((selector) => selector(mockUseBag)),
 }));
 
-describe('PokemonList', () => {
+describe('PokemonList Component', () => {
+  const user = userEvent.setup();
   const mockSetSearchParams = vi.fn();
   const mockNavigate = vi.fn();
+  const mockHandlePokemonClick = vi.fn();
+  mockUseBag.list = mockPokemons;
 
   beforeEach(() => {
     vi.mocked(useSearchParams).mockReturnValue([
@@ -30,30 +29,28 @@ describe('PokemonList', () => {
       mockSetSearchParams,
     ]);
     vi.mocked(useNavigate).mockReturnValue(mockNavigate);
+
+    vi.mocked(useDetailQuery).mockReturnValue({
+      detailsQuery: '',
+      handlePokemonClick: mockHandlePokemonClick,
+    });
   });
 
   afterEach(() => {
     vi.clearAllMocks();
-    cleanup();
+    mockUseBag.list = [];
   });
 
-  it('should render loader when loading', () => {
-    vi.mocked(usePokemonList).mockReturnValue({
-      pokemonsList: [],
-      isLoading: true,
-    });
-
-    render(<PokemonList />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  it('should render "not found" message when no pokemons', () => {
+    render(<PokemonList pokemons={[]} />);
+    expect(
+      screen.getByText('Unfortunately, the search did not find anything')
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId('pokemon-card')).not.toBeInTheDocument();
   });
 
-  it('should render all pokemons when loaded', () => {
-    vi.mocked(usePokemonList).mockReturnValue({
-      pokemonsList: mockPokemonsArray,
-      isLoading: false,
-    });
-
-    render(<PokemonList />);
+  it('should render all pokemons when provided', () => {
+    render(<PokemonList pokemons={mockPokemonsArray} />);
     const cards = screen.getAllByTestId('pokemon-card');
     expect(cards).toHaveLength(mockPokemonsArray.length);
     mockPokemonsArray.forEach((pokemon) => {
@@ -61,63 +58,22 @@ describe('PokemonList', () => {
     });
   });
 
-  it('should render single pokemon when search returns one result', () => {
-    vi.mocked(usePokemonList).mockReturnValue({
-      pokemonsList: [mockPokemonsArray[0]],
-      isLoading: false,
-    });
-
-    render(<PokemonList />);
-    const cards = screen.getAllByTestId('pokemon-card');
-    expect(cards).toHaveLength(1);
-    expect(screen.getByText('pikachu')).toBeInTheDocument();
-  });
-
-  it('should show "not found" message when no pokemons', () => {
-    vi.mocked(usePokemonList).mockReturnValue({
-      pokemonsList: [],
-      isLoading: false,
-    });
-
-    render(<PokemonList />);
-    expect(
-      screen.getByText('Unfortunately, the search did not find anything')
-    ).toBeInTheDocument();
-  });
-
-  it('should handle pokemon card click', () => {
-    vi.mocked(usePokemonList).mockReturnValue({
-      pokemonsList: mockPokemonsArray,
-      isLoading: false,
-    });
-
-    render(<PokemonList />);
+  it('should call handlePokemonClick when card is clicked', async () => {
+    render(<PokemonList pokemons={mockPokemonsArray} />);
     const firstCard = screen.getAllByTestId('pokemon-card')[0];
-    fireEvent.click(firstCard);
-
-    expect(mockNavigate).toHaveBeenCalledWith('?details=pikachu');
-  });
-
-  it('should remove details param when clicking active card', () => {
-    vi.mocked(useSearchParams).mockReturnValue([
-      new URLSearchParams('details=pikachu'),
-      mockSetSearchParams,
-    ]);
-
-    vi.mocked(usePokemonList).mockReturnValue({
-      pokemonsList: mockPokemonsArray,
-      isLoading: false,
-    });
-
-    render(<PokemonList />);
-    const firstCard = screen.getAllByTestId('pokemon-card')[0];
-    fireEvent.click(firstCard);
-
-    expect(mockSetSearchParams).toHaveBeenCalledWith(
-      expect.objectContaining({
-        get: expect.any(Function),
-        delete: expect.any(Function),
-      })
+    await user.click(firstCard);
+    expect(mockHandlePokemonClick).toHaveBeenCalledWith(
+      mockPokemonsArray[0].name
     );
+  });
+
+  it('should show in-bag badge when pokemon is in bag', () => {
+    mockUseBag.list = [mockPokemons[0]];
+    render(<PokemonList pokemons={mockPokemonsArray} />);
+
+    const bagIcons = screen.getAllByAltText('bag icon');
+    expect(bagIcons.length).toBeGreaterThan(0);
+
+    expect(bagIcons[0]).toBeInTheDocument();
   });
 });

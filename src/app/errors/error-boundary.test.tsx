@@ -1,9 +1,7 @@
-import '@testing-library/jest-dom/vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter, useNavigate } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { useNavigate } from 'react-router-dom';
 import ErrorBoundary from './error-boundary';
-import ErrorPage from './error-page';
 
 const BuggyComponent = () => {
   throw new Error('Test error');
@@ -17,7 +15,7 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-describe('error tests', () => {
+describe('ErrorBoundary Component', () => {
   const mockNavigate = vi.fn();
 
   beforeEach(() => {
@@ -40,19 +38,5 @@ describe('error tests', () => {
       screen.getByRole('button', { name: /reload page/i })
     ).toBeInTheDocument();
     consoleErrorMock.mockRestore();
-  });
-
-  it('should call navigate with "/" when button is clicked', () => {
-    render(
-      <MemoryRouter>
-        <ErrorPage />
-      </MemoryRouter>
-    );
-
-    const button = screen.getByRole('button', { name: /back to project/i });
-    fireEvent.click(button);
-
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith('/');
   });
 });

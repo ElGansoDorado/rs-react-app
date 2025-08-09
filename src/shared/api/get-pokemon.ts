@@ -1,4 +1,5 @@
 import type {
+  PokemonResultsRespons,
   PokemonResponse,
   PokemonPath,
   Pokemon,
@@ -20,31 +21,27 @@ function checkRespons(response: Response) {
   }
 }
 
-export async function getPokemon(name: string) {
+export async function getPokemon(name: string): Promise<PokemonResultsRespons> {
   const response = await fetch(PATH + name);
 
   checkRespons(response);
 
   const Pokemon = [(await response.json()) as PokemonPath];
-  return Pokemon;
+  return { list: Pokemon, page: 1 };
 }
 
-export async function getPokemonPage(page: number) {
+export async function getPokemonPage(
+  page: number
+): Promise<PokemonResultsRespons> {
   const response = await fetch(PATH + `?offset=${20 * (page - 1)}&limit=20`);
 
   checkRespons(response);
 
-  const pokemonLists: PokemonResponse = await response.json();
-  return pokemonLists.results;
-}
-
-export async function getPokemonNumberPage() {
-  const response = await fetch(PATH);
-
-  checkRespons(response);
-
-  const pokemonLists: PokemonResponse = await response.json();
-  return Math.ceil(pokemonLists.count / 20);
+  const pokemonResponse: PokemonResponse = await response.json();
+  return {
+    list: pokemonResponse.results,
+    page: Math.ceil(pokemonResponse.count / 20),
+  };
 }
 
 export async function getPokemonDetail(id: string) {

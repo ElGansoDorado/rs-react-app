@@ -1,6 +1,6 @@
 import { renderHook, act, fireEvent, render } from '@testing-library/react';
-import { useLineSearch } from './use-line-search';
 import { describe, it, expect, beforeEach } from 'vitest';
+import { useLineSearch } from './use-line-search';
 
 const localStorageMock = (() => {
   let store: Record<string, string> = {};

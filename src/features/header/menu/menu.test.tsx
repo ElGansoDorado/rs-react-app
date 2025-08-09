@@ -1,6 +1,5 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import Menu from './menu';
 import classes from './menu.module.css';
@@ -33,10 +32,6 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Menu Component', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
   const testLinks = [
     { name: 'About', path: '/about' },
     { name: 'Pokedex', path: '/pokemons' },

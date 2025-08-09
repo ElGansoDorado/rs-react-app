@@ -1,44 +1,26 @@
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { usePokemonList } from './use-pokemon-list';
-import { Card, Loader } from '..';
-import { useBag } from '../../../shared/hooks/use-bag';
+import type { PokemonPath } from '@/shared/model/pokemon.type';
+import { useDetailQuery } from './use-detail-query';
+import { useBag } from '@/shared/hooks/use-bag';
+import { Card } from '..';
 
-function PokemonList() {
-  const { pokemonsList, isLoading } = usePokemonList();
-  const hasPokemon = useBag((state) => state.hasPokemon);
+type Props = {
+  pokemons: PokemonPath[];
+};
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-
-  const detailsQuery = searchParams.get('details') || '';
-
-  const handlePokemonClick = (id: string) => {
-    const newParams = new URLSearchParams(searchParams);
-
-    if (detailsQuery === id) {
-      newParams.delete('details');
-      setSearchParams(newParams);
-      return;
-    }
-
-    newParams.set('details', id);
-    navigate(`?${newParams.toString()}`);
-  };
-
-  if (isLoading) {
-    return <Loader />;
-  }
+function PokemonList({ pokemons }: Props) {
+  const { detailsQuery, handlePokemonClick } = useDetailQuery();
+  const list = useBag((state) => state.list);
 
   return (
     <div>
-      {pokemonsList.length > 0 ? (
+      {pokemons.length > 0 ? (
         <ul className="list-pokemon">
-          {pokemonsList.map((item) => (
+          {pokemons.map((item) => (
             <Card
               key={item.name}
               name={item.name}
               isActive={detailsQuery === item.name}
-              isBag={hasPokemon(item.name)}
+              isBag={list.some((pokemon) => pokemon.name === item.name)}
               showDetail={() => handlePokemonClick(item.name)}
             />
           ))}

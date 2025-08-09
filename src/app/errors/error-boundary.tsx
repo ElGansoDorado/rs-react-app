@@ -23,7 +23,7 @@ class ErrorBoundary extends Component<Props> {
     if (this.state.errorMessage) {
       return (
         <>
-          <main className="container">
+          <main className="abs-center">
             <h2>{this.state.errorMessage}</h2>
             <button onClick={() => location.reload()} className="button">
               Reload page

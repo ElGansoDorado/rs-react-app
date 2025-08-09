@@ -1,33 +1,26 @@
 import classes from './pokemon-detail.module.css';
-import { usePokemonDetail } from './use-pokemon-detail';
+import { useFetchPokemonDetail } from './queries';
+import { useBag } from '@/shared/hooks/use-bag';
 import { Loader } from '..';
-import { useBag } from '../../../shared/hooks/use-bag';
-import { useState, useEffect } from 'react';
 
 function PokemonDetail() {
-  const { detail, isLoading, closeDetail } = usePokemonDetail();
+  const { detail, isLoading, isError, closeDetail } = useFetchPokemonDetail();
 
   const addInBag = useBag((state) => state.addPokemon);
-  const hasBag = useBag((state) => state.hasPokemon);
-  const [isInBag, setIsInBag] = useState(hasBag(detail?.name ?? ''));
-
-  const handleBagClick = () => {
-    if (detail) {
-      setIsInBag(!isInBag);
-      addInBag(detail);
-    }
-  };
-
-  useEffect(() => {
-    setIsInBag(hasBag(detail?.name ?? ''));
-  }, [detail]);
+  const list = useBag((state) => state.list);
 
   if (isLoading) {
     return <Loader />;
   }
 
-  if (!detail) {
-    return null;
+  if (!detail || isError) {
+    return (
+      <div className={classes.container}>
+        <p className={classes.card}>
+          Pokemon details were not found, maybe it hasn t been added yet...
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -59,10 +52,14 @@ function PokemonDetail() {
           />
         </button>
 
-        <button onClick={handleBagClick} className={classes.button} role="add">
+        <button
+          onClick={() => addInBag(detail)}
+          className={classes.button}
+          role="add"
+        >
           <img
             src={
-              !isInBag
+              !list.some((pokemon) => pokemon.name === detail.name)
                 ? 'https://www.svgrepo.com/show/525643/bag-2.svg'
                 : 'https://www.svgrepo.com/show/525648/bag-cross.svg'
             }
