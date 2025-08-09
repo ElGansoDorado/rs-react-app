@@ -2,7 +2,7 @@ import { PokemonList, PokemonDetail, Pagination, Loader } from '.';
 import { useSearchParams } from 'react-router-dom';
 import { useFetchPokemonList } from './queries';
 
-function Pokedex() {
+export function Pokedex() {
   const { data, isLoading, isError } = useFetchPokemonList();
   const [searchParams] = useSearchParams();
 
