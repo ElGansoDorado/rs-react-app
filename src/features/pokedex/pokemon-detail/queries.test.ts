@@ -5,17 +5,11 @@ import { useFetchPokemonDetail } from './queries';
 import { getPokemonDetail } from '@/shared/api/get-pokemon';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { mockPokemons } from '@/shared/test-utils/mocks/pokemons';
-import type { Pokemon } from '@/shared/model/pokemon.type';
+import type { QueryTypeDetai } from '@/shared/test-utils/mocks/use-query';
 
 vi.mock('react-router-dom');
 vi.mock('@tanstack/react-query');
 vi.mock('@/shared/api/get-pokemon');
-
-type responseType = {
-  data: Pokemon | undefined;
-  isLoading: boolean;
-  isError: boolean;
-};
 
 describe('useFetchPokemonDetail', () => {
   const mockSetSearchParams = vi.fn();
@@ -35,7 +29,7 @@ describe('useFetchPokemonDetail', () => {
       data: undefined,
       isLoading: false,
       isError: false,
-    } as responseType);
+    } as QueryTypeDetai);
 
     vi.mocked(getPokemonDetail).mockResolvedValue(mockPokemonData);
   });
@@ -56,7 +50,7 @@ describe('useFetchPokemonDetail', () => {
       data: undefined,
       isLoading: true,
       isError: false,
-    } as responseType);
+    } as QueryTypeDetai);
 
     const { result } = renderHook(() => useFetchPokemonDetail());
 
@@ -68,7 +62,7 @@ describe('useFetchPokemonDetail', () => {
       data: undefined,
       isLoading: false,
       isError: true,
-    } as responseType);
+    } as QueryTypeDetai);
 
     const { result } = renderHook(() => useFetchPokemonDetail());
 
@@ -80,7 +74,7 @@ describe('useFetchPokemonDetail', () => {
       data: mockPokemonData,
       isLoading: false,
       isError: false,
-    } as responseType);
+    } as QueryTypeDetai);
 
     const { result } = renderHook(() => useFetchPokemonDetail());
 
