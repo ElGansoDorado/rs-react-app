@@ -1,31 +1,25 @@
 import Header from '@/features/header';
 import { Modal, ExportControls } from '@/shared/ui';
-import { Outlet } from 'react-router-dom';
-import { useTheme } from '@/shared/hooks/use-theme';
-import { useBag } from '@/shared/hooks/use-bag';
-import { queryClient } from '@/shared/api/query-client';
+// import { useBag } from '@/shared/hooks/use-bag';
+import { ThemeProvider } from './providers/theme-provider';
 
 function App() {
-  const length = useBag((state) => state.list.length);
-  const { theme } = useTheme();
+  // const length = useBag((state) => state.list.length);
 
   return (
-    <div className={`color ${theme}`}>
-      <Header />
-      <Outlet />
+    <ThemeProvider>
+      <div className={`color light`}>
+        <Header />
 
-      <Modal show={length > 0}>
-        <ExportControls />
-      </Modal>
+        <Modal show>
+          <ExportControls />
+        </Modal>
 
-      <button className="button-error" onClick={() => queryClient.clear()}>
-        clear cache
-      </button>
-
-      <footer className="footer">
-        <p className="footer__text">@2025 Yakovchik Denis</p>
-      </footer>
-    </div>
+        <footer className="footer">
+          <p className="footer__text">@2025 Yakovchik Denis</p>
+        </footer>
+      </div>
+    </ThemeProvider>
   );
 }
 
