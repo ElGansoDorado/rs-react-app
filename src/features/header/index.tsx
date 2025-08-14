@@ -1,7 +1,7 @@
 import classes from './header.module.css';
 import Search from './search/search';
 import Menu from './menu/menu';
-// import ThemeSwitcher from './theme-switcher';
+import ThemeSwitcher from './theme-switcher';
 
 function Header() {
   return (
@@ -13,7 +13,7 @@ function Header() {
 
         <div className={classes.functional}>
           <Search />
-          {/* <ThemeSwitcher /> */}
+          <ThemeSwitcher />
         </div>
       </div>
     </header>

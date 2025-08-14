@@ -1,13 +1,25 @@
 'use client';
 
 import Image from 'next/image';
-import { useTheme } from '@/shared/hooks/use-theme';
+import { toggleTheme, getTheme } from '@/shared/providers/theme-provider';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 function ThemeSwitcher() {
-  const { theme, toggleTheme } = useTheme();
+  const [theme, setTheme] = useState('light');
+  const router = useRouter();
+
+  const handleToggle = async () => {
+    setTheme(await toggleTheme());
+    router.refresh();
+  };
+
+  useEffect(() => {
+    getTheme().then((theme) => setTheme(theme));
+  }, []);
 
   return (
-    <button onClick={toggleTheme}>
+    <button onClick={handleToggle}>
       <Image
         src={
           theme === 'dark'

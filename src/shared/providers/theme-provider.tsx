@@ -1,44 +1,24 @@
-import {
-  ThemeContext,
-  type Theme,
-  type ThemeProps,
-} from '@/shared/model/theme';
-import { useEffect, useMemo, useState } from 'react';
+'use server';
 
-const THEME_KEY = 'THEME_KEY';
+import { cookies } from 'next/headers';
+import { Theme } from '../model/theme';
 
-export const ThemeProvider = ({
-  children,
-  defaultTheme = 'light',
-}: ThemeProps) => {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
+export async function getTheme() {
+  const cookieStore = await cookies();
+  let theme = cookieStore.get('theme')?.value as Theme;
 
-  useEffect(() => {
-    localStorage.setItem(THEME_KEY, theme);
-  }, [theme]);
+  if (!theme) {
+    theme = 'light';
+    cookieStore.set('theme', theme, { path: '/' });
+  }
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem(THEME_KEY) as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, []);
+  return theme;
+}
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
-
-  const contextValue = useMemo(
-    () => ({
-      theme,
-      toggleTheme,
-    }),
-    [theme]
-  );
-
-  return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
+export async function toggleTheme() {
+  const cookieStore = await cookies();
+  const currentTheme = cookieStore.get('theme')?.value || 'light';
+  const newTheme: Theme = currentTheme === 'light' ? 'dark' : 'light';
+  cookieStore.set('theme', newTheme, { path: '/' });
+  return newTheme;
+}
