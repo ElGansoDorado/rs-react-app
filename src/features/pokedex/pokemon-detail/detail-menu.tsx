@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { Pokemon } from '@/shared/model/pokemon.type';
 import { useBag } from '@/shared/hooks/use-bag';
 
-interface Props {
+type Props = {
   detail: Pokemon;
-}
+};
 
 function DetailMenu({ detail }: Props) {
   const addInBag = useBag((state) => state.addPokemon);

@@ -3,6 +3,7 @@ import { Header } from '@/features/header';
 import './styles/index.css';
 
 import { getTheme } from '@/shared/providers/theme-provider';
+import { Footer } from '@/shared/ui';
 
 export const metadata: Metadata = {
   title: 'Next.js-SSR',
@@ -20,11 +21,10 @@ export default async function RootLayout({
       <body>
         <div className={`color ${theme}`}>
           <Header />
+
           {children}
 
-          <footer className="footer">
-            <p className="footer__text">@2025 Yakovchik Denis</p>
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>

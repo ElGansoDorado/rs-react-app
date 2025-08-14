@@ -3,9 +3,9 @@ import Pagination from './pagination/pagination';
 import PokemonList from './pokemon-list/pokemons-list';
 import { SuspenseLoader } from '@/shared/ui';
 
-interface Props {
+type Props = {
   page: number;
-}
+};
 
 async function PokedexList({ page }: Props) {
   const { list, page: max } = await getPokemonPage(page);

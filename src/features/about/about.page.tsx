@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import classes from './about.module.css';
 
 function About() {
@@ -5,10 +6,12 @@ function About() {
     <main className="container">
       <section className={classes.container}>
         <div>
-          <img
-            className={classes.img}
-            src="https://avatars.githubusercontent.com/u/87077649?v=4"
+          <Image
+            src={'/profile.png'}
             alt="photo"
+            width={300}
+            height={300}
+            className={classes.img}
           />
         </div>
 
@@ -33,17 +36,23 @@ function About() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
-                  src="https://www.svgrepo.com/show/445786/github.svg"
+                <Image
+                  src={'https://www.svgrepo.com/show/445786/github.svg'}
                   alt="Git Hub img"
+                  width={32}
+                  height={32}
+                  className={classes.icon}
                 />
               </a>
             </li>
             <li className={classes.linkItem}>
               <a href="" target="_blank" rel="noopener noreferrer">
-                <img
-                  src="https://www.svgrepo.com/show/333523/discord-alt.svg"
+                <Image
+                  src={'https://www.svgrepo.com/show/333523/discord-alt.svg'}
                   alt="Discord img"
+                  width={32}
+                  height={32}
+                  className={classes.icon}
                 />
               </a>
             </li>
@@ -53,9 +62,14 @@ function About() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
-                  src="https://www.svgrepo.com/show/144030/linkedin-square-logo.svg"
+                <Image
+                  src={
+                    'https://www.svgrepo.com/show/144030/linkedin-square-logo.svg'
+                  }
                   alt="LinkidIn img"
+                  width={32}
+                  height={32}
+                  className={classes.icon}
                 />
               </a>
             </li>
@@ -71,9 +85,8 @@ function About() {
 
           <ul>
             <li>React</li>
-            <li>React router</li>
+            <li>Next.js</li>
             <li>Zustand</li>
-            <li>Vitest</li>
             <li>TypeScript</li>
             <li>HTML</li>
             <li>CSS</li>

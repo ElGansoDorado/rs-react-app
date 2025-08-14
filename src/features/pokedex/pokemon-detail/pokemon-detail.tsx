@@ -1,10 +1,11 @@
 import classes from './pokemon-detail.module.css';
 import DetailMenu from './detail-menu';
 import { getPokemonDetail } from '@/shared/api/get-pokemon';
+import Image from 'next/image';
 
-interface Props {
+type Props = {
   detailId: string;
-}
+};
 
 async function PokemonDetail({ detailId }: Props) {
   const detail = await getPokemonDetail(detailId);
@@ -28,7 +29,12 @@ async function PokemonDetail({ detailId }: Props) {
             <h2>{detail.name}</h2>
             <p>{detail.types[0].type.name}</p>
           </div>
-          <img src={detail.sprites.front_default} alt={detail.name} />
+          <Image
+            src={detail.sprites.front_default as string}
+            alt={detail.name}
+            width={180}
+            height={180}
+          />
         </div>
 
         <ul>
