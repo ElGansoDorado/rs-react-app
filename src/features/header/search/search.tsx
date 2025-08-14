@@ -1,3 +1,4 @@
+'use client';
 import classes from './search.module.css';
 import { useState } from 'react';
 // import { ROUTES } from '@/shared/model/routes';

@@ -15,4 +15,4 @@ function Bag() {
   );
 }
 
-export const Component = Bag;
+export default Bag;

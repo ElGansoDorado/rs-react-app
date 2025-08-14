@@ -1,6 +1,6 @@
 import classes from './about.module.css';
 
-export function About() {
+function About() {
   return (
     <main className="container">
       <section className={classes.container}>
@@ -138,4 +138,4 @@ export function About() {
   );
 }
 
-export const Component = About;
+export default About;

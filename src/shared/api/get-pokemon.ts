@@ -33,7 +33,9 @@ export async function getPokemon(name: string): Promise<PokemonResultsRespons> {
 export async function getPokemonPage(
   page: number
 ): Promise<PokemonResultsRespons> {
-  const response = await fetch(PATH + `?offset=${20 * (page - 1)}&limit=20`);
+  const response = await fetch(PATH + `?offset=${20 * (page - 1)}&limit=20`, {
+    next: { revalidate: 60 },
+  });
 
   checkRespons(response);
 
@@ -44,8 +46,10 @@ export async function getPokemonPage(
   };
 }
 
-export async function getPokemonDetail(id: string) {
-  const response = await fetch(PATH + id);
+export async function getPokemonDetail(id: string): Promise<Pokemon> {
+  const response = await fetch(PATH + id, {
+    next: { revalidate: 60 },
+  });
 
   checkRespons(response);
 

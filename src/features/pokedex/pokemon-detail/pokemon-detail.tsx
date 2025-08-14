@@ -1,19 +1,18 @@
 import classes from './pokemon-detail.module.css';
-import { useFetchPokemonDetail } from './queries';
-import { useBag } from '@/shared/hooks/use-bag';
-import { Loader } from '..';
+// import { useBag } from '@/shared/hooks/use-bag';
+import { getPokemonDetail } from '@/shared/api/get-pokemon';
 
-function PokemonDetail() {
-  const { detail, isLoading, isError, closeDetail } = useFetchPokemonDetail();
+interface Props {
+  detailId: string;
+}
 
-  const addInBag = useBag((state) => state.addPokemon);
-  const list = useBag((state) => state.list);
+async function PokemonDetail({ detailId }: Props) {
+  const detail = await getPokemonDetail(detailId);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // const addInBag = useBag((state) => state.addPokemon);
+  // const list = useBag((state) => state.list);
 
-  if (!detail || isError) {
+  if (!detail) {
     return (
       <div className={classes.container}>
         <p className={classes.card}>
@@ -44,7 +43,7 @@ function PokemonDetail() {
         </ul>
       </div>
 
-      <div className={classes.menu}>
+      {/* <div className={classes.menu}>
         <button onClick={closeDetail} className={classes.button} role="close">
           <img
             src="https://www.svgrepo.com/show/525281/close-circle.svg"
@@ -66,7 +65,7 @@ function PokemonDetail() {
             alt="bag img"
           />
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }

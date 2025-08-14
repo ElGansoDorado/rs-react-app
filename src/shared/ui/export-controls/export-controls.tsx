@@ -1,3 +1,4 @@
+'use client';
 import classes from './export-controls.module.css';
 import { useBag } from '@/shared/hooks/use-bag';
 import { useCSVDowload } from './use-csv-dowload';

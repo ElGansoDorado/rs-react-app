@@ -1,37 +1,52 @@
+'use client';
 import classes from './menu.module.css';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/shared/model/routes';
 
 const links = [
   {
     name: 'About',
     links: ROUTES.ABOUT,
+    exact: true,
   },
   {
     name: 'Pokedex',
     links: ROUTES.POKEMONS + '?page=1',
+    exact: false,
   },
   {
     name: 'Bag',
     links: ROUTES.BAG,
+    exact: true,
   },
 ];
 
 function Menu() {
+  const pathname = usePathname();
+
+  const isActive = (href: string, exact: boolean) => {
+    if (exact) {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <nav role="menu">
       <ul className={classes.menu}>
         {links.map((item) => (
           <li key={item.name}>
-            <NavLink
-              to={item.links}
-              data-testid={`nav-link-${item.links}`}
-              className={({ isActive }) =>
-                isActive ? `${classes.active} ${classes.item}` : classes.item
+            <Link
+              href={item.links}
+              className={
+                isActive(item.links, item.exact)
+                  ? `${classes.active} ${classes.item}`
+                  : classes.item
               }
             >
               {item.name}
-            </NavLink>
+            </Link>
           </li>
         ))}
       </ul>

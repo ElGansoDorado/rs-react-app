@@ -1,5 +1,6 @@
+'use client';
 import type { PokemonPath } from '@/shared/model/pokemon.type';
-import { useDetailQuery } from './use-detail-query';
+// import { useDetailQuery } from './use-detail-query';
 import { useBag } from '@/shared/hooks/use-bag';
 import { Card } from '..';
 
@@ -8,7 +9,7 @@ type Props = {
 };
 
 function PokemonList({ pokemons }: Props) {
-  const { detailsQuery, handlePokemonClick } = useDetailQuery();
+  // const { detailsQuery, handlePokemonClick } = useDetailQuery();
   const list = useBag((state) => state.list);
 
   return (
@@ -19,9 +20,9 @@ function PokemonList({ pokemons }: Props) {
             <Card
               key={item.name}
               name={item.name}
-              isActive={detailsQuery === item.name}
+              isActive={false}
               isBag={list.some((pokemon) => pokemon.name === item.name)}
-              showDetail={() => handlePokemonClick(item.name)}
+              showDetail={() => {}}
             />
           ))}
         </ul>

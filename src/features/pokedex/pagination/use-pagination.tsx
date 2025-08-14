@@ -1,24 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+// import { useEffect, useState } from 'react';
 
-export function usePagination(max: number) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+// export function usePagination(max: number) {
+//   const [searchParams, setSearchParams] = useSearchParams();
+//   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
 
-  const switchPage = (value: number) => {
-    if (page + value < 1 || page + value > max) {
-      return;
-    }
+//   const switchPage = (value: number) => {
+//     if (page + value < 1 || page + value > max) {
+//       return;
+//     }
 
-    setPage((prev) => prev + value);
-  };
+//     setPage((prev) => prev + value);
+//   };
 
-  useEffect(() => {
-    if (!searchParams.has('page')) return;
+//   useEffect(() => {
+//     if (!searchParams.has('page')) return;
 
-    const params = Object.fromEntries(searchParams);
-    setSearchParams({ ...params, page: `${page}` });
-  }, [page]);
+//     const params = Object.fromEntries(searchParams);
+//     setSearchParams({ ...params, page: `${page}` });
+//   }, [page]);
 
-  return { page, max, setPage, switchPage };
-}
+//   return { page, max, setPage, switchPage };
+// }

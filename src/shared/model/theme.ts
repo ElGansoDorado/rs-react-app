@@ -1,4 +1,5 @@
-import { createContext } from 'react';
+'use client';
+import { createContext, type ReactNode } from 'react';
 
 export type Theme = 'light' | 'dark';
 
@@ -8,7 +9,7 @@ export type ThemeContextType = {
 };
 
 export type ThemeProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   defaultTheme?: Theme;
 };
 

@@ -1,30 +1,20 @@
-import { PokemonList, PokemonDetail, Pagination, Loader } from '.';
-import { useSearchParams } from 'react-router-dom';
-import { useFetchPokemonList } from './queries';
+import { PokemonList } from '.';
 
-export function Pokedex() {
-  const { data, isLoading, isError } = useFetchPokemonList();
-  const [searchParams] = useSearchParams();
-
+function Pokedex() {
   return (
     <main className="container">
       <h2 className="list-pokemon__title">Result</h2>
 
       <div className="flex-row">
-        {isError ? (
-          <p>Oooopsss... There was an error in your request.</p>
-        ) : (
-          <section>
-            {searchParams.has('page') && <Pagination max={data.page} />}
+        <section>
+          {/* <Pagination max={1} /> */}
+          <PokemonList pokemons={[]} />
+        </section>
 
-            {isLoading ? <Loader /> : <PokemonList pokemons={data.list} />}
-          </section>
-        )}
-
-        {searchParams.has('details') && <PokemonDetail />}
+        {/* <PokemonDetail /> */}
       </div>
     </main>
   );
 }
 
-export const Component = Pokedex;
+export default Pokedex;

@@ -1,3 +1,4 @@
+'use client';
 import type { Pokemon } from '@/shared/model/pokemon.type';
 import { useRef } from 'react';
 
