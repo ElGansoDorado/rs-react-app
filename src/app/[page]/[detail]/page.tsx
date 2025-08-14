@@ -6,11 +6,16 @@ interface Props {
   params: { page: number; detail: string };
 }
 
-export default function Page({ params }: Props) {
+async function Page({ params }: Props) {
+  const { page, detail } = await params;
   return (
-    <Suspense fallback={<Loader />}>
-      <PokedexList {...{ params }} />
-      <PokemonDetail detailId={params.detail} />
-    </Suspense>
+    <>
+      <PokedexList {...{ page }} />
+      <Suspense fallback={<Loader />}>
+        <PokemonDetail detailId={detail} />
+      </Suspense>
+    </>
   );
 }
+
+export default Page;

@@ -34,7 +34,10 @@ export async function getPokemonPage(
   page: number
 ): Promise<PokemonResultsRespons> {
   const response = await fetch(PATH + `?offset=${20 * (page - 1)}&limit=20`, {
-    next: { revalidate: 60 },
+    next: {
+      revalidate: 5 * 60,
+      tags: [`pokemon-page-${page}`],
+    },
   });
 
   checkRespons(response);
@@ -48,7 +51,10 @@ export async function getPokemonPage(
 
 export async function getPokemonDetail(id: string): Promise<Pokemon> {
   const response = await fetch(PATH + id, {
-    next: { revalidate: 60 },
+    next: {
+      revalidate: 5 * 60,
+      tags: [`pokemon-detail-${id}`],
+    },
   });
 
   checkRespons(response);

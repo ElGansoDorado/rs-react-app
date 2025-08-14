@@ -1,23 +1,22 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+'use client';
+import { useRouter, usePathname } from 'next/navigation';
 
 export const useDetailQuery = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const detailsQuery = searchParams.get('details') || '';
+  const pathSegments = pathname.split('/');
+  const currentDetail = pathSegments.length > 2 ? pathSegments[2] : null;
 
-  const handlePokemonClick = (id: string) => {
-    const newParams = new URLSearchParams(searchParams);
+  const toggleDetail = (detailId: string) => {
+    const basePath = `http://localhost:3000/${pathSegments[1]}`;
 
-    if (detailsQuery === id) {
-      newParams.delete('details');
-      setSearchParams(newParams);
-      return;
+    if (currentDetail === detailId) {
+      router.push(basePath);
+    } else {
+      router.push(`${basePath}/${detailId}`);
     }
-
-    newParams.set('details', id);
-    navigate(`?${newParams.toString()}`);
   };
 
-  return { detailsQuery, handlePokemonClick };
+  return { currentDetail, toggleDetail };
 };

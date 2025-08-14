@@ -9,8 +9,11 @@ html {
   height: 100%;
 }
 
-html {
+html[data-scroll-behavior='smooth'] {
   scroll-behavior: smooth;
+}
+
+html {
   overflow-x: hidden;
 }
 

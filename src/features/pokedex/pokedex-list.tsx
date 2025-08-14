@@ -1,18 +1,24 @@
 import { getPokemonPage } from '@/shared/api/get-pokemon';
 import Pagination from './pagination/pagination';
 import PokemonList from './pokemon-list/pokemons-list';
+import { Loader } from '@/shared/ui';
+import { Suspense } from 'react';
 
 interface Props {
-  params: { page: number };
+  page: number;
 }
 
-export default async function PokedexList({ params }: Props) {
-  const { list, page } = await getPokemonPage(params.page);
+async function PokedexList({ page }: Props) {
+  const { list, page: max } = await getPokemonPage(page);
 
   return (
-    <section>
-      <Pagination max={page} />
-      <PokemonList pokemons={list} />
-    </section>
+    <Suspense fallback={<Loader />}>
+      <section>
+        <Pagination {...{ max }} />
+        <PokemonList pokemons={list} />
+      </section>
+    </Suspense>
   );
 }
+
+export default PokedexList;

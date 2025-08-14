@@ -1,4 +1,4 @@
-import classes from './card.module.css';
+import classes from './pokemon-card.module.css';
 
 interface Props {
   name: string;
@@ -7,7 +7,7 @@ interface Props {
   showDetail: () => void;
 }
 
-function Card({ name, isActive, isBag, showDetail }: Props) {
+function PokemonCard({ name, isActive, isBag, showDetail }: Props) {
   return (
     <li className={classes.container}>
       {isBag && (
@@ -29,4 +29,4 @@ function Card({ name, isActive, isBag, showDetail }: Props) {
   );
 }
 
-export default Card;
+export default PokemonCard;

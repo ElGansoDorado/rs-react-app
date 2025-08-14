@@ -1,5 +1,5 @@
+import PokemonDetailMenu from './pokemon-detail-menu';
 import classes from './pokemon-detail.module.css';
-// import { useBag } from '@/shared/hooks/use-bag';
 import { getPokemonDetail } from '@/shared/api/get-pokemon';
 
 interface Props {
@@ -8,9 +8,6 @@ interface Props {
 
 async function PokemonDetail({ detailId }: Props) {
   const detail = await getPokemonDetail(detailId);
-
-  // const addInBag = useBag((state) => state.addPokemon);
-  // const list = useBag((state) => state.list);
 
   if (!detail) {
     return (
@@ -43,29 +40,7 @@ async function PokemonDetail({ detailId }: Props) {
         </ul>
       </div>
 
-      {/* <div className={classes.menu}>
-        <button onClick={closeDetail} className={classes.button} role="close">
-          <img
-            src="https://www.svgrepo.com/show/525281/close-circle.svg"
-            alt="close"
-          />
-        </button>
-
-        <button
-          onClick={() => addInBag(detail)}
-          className={classes.button}
-          role="add"
-        >
-          <img
-            src={
-              !list.some((pokemon) => pokemon.name === detail.name)
-                ? 'https://www.svgrepo.com/show/525643/bag-2.svg'
-                : 'https://www.svgrepo.com/show/525648/bag-cross.svg'
-            }
-            alt="bag img"
-          />
-        </button>
-      </div> */}
+      <PokemonDetailMenu {...{ detail }} />
     </section>
   );
 }
