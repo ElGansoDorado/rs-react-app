@@ -1,7 +1,7 @@
 'use client';
 import { useRouter, usePathname } from 'next/navigation';
 
-export const useDetailQuery = () => {
+export const useDetailToggle = () => {
   const pathname = usePathname();
   const router = useRouter();
 

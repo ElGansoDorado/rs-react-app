@@ -1,5 +1,5 @@
-import PokemonDetailMenu from './pokemon-detail-menu';
 import classes from './pokemon-detail.module.css';
+import DetailMenu from './detail-menu';
 import { getPokemonDetail } from '@/shared/api/get-pokemon';
 
 interface Props {
@@ -40,7 +40,7 @@ async function PokemonDetail({ detailId }: Props) {
         </ul>
       </div>
 
-      <PokemonDetailMenu {...{ detail }} />
+      <DetailMenu {...{ detail }} />
     </section>
   );
 }

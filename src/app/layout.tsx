@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Header from '@/features/header';
+import { Header } from '@/features/header';
 import './styles/index.css';
 
 import { getTheme } from '@/shared/providers/theme-provider';

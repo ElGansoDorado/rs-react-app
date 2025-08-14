@@ -9,7 +9,7 @@ interface Props {
   detail: Pokemon;
 }
 
-function PokemonDetailMenu({ detail }: Props) {
+function DetailMenu({ detail }: Props) {
   const addInBag = useBag((state) => state.addPokemon);
   const list = useBag((state) => state.list);
 
@@ -48,4 +48,4 @@ function PokemonDetailMenu({ detail }: Props) {
   );
 }
 
-export default PokemonDetailMenu;
+export default DetailMenu;

@@ -1,4 +1,5 @@
-import classes from './pokemon-card.module.css';
+import Image from 'next/image';
+import classes from './card.module.css';
 
 interface Props {
   name: string;
@@ -7,14 +8,16 @@ interface Props {
   showDetail: () => void;
 }
 
-function PokemonCard({ name, isActive, isBag, showDetail }: Props) {
+function Card({ name, isActive, isBag, showDetail }: Props) {
   return (
     <li className={classes.container}>
       {isBag && (
-        <img
-          className={classes.icon}
-          src="https://www.svgrepo.com/show/525643/bag-2.svg"
+        <Image
+          src={'https://www.svgrepo.com/show/525643/bag-2.svg'}
           alt="bag icon"
+          width={24}
+          height={24}
+          className={classes.icon}
         />
       )}
       <div
@@ -29,4 +32,4 @@ function PokemonCard({ name, isActive, isBag, showDetail }: Props) {
   );
 }
 
-export default PokemonCard;
+export default Card;

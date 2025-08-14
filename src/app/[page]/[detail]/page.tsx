@@ -1,6 +1,5 @@
 import { PokedexList, PokemonDetail } from '@/features/pokedex';
-import { Loader } from '@/shared/ui';
-import { Suspense } from 'react';
+import { SuspenseLoader } from '@/shared/ui';
 
 interface Props {
   params: { page: number; detail: string };
@@ -11,9 +10,9 @@ async function Page({ params }: Props) {
   return (
     <>
       <PokedexList {...{ page }} />
-      <Suspense fallback={<Loader />}>
+      <SuspenseLoader>
         <PokemonDetail detailId={detail} />
-      </Suspense>
+      </SuspenseLoader>
     </>
   );
 }

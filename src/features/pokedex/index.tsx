@@ -1,7 +1,7 @@
-import PokemonCard from './pokemon-card/pokemon-card';
+import Card from './pokemon-list/card/card';
 import PokemonList from './pokemon-list/pokemons-list';
 import Pagination from './pagination/pagination';
 import PokemonDetail from './pokemon-detail/pokemon-detail';
 import PokedexList from './pokedex-list';
 
-export { PokemonCard, PokemonList, Pagination, PokemonDetail, PokedexList };
+export { Card, PokemonList, Pagination, PokemonDetail, PokedexList };
