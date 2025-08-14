@@ -1,23 +1,32 @@
-// import { useEffect, useState } from 'react';
+'use client';
+import { useRouter, usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-// export function usePagination(max: number) {
-//   const [searchParams, setSearchParams] = useSearchParams();
-//   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+export function usePagination(max: number) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const pathSegments = pathname.split('/');
+  const [page, setPage] = useState(Number(pathSegments[1]));
 
-//   const switchPage = (value: number) => {
-//     if (page + value < 1 || page + value > max) {
-//       return;
-//     }
+  const currentDetail = pathSegments.length > 2 ? pathSegments[2] : null;
 
-//     setPage((prev) => prev + value);
-//   };
+  const switchPage = (value: number) => {
+    if (page + value < 1 || page + value > max) {
+      return;
+    }
 
-//   useEffect(() => {
-//     if (!searchParams.has('page')) return;
+    setPage((prev) => prev + value);
+  };
 
-//     const params = Object.fromEntries(searchParams);
-//     setSearchParams({ ...params, page: `${page}` });
-//   }, [page]);
+  useEffect(() => {
+    const basePath = `http://localhost:3000/${page}`;
 
-//   return { page, max, setPage, switchPage };
-// }
+    if (currentDetail) {
+      router.push(basePath + `/${currentDetail}`);
+    } else {
+      router.push(`${basePath}`);
+    }
+  }, [page]);
+
+  return { page, setPage, switchPage };
+}

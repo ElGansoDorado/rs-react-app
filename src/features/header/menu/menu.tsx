@@ -12,7 +12,7 @@ const links = [
   },
   {
     name: 'Pokedex',
-    links: ROUTES.POKEMONS + '?page=1',
+    links: '/1',
     exact: false,
   },
   {
