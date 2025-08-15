@@ -8,15 +8,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "preview": "vite preview",
     "format:fix": "prettier --write .",
-    "prepare": "husky && chmod ug+x .husky/*",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "prepare": "husky && chmod ug+x .husky/*"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.84.1",
     "next": "^15.4.6",
+    "next-intl": "^4.3.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "zustand": "^5.0.7"

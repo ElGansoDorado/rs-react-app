@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import classes from './about.module.css';
+import { getTranslations } from 'next-intl/server';
 
-function About() {
+async function About() {
+  const t = await getTranslations('About');
+
   return (
     <main className="container">
       <section className={classes.container}>
@@ -16,18 +19,11 @@ function About() {
         </div>
 
         <div className={classes.text}>
-          <h2 className={classes.title}>About me</h2>
+          <h2 className={classes.title}>{t('title')}</h2>
 
-          <h3 className={classes.name}>yakovchik denis - frontend deweloper</h3>
+          <h3 className={classes.name}>{t('me')}</h3>
 
-          <p className={classes.description}>
-            Junior Frontend Developer skilled in HTML, CSS, JavaScript,
-            TypeScript, React, and TanStack Query. Experienced in building
-            responsive, accessible, and maintainable web interfaces.
-            Knowledgeable in converting design mockups into clean code. Familiar
-            with version control (Git) and basic debugging tools. Committed to
-            writing efficient and scalable frontend code.
-          </p>
+          <p className={classes.description}>{t('about')}</p>
 
           <ul className={classes.links}>
             <li className={classes.linkItem}>
@@ -81,7 +77,7 @@ function About() {
 
       <section className={classes.cardList}>
         <div className={classes.card}>
-          <h3>Stack</h3>
+          <h3>{t('name_cl1')}</h3>
 
           <ul>
             <li>React</li>
@@ -94,18 +90,13 @@ function About() {
         </div>
 
         <div className={classes.card}>
-          <h3>Project</h3>
+          <h3>{t('name_cl2')}</h3>
 
-          <p>
-            React application developed using RS School courses. Implemented
-            display of a list of Pokemon on the screen, search for Pokemon by
-            name or id, and also added a router for moving through the pages of
-            the site.
-          </p>
+          <p>{t('project')}</p>
         </div>
 
         <div className={classes.card}>
-          <h3>External sources</h3>
+          <h3>{t('name_cl3')}</h3>
 
           <ul>
             <li>

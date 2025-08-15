@@ -9,7 +9,7 @@ export async function getTheme() {
 
   if (!theme) {
     theme = 'light';
-    cookieStore.set('theme', theme, { path: '/' });
+    // cookieStore.set('theme', theme, { path: '/' });
   }
 
   return theme;
