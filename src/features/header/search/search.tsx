@@ -1,7 +1,6 @@
 'use client';
 import classes from './search.module.css';
 import { useState } from 'react';
-// import { ROUTES } from '@/shared/model/routes';
 import { useLineSearch } from '@/shared/hooks/use-line-search';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 

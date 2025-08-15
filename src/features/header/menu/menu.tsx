@@ -12,7 +12,7 @@ const links = [
   },
   {
     name: 'Pokedex',
-    links: '/1',
+    links: ROUTES.POKEMONS,
     exact: false,
   },
   {
