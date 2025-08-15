@@ -27,7 +27,7 @@ export async function getPokemon(name: string): Promise<PokemonResultsRespons> {
   checkRespons(response);
 
   const Pokemon = [(await response.json()) as PokemonPath];
-  return { list: Pokemon, page: 1 };
+  return { list: Pokemon, numberPage: 0 };
 }
 
 export async function getPokemonPage(
@@ -35,7 +35,7 @@ export async function getPokemonPage(
 ): Promise<PokemonResultsRespons> {
   const response = await fetch(PATH + `?offset=${20 * (page - 1)}&limit=20`, {
     next: {
-      revalidate: 5 * 60,
+      revalidate: 1 * 60,
       tags: [`pokemon-page-${page}`],
     },
   });
@@ -45,17 +45,12 @@ export async function getPokemonPage(
   const pokemonResponse: PokemonResponse = await response.json();
   return {
     list: pokemonResponse.results,
-    page: Math.ceil(pokemonResponse.count / 20),
+    numberPage: Math.ceil(pokemonResponse.count / 20),
   };
 }
 
 export async function getPokemonDetail(id: string): Promise<Pokemon> {
-  const response = await fetch(PATH + id, {
-    next: {
-      revalidate: 5 * 60,
-      tags: [`pokemon-detail-${id}`],
-    },
-  });
+  const response = await fetch(PATH + id);
 
   checkRespons(response);
 

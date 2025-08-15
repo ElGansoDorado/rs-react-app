@@ -4,11 +4,11 @@ import { getPokemonDetail } from '@/shared/api/get-pokemon';
 import Image from 'next/image';
 
 type Props = {
-  detailId: string;
+  id: string;
 };
 
-async function PokemonDetail({ detailId }: Props) {
-  const detail = await getPokemonDetail(detailId);
+async function PokemonDetail({ id }: Props) {
+  const detail = await getPokemonDetail(id);
 
   if (!detail) {
     return (

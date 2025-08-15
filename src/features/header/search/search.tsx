@@ -3,22 +3,32 @@ import classes from './search.module.css';
 import { useState } from 'react';
 // import { ROUTES } from '@/shared/model/routes';
 import { useLineSearch } from '@/shared/hooks/use-line-search';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 function Search() {
   const { searchLine } = useLineSearch();
   const [search, setSearch] = useState(searchLine);
 
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // if (trimmedSearch != '') {
-    //   navigate(
-    //     `${ROUTES.POKEMONS}?search=${encodeURIComponent(trimmedSearch)}`
-    //   );
-    //   setSearch(trimmedSearch);
-    // } else {
-    //   navigate(`${ROUTES.POKEMONS}?page=${1}`);
-    // }
+    const params = new URLSearchParams(searchParams);
+    const trimmedSearch = search.trim();
+
+    if (trimmedSearch) {
+      params.delete('page');
+      params.set('query', trimmedSearch);
+      setSearch(trimmedSearch);
+    } else {
+      params.delete('query');
+      params.set('page', '1');
+    }
+
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -32,12 +42,7 @@ function Search() {
         value={search}
       />
 
-      <input
-        type="submit"
-        name="search-button"
-        value="search"
-        className={classes.button}
-      />
+      <input type="submit" className={classes.button} />
     </form>
   );
 }

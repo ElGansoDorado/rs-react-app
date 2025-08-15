@@ -1,5 +1,7 @@
 import About from '@/features/about/about.page';
 
-export default function Page() {
+function AboutPage() {
   return <About />;
 }
+
+export default AboutPage;

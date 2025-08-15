@@ -1,21 +1,23 @@
 'use client';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 export const useDetailToggle = () => {
   const pathname = usePathname();
-  const router = useRouter();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
 
-  const pathSegments = pathname.split('/');
-  const currentDetail = pathSegments.length > 2 ? pathSegments[2] : null;
+  const currentDetail = searchParams.get('detail') || '';
 
-  const toggleDetail = (detailId: string) => {
-    const basePath = `http://localhost:3000/${pathSegments[1]}`;
+  const toggleDetail = (detail: string) => {
+    const params = new URLSearchParams(searchParams);
 
-    if (currentDetail === detailId) {
-      router.push(basePath);
+    if (currentDetail !== detail) {
+      params.set('detail', detail);
     } else {
-      router.push(`${basePath}/${detailId}`);
+      params.delete('detail');
     }
+
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return { currentDetail, toggleDetail };

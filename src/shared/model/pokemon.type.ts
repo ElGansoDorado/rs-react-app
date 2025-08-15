@@ -10,7 +10,7 @@ export type PokemonResponse = {
 
 export type PokemonResultsRespons = {
   list: PokemonPath[];
-  page: number;
+  numberPage: number;
 };
 
 export type PokemonSprites = {

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: 'My pokedex app',
 };
 
-export default async function RootLayout({
+async function RootLayout({
   children,
   params,
 }: {
@@ -41,3 +41,5 @@ export default async function RootLayout({
     </html>
   );
 }
+
+export default RootLayout;

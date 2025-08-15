@@ -1,5 +1,7 @@
 import Bag from '@/features/bag/bag.page';
 
-export default function Page() {
+function BagPage() {
   return <Bag />;
 }
+
+export default BagPage;
