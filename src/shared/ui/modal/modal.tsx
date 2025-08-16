@@ -1,13 +1,15 @@
+'use client';
+import { useBag } from '@/shared/hooks/use-bag';
 import classes from './modal.module.css';
 
 type Props = {
-  show: boolean;
   children: React.ReactNode;
 };
 
-function Modal({ show, children }: Props) {
+function Modal({ children }: Props) {
+  const length = useBag((state) => state.list.length);
   return (
-    <dialog open={show} className={classes.modal}>
+    <dialog open={length > 0} className={classes.modal}>
       {children}
     </dialog>
   );

@@ -4,7 +4,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing';
 
 import { getTheme } from '@/shared/providers/theme-provider';
-import { Footer } from '@/shared/ui';
+import { ExportControls, Footer, Modal } from '@/shared/ui';
 import { Header } from '@/features/header';
 
 import '../styles/index.css';
@@ -35,6 +35,10 @@ async function RootLayout({
             <Header />
 
             {children}
+
+            <Modal>
+              <ExportControls />
+            </Modal>
 
             <Footer />
           </NextIntlClientProvider>
