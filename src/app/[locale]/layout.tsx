@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { hasLocale } from 'next-intl';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing';
 
 import { getTheme } from '@/shared/providers/theme-provider';
@@ -31,11 +31,13 @@ async function RootLayout({
     <html lang={locale} data-scroll-behavior="smooth">
       <body>
         <div className={`color ${theme}`}>
-          <Header />
+          <NextIntlClientProvider>
+            <Header />
 
-          {children}
+            {children}
 
-          <Footer />
+            <Footer />
+          </NextIntlClientProvider>
         </div>
       </body>
     </html>

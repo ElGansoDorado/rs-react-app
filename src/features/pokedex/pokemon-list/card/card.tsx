@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import classes from './card.module.css';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   name: string;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 function Card({ name, isActive, isBag, showDetail }: Props) {
+  const t = useTranslations('UI');
+
   return (
     <li className={classes.container}>
       {isBag && (
@@ -25,7 +28,7 @@ function Card({ name, isActive, isBag, showDetail }: Props) {
         onClick={showDetail}
         className={`${classes.card} ${isActive ? classes.active : ''}`}
       >
-        <p>current</p>
+        <p>{t('card')}</p>
         <h3>{name}</h3>
       </div>
     </li>

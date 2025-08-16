@@ -3,10 +3,12 @@ import classes from './export-controls.module.css';
 import { useBag } from '@/shared/hooks/use-bag';
 import { useCSVDowload } from './use-csv-dowload';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 function ExportControls() {
   const list = useBag((state) => state.list);
   const clear = useBag((state) => state.clear);
+  const t = useTranslations('UI');
 
   const { downloadLinkRef, exportToCSV } = useCSVDowload();
 
@@ -17,7 +19,9 @@ function ExportControls() {
 
   return (
     <div className={classes.menu}>
-      <p>selected items: {list.length}</p>
+      <p>
+        {t('exp-control')} {list.length}
+      </p>
       <div className={classes.Box}>
         <button className={classes.button} onClick={() => clear()}>
           <Image

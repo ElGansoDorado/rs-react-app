@@ -3,49 +3,45 @@ import classes from './menu.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/shared/model/routes';
+import { useTranslations } from 'next-intl';
 
 const links = [
   {
     name: 'About',
     links: ROUTES.ABOUT,
-    exact: true,
   },
   {
     name: 'Pokedex',
     links: ROUTES.POKEMONS,
-    exact: false,
   },
   {
     name: 'Bag',
     links: ROUTES.BAG,
-    exact: true,
   },
 ];
 
 function Menu() {
   const pathname = usePathname();
+  const t = useTranslations('Header');
 
-  const isActive = (href: string, exact: boolean) => {
-    if (exact) {
-      return pathname === href;
-    }
-    return pathname.startsWith(href);
+  const isActive = (href: string) => {
+    return pathname.includes(href);
   };
 
   return (
     <nav role="menu">
       <ul className={classes.menu}>
-        {links.map((item) => (
+        {links.map((item, index) => (
           <li key={item.name}>
             <Link
               href={item.links}
               className={
-                isActive(item.links, item.exact)
+                isActive(item.links)
                   ? `${classes.active} ${classes.item}`
                   : classes.item
               }
             >
-              {item.name}
+              {t.raw('menu')[index]}
             </Link>
           </li>
         ))}

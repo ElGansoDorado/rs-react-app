@@ -7,5 +7,13 @@
     "name_cl2": "Project",
     "name_cl3": "External sources",
     "project": "React application developed using RS School courses. Implemented display of a list of Pokemon on the screen, search for Pokemon by name or id, and also added a router for moving through the pages of the site."
+  },
+  "Header": {
+    "menu": ["about", "pokedex", "bag"],
+    "search": "Search"
+  },
+  "UI": {
+    "card": "current",
+    "exp-control": "selected items:"
   }
 }

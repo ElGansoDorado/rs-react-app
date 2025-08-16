@@ -3,6 +3,7 @@ import classes from './search.module.css';
 import { useState } from 'react';
 import { useLineSearch } from '@/shared/hooks/use-line-search';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 function Search() {
   const { searchLine } = useLineSearch();
@@ -11,6 +12,8 @@ function Search() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+
+  const t = useTranslations('Header');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,12 +39,17 @@ function Search() {
         type="search"
         name="search"
         className={classes.search}
-        placeholder="Search..."
+        placeholder={`${t('search')}...`}
         onChange={(e) => setSearch(e.target.value)}
         value={search}
       />
 
-      <input type="submit" className={classes.button} />
+      <input
+        type="submit"
+        name="search-button"
+        value={t('search')}
+        className={classes.button}
+      />
     </form>
   );
 }
