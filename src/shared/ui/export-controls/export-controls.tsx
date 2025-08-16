@@ -10,10 +10,10 @@ function ExportControls() {
   const clear = useBag((state) => state.clear);
   const t = useTranslations('UI');
 
-  const { downloadLinkRef, exportToCSV } = useCSVDowload();
+  const { downloadLinkRef, handleDownload } = useCSVDowload();
 
-  const handleDownloadClick = () => {
-    exportToCSV(list);
+  const handleDownloadClick = async () => {
+    await handleDownload(list);
     clear();
   };
 

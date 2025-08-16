@@ -5,19 +5,19 @@ import { useRef } from 'react';
 export function useCSVDowload() {
   const downloadLinkRef = useRef<HTMLAnchorElement>(null);
 
-  const exportToCSV = (pokemons: Pokemon[]) => {
-    if (!pokemons.length) return;
-
-    const headers = ['ID', 'Name'];
-    const rows = pokemons.map((p) => [p.id, p.name]);
-    const csvContent = [
-      headers.join(','),
-      ...rows.map((r) => r.join(',')),
-    ].join('\n');
-
-    const blob = new Blob(['\uFEFF' + csvContent], {
-      type: 'text/csv;charset=utf-8;',
+  const handleDownload = async (pokemons: Pokemon[]) => {
+    const response = await fetch('/api/export-csv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(pokemons),
     });
+
+    if (!response.ok) {
+      console.error('Export failed');
+      return;
+    }
+
+    const blob = await response.blob();
     const url = URL.createObjectURL(blob);
 
     if (downloadLinkRef.current) {
@@ -28,5 +28,5 @@ export function useCSVDowload() {
     }
   };
 
-  return { downloadLinkRef, exportToCSV };
+  return { downloadLinkRef, handleDownload };
 }
