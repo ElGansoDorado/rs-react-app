@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import classes from './about.module.css';
 import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
 
 async function AboutPage() {
   const t = await getTranslations('About');
@@ -27,7 +28,7 @@ async function AboutPage() {
 
           <ul className={classes.links}>
             <li className={classes.linkItem}>
-              <a
+              <Link
                 href="https://github.com/ElGansoDorado"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -39,10 +40,10 @@ async function AboutPage() {
                   height={32}
                   className={classes.icon}
                 />
-              </a>
+              </Link>
             </li>
             <li className={classes.linkItem}>
-              <a href="" target="_blank" rel="noopener noreferrer">
+              <Link href="" target="_blank" rel="noopener noreferrer">
                 <Image
                   src={'https://www.svgrepo.com/show/333523/discord-alt.svg'}
                   alt="Discord img"
@@ -50,10 +51,10 @@ async function AboutPage() {
                   height={32}
                   className={classes.icon}
                 />
-              </a>
+              </Link>
             </li>
             <li className={classes.linkItem}>
-              <a
+              <Link
                 href="https://www.linkedin.com/in/jakovchikdenis/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -67,7 +68,7 @@ async function AboutPage() {
                   height={32}
                   className={classes.icon}
                 />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -100,40 +101,40 @@ async function AboutPage() {
 
           <ul>
             <li>
-              <a
+              <Link
                 href="https://rs.school/courses/reactjs"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 RS School React
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="https://pokeapi.co/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 PokemonAPI
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="https://www.svgrepo.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 SVG icon
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="https://dribbble.com/shots/6063224-About-me-Portfolio-Website-UI"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Design
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
