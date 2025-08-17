@@ -1,12 +1,13 @@
+'use client';
 import classes from './pagination.module.css';
 import { usePagination } from './use-pagination';
 
 type Props = {
-  max: number;
+  numberPage: number;
 };
 
-function Pagination({ max }: Props) {
-  const { page, setPage, switchPage } = usePagination(max);
+function Pagination({ numberPage }: Props) {
+  const { page, setPage, switchPage } = usePagination(numberPage);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ function Pagination({ max }: Props) {
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    setPage(value > max ? max : value);
+    setPage(value > numberPage ? numberPage : value);
   };
 
   return (
@@ -31,19 +32,22 @@ function Pagination({ max }: Props) {
       </button>
 
       <input
-        data-testid="page-input"
+        name="page-input"
         className={classes.input}
         type="number"
         value={page}
         onChange={changeInput}
         min="1"
-        max={max}
+        max={numberPage}
       />
 
-      <button disabled={page > max - 11} onClick={() => switchPage(10)}>
+      <button disabled={page > numberPage - 11} onClick={() => switchPage(10)}>
         {'>'}
       </button>
-      <button disabled={page === max} onClick={() => setPage(max)}>
+      <button
+        disabled={page === numberPage}
+        onClick={() => setPage(numberPage)}
+      >
         {'>>'}
       </button>
     </form>

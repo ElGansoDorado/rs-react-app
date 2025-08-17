@@ -1,9 +1,13 @@
+'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 export function usePagination(max: number) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+
+  const [page, setPage] = useState(Number(searchParams.get('path')) || 1);
 
   const switchPage = (value: number) => {
     if (page + value < 1 || page + value > max) {
@@ -14,11 +18,13 @@ export function usePagination(max: number) {
   };
 
   useEffect(() => {
-    if (!searchParams.has('page')) return;
+    const params = new URLSearchParams(searchParams);
 
-    const params = Object.fromEntries(searchParams);
-    setSearchParams({ ...params, page: `${page}` });
+    params.delete('query');
+    params.set('page', `${page}`);
+
+    replace(`${pathname}?${params.toString()}`);
   }, [page]);
 
-  return { page, max, setPage, switchPage };
+  return { page, setPage, switchPage };
 }

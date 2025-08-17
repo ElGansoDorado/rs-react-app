@@ -1,6 +1,9 @@
+'use client';
 import classes from './menu.module.css';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/shared/model/routes';
+import { useTranslations } from 'next-intl';
 
 const links = [
   {
@@ -9,7 +12,7 @@ const links = [
   },
   {
     name: 'Pokedex',
-    links: ROUTES.POKEMONS + '?page=1',
+    links: ROUTES.POKEMONS,
   },
   {
     name: 'Bag',
@@ -18,20 +21,28 @@ const links = [
 ];
 
 function Menu() {
+  const pathname = usePathname();
+  const t = useTranslations('Header');
+
+  const isActive = (href: string) => {
+    return pathname.includes(href);
+  };
+
   return (
     <nav role="menu">
       <ul className={classes.menu}>
-        {links.map((item) => (
+        {links.map((item, index) => (
           <li key={item.name}>
-            <NavLink
-              to={item.links}
-              data-testid={`nav-link-${item.links}`}
-              className={({ isActive }) =>
-                isActive ? `${classes.active} ${classes.item}` : classes.item
+            <Link
+              href={item.links}
+              className={
+                isActive(item.links)
+                  ? `${classes.active} ${classes.item}`
+                  : classes.item
               }
             >
-              {item.name}
-            </NavLink>
+              {t.raw('menu')[index]}
+            </Link>
           </li>
         ))}
       </ul>

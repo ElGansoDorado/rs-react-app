@@ -1,19 +1,16 @@
 import classes from './pokemon-detail.module.css';
-import { useFetchPokemonDetail } from './queries';
-import { useBag } from '@/shared/hooks/use-bag';
-import { Loader } from '..';
+import DetailMenu from './detail-menu';
+import { getPokemonDetail } from '@/shared/api/get-pokemon';
+import Image from 'next/image';
 
-function PokemonDetail() {
-  const { detail, isLoading, isError, closeDetail } = useFetchPokemonDetail();
+type Props = {
+  id: string;
+};
 
-  const addInBag = useBag((state) => state.addPokemon);
-  const list = useBag((state) => state.list);
+async function PokemonDetail({ id }: Props) {
+  const detail = await getPokemonDetail(id);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (!detail || isError) {
+  if (!detail) {
     return (
       <div className={classes.container}>
         <p className={classes.card}>
@@ -32,7 +29,12 @@ function PokemonDetail() {
             <h2>{detail.name}</h2>
             <p>{detail.types[0].type.name}</p>
           </div>
-          <img src={detail.sprites.front_default} alt={detail.name} />
+          <Image
+            src={detail.sprites.front_default as string}
+            alt={detail.name}
+            width={180}
+            height={180}
+          />
         </div>
 
         <ul>
@@ -44,29 +46,7 @@ function PokemonDetail() {
         </ul>
       </div>
 
-      <div className={classes.menu}>
-        <button onClick={closeDetail} className={classes.button} role="close">
-          <img
-            src="https://www.svgrepo.com/show/525281/close-circle.svg"
-            alt="close"
-          />
-        </button>
-
-        <button
-          onClick={() => addInBag(detail)}
-          className={classes.button}
-          role="add"
-        >
-          <img
-            src={
-              !list.some((pokemon) => pokemon.name === detail.name)
-                ? 'https://www.svgrepo.com/show/525643/bag-2.svg'
-                : 'https://www.svgrepo.com/show/525648/bag-cross.svg'
-            }
-            alt="bag img"
-          />
-        </button>
-      </div>
+      <DetailMenu {...{ detail }} />
     </section>
   );
 }
