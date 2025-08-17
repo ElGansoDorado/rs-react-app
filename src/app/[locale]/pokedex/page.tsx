@@ -1,6 +1,6 @@
 import { Pagination, PokemonDetail, PokemonList } from '@/features/pokedex';
 import { getPokemon, getPokemonPage } from '@/shared/api/get-pokemon';
-import { SuspenseLoader } from '@/shared/ui';
+import { SuspenseLoader, RefreshButton } from '@/shared/ui';
 
 type Props = {
   searchParams?: Promise<{
@@ -22,7 +22,12 @@ async function PokedexPage(props: Props) {
 
   return (
     <main className="container">
-      <h2 className="list-pokemon__title">Result</h2>
+      <div>
+        <h2 className="list-pokemon__title">Result</h2>
+        <RefreshButton
+          tag={query ? `pokemon-${query}` : `pokemon-page-${currentPage}`}
+        />
+      </div>
 
       <div className="flex-row">
         <SuspenseLoader>

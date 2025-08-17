@@ -22,7 +22,9 @@ function checkRespons(response: Response) {
 }
 
 export async function getPokemon(name: string): Promise<PokemonResultsRespons> {
-  const response = await fetch(PATH + name);
+  const response = await fetch(PATH + name, {
+    next: { revalidate: 1 * 60, tags: [`pokemon-${name}`] },
+  });
 
   checkRespons(response);
 
