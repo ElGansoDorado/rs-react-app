@@ -1,0 +1,39 @@
+.container {
+  max-width: 86.11%;
+  margin: 0 auto;
+}
+
+.flex-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pokemon-item {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+@media screen and (min-width: 1600px) {
+  .container {
+    max-width: 1600px;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .container {
+    max-width: 92.18%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    max-width: 89.58%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .container {
+    max-width: 91.79%;
+  }
+}
