@@ -5,7 +5,7 @@ function App() {
       <main className="container">Main</main>
       <footer className="container">@2025 Yakovchik Denis</footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
