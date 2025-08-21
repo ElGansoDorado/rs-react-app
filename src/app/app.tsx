@@ -1,9 +1,24 @@
+import { Form } from '@/features/form';
+import { Header, Footer } from '@/shared/ui';
+
+import { useState } from 'react';
+
 function App() {
+  const [isShow, setIsShow] = useState(false);
+
+  const toggleFormShow = () => {
+    setIsShow(!isShow);
+  };
+
   return (
     <>
-      <header className="container">Header</header>
-      <main className="container">Main</main>
-      <footer className="container">@2025 Yakovchik Denis</footer>
+      <Header onClick={toggleFormShow} />
+
+      <main className="container">
+        <Form {...{ isShow }} />
+      </main>
+
+      <Footer />
     </>
   );
 }
