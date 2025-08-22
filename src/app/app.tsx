@@ -1,4 +1,4 @@
-import { Form } from '@/features/form';
+import { Modal } from '@/features/form';
 import { Header, Footer } from '@/shared/ui';
 
 import { useState } from 'react';
@@ -15,7 +15,7 @@ function App() {
       <Header onClick={toggleFormShow} />
 
       <main className="container">
-        <Form {...{ isShow }} />
+        <Modal {...{ isShow }} />
       </main>
 
       <Footer />

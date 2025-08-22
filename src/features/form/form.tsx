@@ -1,29 +1,34 @@
 import classes from './form.module.css';
 import { Button } from '@/shared/ui';
-import { FormInput } from '.';
+import { FormInput, FormInputImg } from '.';
+import { useForm } from 'react-hook-form';
+import type { FormData, User } from '@/shared/user.types';
 
-type Props = {
-  isShow: boolean;
-};
+function Form() {
+  const { register, handleSubmit } = useForm<FormData>();
 
-function Form({ isShow }: Props) {
+  const onSubmit = (data: FormData) => {
+    const newUser: User = data;
+
+    console.log(newUser);
+  };
+
   return (
-    <dialog open={isShow} className={classes.container}>
-      <h2>Registration form</h2>
+    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+      <div className={classes.column}>
+        <FormInputImg {...{ register }} name="img" />
+        <FormInput type="text" name="username" register={register} />
+        <FormInput type="number" name="age" register={register} />
+        <FormInput type="email" name="email" register={register} />
+        <FormInput type="text" name="country" register={register} />
+        <FormInput type="password" name="password" register={register} />
+        <FormInput type="password" name="confirmPassword" register={register} />
+        <FormInput type="checkbox" name="gender" register={register} />
+        <FormInput type="checkbox" name="TAC" register={register} />
+      </div>
 
-      <form className={classes.form}>
-        <div className={classes.column}>
-          <FormInput type="text" name="name" />
-          <FormInput type="number" name="age" />
-          <FormInput type="email" name="email" />
-          <FormInput type="text" name="country" />
-          <FormInput type="password" name="password" />
-          <FormInput type="password" name="password2" />
-        </div>
-
-        <Button name="submit" />
-      </form>
-    </dialog>
+      <Button name="submit" />
+    </form>
   );
 }
 

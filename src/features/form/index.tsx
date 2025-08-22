@@ -1,4 +1,6 @@
 import Form from './form';
-import FormInput from './form-input';
+import Modal from './modal';
+import FormInput from './components/form-input';
+import FormInputImg from './components/form-input-img';
 
-export { Form, FormInput };
+export { Form, Modal, FormInput, FormInputImg };
