@@ -104,7 +104,7 @@ function FormRef() {
             <input
               name="username_2"
               type="text"
-              placeholder={errors.username || 'username...'}
+              placeholder={'username...'}
               autoComplete="name"
             />
           </label>
@@ -112,11 +112,7 @@ function FormRef() {
           <label
             className={`${classes.input} ${errors.email && classes.error}`}
           >
-            <input
-              name="email_2"
-              type="email"
-              placeholder={errors.email || 'email...'}
-            />
+            <input name="email_2" type="email" placeholder={'email...'} />
           </label>
 
           <div className="flex-row">

@@ -108,6 +108,7 @@ function Form() {
               errors.password ? errors.password.message : 'enter password...'
             }
           />
+          <p>{errors.password ? errors.password.message : ''}</p>
         </label>
 
         <button type="button" onClick={() => setIsShow(!isShow)}>
