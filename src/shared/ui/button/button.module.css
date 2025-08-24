@@ -1,0 +1,26 @@
+.button {
+  min-width: 120px;
+  padding: 6px 8px;
+
+  border-radius: 12px;
+
+  font:
+    400 16px/120% 'Trebuchet MS',
+    'Lucida Sans Unicode',
+    'Lucida Grande',
+    'Lucida Sans',
+    Arial,
+    sans-serif;
+
+  color: #fff;
+  background-color: var(--color-dark-blue);
+  transition: background 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: var(--color-ocean);
+}
+
+.button:disabled {
+  background-color: var(--color-brown);
+}

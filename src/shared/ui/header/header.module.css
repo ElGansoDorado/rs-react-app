@@ -1,0 +1,59 @@
+.header {
+  width: 100%;
+  height: 75px;
+
+  display: flex;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  backdrop-filter: blur(4px);
+}
+
+.header::before {
+  content: '';
+  width: 100%;
+  height: 75px;
+
+  position: absolute;
+  z-index: 1;
+  top: 0;
+
+  background-color: #fff;
+  opacity: 60%;
+  backdrop-filter: blur(10px);
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font:
+    800 24px/120% 'Trebuchet MS',
+    'Lucida Sans Unicode',
+    'Lucida Grande',
+    'Lucida Sans',
+    Arial,
+    sans-serif;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.functional {
+  display: flex;
+  gap: 12px;
+}
+
+.functional img {
+  width: 25px;
+  height: 25px;
+}

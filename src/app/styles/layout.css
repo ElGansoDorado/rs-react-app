@@ -14,21 +14,6 @@
   grid-template-columns: 1fr 3fr;
 }
 
-.abs-center {
-  width: 100%;
-  height: max-content;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
 @media screen and (min-width: 1600px) {
   .container {
     max-width: 1600px;
