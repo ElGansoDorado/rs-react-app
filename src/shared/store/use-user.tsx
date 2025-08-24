@@ -2,14 +2,14 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { User } from '../model/user.types';
 
-interface BagState {
+interface UserState {
   list: User[];
   addUser: (pokemon: User) => void;
   removeUser: (name: string) => void;
   clear: () => void;
 }
 
-export const useUser = create<BagState>()(
+export const useUser = create<UserState>()(
   persist(
     (set, get) => ({
       list: [],

@@ -2,7 +2,7 @@ import classes from './form.module.css';
 import { Button } from '@/shared/ui';
 
 import { useForm } from 'react-hook-form';
-import { useUser, useShowForm } from '@/shared/store';
+import { useUser, useShowForm, useCountry } from '@/shared/store';
 import { useState } from 'react';
 
 import { formSchema, type User } from '@/shared/model';
@@ -14,6 +14,7 @@ import type z from 'zod';
 function Form() {
   const close = useShowForm((state) => state.showFormOne);
   const add = useUser((state) => state.addUser);
+  const countryList = useCountry((state) => state.countries);
   const [isShow, setIsShow] = useState(false);
   const {
     register,
@@ -56,6 +57,7 @@ function Form() {
               placeholder={
                 errors.username ? errors.username.message : 'username...'
               }
+              autoComplete="name"
             />
           </label>
           <label className={classes.input}>
@@ -66,11 +68,29 @@ function Form() {
             <label className="input__age ">
               <input type="number" {...register('age')} max={120} min={0} />
             </label>
-            <label>
-              <input type="checkbox" {...register('gender')} />
-            </label>
-            <label className="input__country">
-              <input type="text" {...register('country')} />
+
+            <div className={classes.gender}>
+              <input type="radio" id="M" {...register('gender')} value="M" />
+              <label form="M">M</label>
+
+              <input type="radio" id="W" {...register('gender')} value="W" />
+              <label form="W">W</label>
+            </div>
+
+            <label className={classes.input}>
+              <input
+                list="country-list"
+                id="country"
+                className={classes.country}
+                placeholder="country..."
+                {...register('country')}
+              />
+
+              <datalist id="country-list">
+                {countryList.map((item) => (
+                  <option key={item} value={item}></option>
+                ))}
+              </datalist>
             </label>
           </div>
         </div>
@@ -102,7 +122,7 @@ function Form() {
             placeholder={
               errors.confirmPassword
                 ? errors.confirmPassword.message
-                : 'Confirm password...'
+                : 'confirm password...'
             }
           />
         </label>

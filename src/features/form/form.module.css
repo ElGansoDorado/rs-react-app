@@ -50,3 +50,13 @@
 .input.error input::placeholder {
   color: var(--color-red);
 }
+
+.gender {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.country {
+  width: 140px;
+}

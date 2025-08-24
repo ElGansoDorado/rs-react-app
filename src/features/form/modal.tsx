@@ -31,8 +31,10 @@ function Modal({ isShow, children }: Props) {
     if (!dialog) return;
 
     if (isShow) {
+      document.body.classList.add('test');
       dialog.showModal();
     } else {
+      document.body.classList.remove('test');
       dialog.close();
     }
   }, [isShow]);

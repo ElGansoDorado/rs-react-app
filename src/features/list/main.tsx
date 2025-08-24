@@ -1,4 +1,4 @@
-import { useUser } from '@/shared/store/useUser';
+import { useUser } from '@/shared/store/use-user';
 
 function Main() {
   const list = useUser((state) => state.list);

@@ -28,7 +28,9 @@ export const formSchema = z
       .min(0, 'Age cannot be negative')
       .max(120, 'Age cannot be more than 120 years'),
 
-    gender: z.boolean(),
+    gender: z.string({
+      error: 'Gender is required',
+    }),
 
     TAC: z
       .boolean()

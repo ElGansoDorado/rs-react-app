@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-interface BagState {
+interface FormState {
   formOne: boolean;
   formTwo: boolean;
 
@@ -9,7 +9,7 @@ interface BagState {
   closeFormOne: () => void;
 }
 
-export const useShowForm = create<BagState>()(
+export const useShowForm = create<FormState>()(
   persist(
     (set, get) => ({
       formOne: false,

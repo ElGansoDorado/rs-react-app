@@ -6,6 +6,10 @@ body {
   background-color: #f3f3f2;
 }
 
+body.test {
+  overflow: hidden;
+}
+
 body,
 html {
   height: 100%;

@@ -3,7 +3,7 @@ export type User = {
   age: number;
   email: string;
   password: string;
-  gender: boolean;
+  gender: string;
   TAC: boolean;
   img: string;
   country: string;
@@ -15,7 +15,7 @@ export type FormData = {
   email: string;
   password: string;
   confirmPassword: string;
-  gender: boolean;
+  gender: string;
   TAC: boolean;
   img: FileList;
   country: string;
