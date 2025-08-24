@@ -1,7 +1,7 @@
 import type { UseFormRegister } from 'react-hook-form';
 import classes from './form-input.module.css';
 
-import type { FormData } from '@/shared/user.types';
+import type { FormData } from '@/shared/model/user.types';
 
 type Props = {
   type?: string;

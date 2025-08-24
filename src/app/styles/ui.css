@@ -1,0 +1,30 @@
+.input__age input {
+  width: 45px;
+  border: 1px solid #000;
+}
+
+.input__country input {
+  border: 1px solid #000;
+}
+
+.input__button {
+  min-width: 120px;
+  padding: 6px 8px;
+
+  border-radius: 12px;
+
+  font:
+    400 16px/120% 'Trebuchet MS',
+    'Lucida Sans Unicode',
+    'Lucida Grande',
+    'Lucida Sans',
+    Arial,
+    sans-serif;
+
+  background-color: #000;
+}
+
+.app__img {
+  width: 120px;
+  height: 120px;
+}

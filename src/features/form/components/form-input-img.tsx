@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react';
-import type { FormData } from '@/shared/user.types';
+import type { FormData } from '@/shared/model/user.types';
 import type { UseFormRegister } from 'react-hook-form';
 
 type Props = {

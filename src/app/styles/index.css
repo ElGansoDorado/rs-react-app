@@ -1,5 +1,6 @@
 @import './reset.css';
 @import './layout.css';
+@import './ui.css';
 
 body {
   background-color: #f3f3f2;
@@ -20,7 +21,10 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
 
+#root,
+#portal {
   --color-dark-blue: #0f1f38;
   --color-orange: #f55449;
   --color-red: #e74170;

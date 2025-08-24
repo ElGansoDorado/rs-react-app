@@ -17,6 +17,6 @@ export type FormData = {
   confirmPassword: string;
   gender: boolean;
   TAC: boolean;
-  img: string;
+  img: FileList;
   country: string;
 };
