@@ -2,22 +2,15 @@ import { Modal } from '@/features/form';
 import { useUser } from '@/shared/store/useUser';
 import { Header, Footer } from '@/shared/ui';
 
-import { useState } from 'react';
-
 function App() {
   const list = useUser((state) => state.list);
   const clear = useUser((state) => state.clear);
-  const [isShow, setIsShow] = useState(false);
-
-  const toggleFormShow = () => {
-    setIsShow(!isShow);
-  };
 
   return (
     <>
-      <Header onClick={toggleFormShow} />
+      <Header />
 
-      <Modal {...{ isShow }} />
+      <Modal />
       <main className="container">
         {list.map((item) => (
           <div key={item.email}>

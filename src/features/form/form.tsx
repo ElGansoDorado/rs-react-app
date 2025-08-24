@@ -2,7 +2,7 @@ import classes from './form.module.css';
 import { Button } from '@/shared/ui';
 
 import { useForm } from 'react-hook-form';
-import { useUser } from '@/shared/store/useUser';
+import { useUser, useShowForm } from '@/shared/store';
 import { useState } from 'react';
 
 import { formSchema, type User } from '@/shared/model';
@@ -12,13 +12,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type z from 'zod';
 
 function Form() {
+  const close = useShowForm((state) => state.showFormOne);
   const add = useUser((state) => state.addUser);
   const [isShow, setIsShow] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm({ resolver: zodResolver(formSchema) });
+  const { register, handleSubmit, reset } = useForm({
+    resolver: zodResolver(formSchema),
+  });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const imgUrl = await convertFileToDataURL(data.img[0]);
@@ -30,6 +29,7 @@ function Form() {
 
     add(newUser);
     reset();
+    close();
   };
 
   const show = () => (isShow ? 'text' : 'password');
