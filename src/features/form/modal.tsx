@@ -1,14 +1,17 @@
 import classes from './form.module.css';
 import { createPortal } from 'react-dom';
-import { Form } from '.';
 import { useShowForm } from '@/shared/store';
 import { useEffect, useRef } from 'react';
 
-function Modal() {
+type Props = {
+  isShow: boolean;
+  children: React.ReactNode;
+};
+
+function Modal({ isShow, children }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const portal = document.getElementById('portal');
 
-  const isShow = useShowForm((state) => state.formOne);
   const close = useShowForm((state) => state.closeFormOne);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -50,7 +53,7 @@ function Modal() {
         <button onClick={close}>close</button>
       </div>
 
-      <Form />
+      {children}
     </dialog>,
     portal
   );

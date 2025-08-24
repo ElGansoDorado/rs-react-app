@@ -42,3 +42,11 @@
   padding: 6px 0;
   border-bottom: 1px solid #000;
 }
+
+.input.error {
+  border-bottom-color: var(--color-red);
+}
+
+.input.error input::placeholder {
+  color: var(--color-red);
+}

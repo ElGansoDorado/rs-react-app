@@ -15,7 +15,12 @@ function Form() {
   const close = useShowForm((state) => state.showFormOne);
   const add = useUser((state) => state.addUser);
   const [isShow, setIsShow] = useState(false);
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(formSchema),
   });
 
@@ -37,16 +42,20 @@ function Form() {
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={classes.column}>
-        <label>
+        <label className="">
           <input {...register('img')} type="file" accept="image/*" />
         </label>
 
         <div className={classes.row}>
-          <label className={classes.input}>
+          <label
+            className={`${classes.input} ${errors.username && classes.error}`}
+          >
             <input
               type="text"
               {...register('username')}
-              placeholder="username..."
+              placeholder={
+                errors.username ? errors.username.message : 'username...'
+              }
             />
           </label>
           <label className={classes.input}>
@@ -68,11 +77,15 @@ function Form() {
       </div>
 
       <div className="flex-row">
-        <label className={classes.input}>
+        <label
+          className={`${classes.input} ${errors.password && classes.error}`}
+        >
           <input
             type={show()}
             {...register('password')}
-            placeholder="password..."
+            placeholder={
+              errors.password ? errors.password.message : 'enter password...'
+            }
           />
         </label>
 
@@ -80,11 +93,17 @@ function Form() {
           show
         </button>
 
-        <label className={classes.input}>
+        <label
+          className={`${classes.input} ${errors.confirmPassword && classes.error}`}
+        >
           <input
             type={show()}
             {...register('confirmPassword')}
-            placeholder="Confirm password..."
+            placeholder={
+              errors.confirmPassword
+                ? errors.confirmPassword.message
+                : 'Confirm password...'
+            }
           />
         </label>
       </div>
