@@ -25,7 +25,7 @@ export const useUser = create<UserState>()(
       clear: () => set({ list: [] }),
     }),
     {
-      name: 'USER-STORAGE',
+      name: 'USERS-STORAGE',
       storage: createJSONStorage(() => localStorage),
     }
   )

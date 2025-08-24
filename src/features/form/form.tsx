@@ -20,7 +20,7 @@ function Form() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: zodResolver(formSchema),
   });
@@ -128,7 +128,7 @@ function Form() {
         </label>
       </div>
 
-      <Button name="submit" />
+      <Button name="submit" disabled={!isValid} />
 
       <label>
         <input type="checkbox" {...register('TAC')} />
