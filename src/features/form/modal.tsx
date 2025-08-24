@@ -1,18 +1,16 @@
 import classes from './form.module.css';
 import { createPortal } from 'react-dom';
-import { useShowForm } from '@/shared/store';
 import { useEffect, useRef } from 'react';
 
 type Props = {
   isShow: boolean;
+  close: () => void;
   children: React.ReactNode;
 };
 
-function Modal({ isShow, children }: Props) {
+function Modal({ isShow, close, children }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const portal = document.getElementById('portal');
-
-  const close = useShowForm((state) => state.closeFormOne);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Escape') {

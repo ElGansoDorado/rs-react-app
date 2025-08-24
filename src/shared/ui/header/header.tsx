@@ -4,6 +4,7 @@ import { useShowForm } from '@/shared/store';
 
 function Header() {
   const toggleShowOne = useShowForm((state) => state.showFormOne);
+  const toggleShowTwo = useShowForm((state) => state.showFormTwo);
 
   return (
     <header className={classes.header}>
@@ -12,7 +13,7 @@ function Header() {
 
         <div className={classes.functional}>
           <Button name="form hook" onClick={toggleShowOne} />
-          <Button name="form ref" />
+          <Button name="form ref" onClick={toggleShowTwo} />
         </div>
       </div>
     </header>

@@ -7,6 +7,9 @@ interface FormState {
 
   showFormOne: () => void;
   closeFormOne: () => void;
+
+  showFormTwo: () => void;
+  closeFormTwo: () => void;
 }
 
 export const useShowForm = create<FormState>()(
@@ -21,6 +24,14 @@ export const useShowForm = create<FormState>()(
 
       closeFormOne: () => {
         set({ formOne: false });
+      },
+
+      showFormTwo: () => {
+        set({ formTwo: !get().formOne });
+      },
+
+      closeFormTwo: () => {
+        set({ formTwo: false });
       },
     }),
     {

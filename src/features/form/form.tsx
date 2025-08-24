@@ -43,8 +43,9 @@ function Form() {
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={classes.column}>
-        <label className="">
+        <label className={classes.inputImg}>
           <input {...register('img')} type="file" accept="image/*" />
+          <p>{errors.img?.message}</p>
         </label>
 
         <div className={classes.row}>
@@ -132,7 +133,7 @@ function Form() {
 
       <label>
         <input type="checkbox" {...register('TAC')} />
-        Согласие на сбор и обработку данных
+        accept Terms and Conditions agreement
       </label>
     </form>
   );

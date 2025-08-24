@@ -60,3 +60,7 @@
 .country {
   width: 140px;
 }
+
+.inputImg {
+  border: 1px solid #000;
+}
