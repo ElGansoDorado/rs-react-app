@@ -1,11 +1,12 @@
 import { Header, Footer } from '@/shared/ui';
+import Table from '@/features/table';
 
 function App() {
   return (
     <>
       <Header />
 
-      <main></main>
+      <Table />
 
       <Footer />
     </>
