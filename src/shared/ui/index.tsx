@@ -1,4 +1,4 @@
-import Header from './footer/header/header';
+import Header from './header/header';
 import Footer from './footer/footer';
 import Button from './button/button';
 

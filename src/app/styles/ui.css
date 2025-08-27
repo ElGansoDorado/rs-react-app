@@ -28,3 +28,31 @@
   width: 120px;
   height: 120px;
 }
+
+.table {
+  background-color: #fff;
+  border: 1px solid var(--color-placeholder);
+}
+
+.table th,
+td {
+  padding: 8px;
+  border: 1px solid var(--color-placeholder);
+}
+
+.table__title {
+  color: var(--color-dark-blue);
+  font: 600 21px/120% 'Segoe UI';
+}
+
+.table__head {
+  font: 500 18px/120% 'Segoe UI';
+}
+
+.table__container {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+}
