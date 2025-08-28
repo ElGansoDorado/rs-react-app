@@ -3,9 +3,9 @@ import { useLoading } from './use-loading';
 
 function Table() {
   const [selectedCountry, setSelectedCountry] = useState('Albania');
-  const { data, loading } = useLoading();
+  const { countryCO2Data, loading } = useLoading();
 
-  if (!data) {
+  if (!countryCO2Data) {
     return (
       <main className="container">
         <p>Loading: {loading}%</p>
@@ -13,23 +13,12 @@ function Table() {
     );
   }
 
-  const countryNames = Object.keys(data);
+  const countryNames = Object.keys(countryCO2Data);
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
       <main className="container">
-        <select
-          value={selectedCountry}
-          onChange={(e) => setSelectedCountry(e.target.value)}
-        >
-          {countryNames.map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
-
-        <div className="table__container">
+        <div className="table__grid">
           <table className="table">
             <caption className="table__title">Country list</caption>,
             <thead className="table__head">
@@ -42,12 +31,17 @@ function Table() {
             <tbody className="table__body">
               {countryNames.map((item) => {
                 return (
-                  <tr key={item}>
-                    <td onClick={() => setSelectedCountry(item)}>{item}</td>
-                    <td>{data[item].iso_code || 'N/A'}</td>
+                  <tr
+                    className={`table__button ${item === selectedCountry ? 'table__active' : ''}`}
+                    onClick={() => setSelectedCountry(item)}
+                    key={item}
+                  >
+                    <td>{item}</td>
+                    <td>{countryCO2Data[item].iso_code || 'N/A'}</td>
                     <td>
-                      {data[item].data[data[item].data.length - 1].population ||
-                        'N/A'}
+                      {countryCO2Data[item].data[
+                        countryCO2Data[item].data.length - 1
+                      ].population || 'N/A'}
                     </td>
                   </tr>
                 );
@@ -56,7 +50,7 @@ function Table() {
           </table>
 
           <table className="table">
-            <caption className="table__title">{selectedCountry}</caption>,
+            <caption className="table__title">{selectedCountry} table</caption>,
             <thead className="table__head">
               <tr>
                 <th>Year</th>
@@ -66,7 +60,7 @@ function Table() {
               </tr>
             </thead>
             <tbody className="table__body">
-              {data[selectedCountry]?.data.map((_, index, array) => {
+              {countryCO2Data[selectedCountry]?.data.map((_, index, array) => {
                 const yearData = array[array.length - 1 - index];
                 return (
                   <tr key={yearData.year}>

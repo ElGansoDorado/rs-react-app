@@ -1,4 +1,4 @@
-import { Header, Footer } from '@/shared/ui';
+import { Header } from '@/shared/ui';
 import Table from '@/features/table';
 
 function App() {
@@ -7,8 +7,6 @@ function App() {
       <Header />
 
       <Table />
-
-      <Footer />
     </>
   );
 }

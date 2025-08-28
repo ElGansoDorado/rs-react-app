@@ -3,7 +3,9 @@ import type { CountriesData } from '@/shared/model/country';
 import { useEffect, useRef, useState } from 'react';
 
 export const useLoading = () => {
-  const [data, setData] = useState<CountriesData | null>(null);
+  const [countryCO2Data, setCountryCO2Data] = useState<CountriesData | null>(
+    null
+  );
 
   const [loading, setLoading] = useState(0);
   const hasFetched = useRef(false);
@@ -15,9 +17,9 @@ export const useLoading = () => {
     hasFetched.current = true;
 
     fetchCountryData(setLoading).then((data) => {
-      setData(data);
+      setCountryCO2Data(data);
     });
   }, []);
 
-  return { data, loading };
+  return { countryCO2Data, loading };
 };
