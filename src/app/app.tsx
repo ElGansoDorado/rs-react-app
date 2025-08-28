@@ -1,5 +1,5 @@
 import { Header } from '@/shared/ui';
-import Table from '@/features/table';
+import { Table } from '@/features/table';
 
 function App() {
   return (
