@@ -1,4 +1,4 @@
-import { Header } from '@/shared/ui';
+import Header from '@/features/header/header';
 import { Table } from '@/features/table';
 
 function App() {
@@ -6,7 +6,9 @@ function App() {
     <>
       <Header />
 
-      <Table />
+      <main className="container">
+        <Table />
+      </main>
     </>
   );
 }

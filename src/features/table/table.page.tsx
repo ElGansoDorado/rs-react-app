@@ -7,28 +7,22 @@ function Table() {
   const { countryCO2Data, loading } = useLoading();
 
   if (!countryCO2Data) {
-    return (
-      <main className="container">
-        <p>Loading: {loading}%</p>
-      </main>
-    );
+    return <p>Loading: {loading}%</p>;
   }
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <main className="container">
-        <div className="table__grid">
-          <TableCountry
-            {...{ countryCO2Data, selectedCountry, setSelectedCountry }}
-          />
+      <div className="table__grid">
+        <TableCountry
+          {...{ countryCO2Data, selectedCountry, setSelectedCountry }}
+        />
 
-          {selectedCountry ? (
-            <TableData {...{ countryCO2Data, selectedCountry }} />
-          ) : (
-            <p>select a country to display its co2 data</p>
-          )}
-        </div>
-      </main>
+        {selectedCountry ? (
+          <TableData {...{ countryCO2Data, selectedCountry }} />
+        ) : (
+          <p>select a country to display its co2 data</p>
+        )}
+      </div>
     </Suspense>
   );
 }

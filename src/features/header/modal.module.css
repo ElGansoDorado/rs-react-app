@@ -1,0 +1,41 @@
+.modal {
+  width: 250px;
+  height: 300px;
+
+  border-radius: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu {
+  height: 100%;
+  padding: 15px 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu label {
+  border-bottom: 1px solid var(--color-placeholder);
+}
+
+.menu button {
+  padding: 6px;
+  border-radius: 6px;
+
+  color: #fff;
+  background-color: var(--color-dark-blue);
+
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}

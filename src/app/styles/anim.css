@@ -5,12 +5,12 @@ caption {
 
 @keyframes firstAppearance {
   0% {
-    background-color: #ffffff;
+    background-color: #fff;
   }
   50% {
-    background-color: #333333;
+    background-color: #357082;
   }
   100% {
-    background-color: #ffffff;
+    background-color: #fff;
   }
 }
