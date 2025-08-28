@@ -18,3 +18,11 @@ export type CountryData = {
 export type CountriesData = {
   [countryName: string]: CountryData;
 };
+
+export type SortField = 'name' | 'iso' | 'population' | null;
+export type SortDirection = 'asc' | 'desc';
+
+export type SortConfig = {
+  field: SortField;
+  direction: SortDirection;
+};

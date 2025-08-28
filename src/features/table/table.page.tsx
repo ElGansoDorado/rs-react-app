@@ -3,7 +3,7 @@ import { useLoading } from './use-loading';
 import { TableCountry, TableData } from '.';
 
 function Table() {
-  const [selectedCountry, setSelectedCountry] = useState('Albania');
+  const [selectedCountry, setSelectedCountry] = useState('');
   const { countryCO2Data, loading } = useLoading();
 
   if (!countryCO2Data) {
@@ -22,7 +22,11 @@ function Table() {
             {...{ countryCO2Data, selectedCountry, setSelectedCountry }}
           />
 
-          <TableData {...{ countryCO2Data, selectedCountry }} />
+          {selectedCountry ? (
+            <TableData {...{ countryCO2Data, selectedCountry }} />
+          ) : (
+            <p>select a country to display its co2 data</p>
+          )}
         </div>
       </main>
     </Suspense>
