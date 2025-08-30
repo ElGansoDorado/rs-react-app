@@ -4,8 +4,10 @@ import { create } from 'zustand';
 interface ConfigState {
   config: string[];
   search: string;
-  updateSearch: (str: string) => void;
-  updateConfig: (str: string) => void;
+  year: number;
+  setSearch: (str: string) => void;
+  setConfig: (str: string) => void;
+  setYear: (newYear: number) => void;
 }
 
 export const useConfig = create<ConfigState>()(
@@ -13,12 +15,13 @@ export const useConfig = create<ConfigState>()(
     (set, get) => ({
       config: [],
       search: '',
+      year: 2023,
 
-      updateSearch: (str) => {
+      setSearch: (str) => {
         set({ search: str });
       },
 
-      updateConfig: (str) => {
+      setConfig: (str) => {
         const configList = get().config;
 
         if (configList.includes(str)) {
@@ -26,6 +29,10 @@ export const useConfig = create<ConfigState>()(
         } else {
           set({ config: [...configList, str] });
         }
+      },
+
+      setYear: (newYear) => {
+        set({ year: newYear });
       },
     }),
     {

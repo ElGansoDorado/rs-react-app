@@ -91,5 +91,5 @@ tbody tr {
 .table__button.table__active,
 .table__button:hover {
   color: #fff;
-  background-color: var(--color-brown);
+  background-color: var(--color-active);
 }

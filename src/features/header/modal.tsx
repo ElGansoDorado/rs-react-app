@@ -8,7 +8,7 @@ type Props = {
 
 function Modal({ onClose }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const updateSettings = useConfig((state) => state.updateConfig);
+  const updateSettings = useConfig((state) => state.setConfig);
   const settings = useConfig((state) => state.config);
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {

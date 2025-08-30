@@ -1,5 +1,6 @@
 import type { CountriesData } from '@/shared/model/country';
 import { useSort } from './use-sort';
+import { useConfig } from '@/shared/store/use-config';
 
 type Props = {
   countryCO2Data: CountriesData;
@@ -14,6 +15,7 @@ function TableCountry({
 }: Props) {
   const { sortedCountryNames, handleSort, getSortIndicator } =
     useSort(countryCO2Data);
+  const year = useConfig((state) => state.year);
 
   return (
     <table className="table">
@@ -34,7 +36,7 @@ function TableCountry({
       <tbody className="table__body">
         {sortedCountryNames.map((item) => {
           const country = countryCO2Data[item];
-          const latestData = country.data[country.data.length - 1];
+          const latestData = country.data.find((item) => item.year === year);
 
           return (
             <tr
