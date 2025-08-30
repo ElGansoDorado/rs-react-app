@@ -77,6 +77,12 @@ tbody tr {
   font: 500 18px/120% 'Segoe UI';
 }
 
+.table__head th {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .table__button {
   cursor: pointer;
   transition: background 0.2s ease-out;

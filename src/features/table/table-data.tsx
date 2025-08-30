@@ -1,4 +1,5 @@
 import type { CountriesData } from '@/shared/model/country';
+import { useConfig } from '@/shared/store/use-config';
 
 type Props = {
   countryCO2Data: CountriesData;
@@ -6,6 +7,8 @@ type Props = {
 };
 
 function TableData({ countryCO2Data, selectedCountry }: Props) {
+  const configList = useConfig((state) => state.config);
+
   return (
     <table className="table">
       <caption className="table__title">{selectedCountry} table</caption>,
@@ -15,6 +18,15 @@ function TableData({ countryCO2Data, selectedCountry }: Props) {
           <th>Population</th>
           <th>CO2</th>
           <th>co2 per capita</th>
+          {configList.includes('gdp') && <th>gdp</th>}
+          {configList.includes('cumulative_luc_co2') && (
+            <td>cumulative luc co2</td>
+          )}
+          {configList.includes('ghg_excluding_lucf_per_capita') && (
+            <td>ghg excluding lucf per capita</td>
+          )}
+          {configList.includes('ghg_per_capita') && <td>ghg per capita</td>}
+          {configList.includes('cement_co') && <th>cement co2</th>}
         </tr>
       </thead>
       <tbody className="table__body">
@@ -28,6 +40,28 @@ function TableData({ countryCO2Data, selectedCountry }: Props) {
               <td>
                 {yearData.cement_co2_per_capita?.toLocaleString() || 'N/A'}
               </td>
+              {configList.includes('gdp') && (
+                <td>{yearData.gdp?.toLocaleString() || 'N/A'}</td>
+              )}
+
+              {configList.includes('cumulative_luc_co2') && (
+                <td>
+                  {yearData.cumulative_luc_co2?.toLocaleString() || 'N/A'}
+                </td>
+              )}
+              {configList.includes('ghg_excluding_lucf_per_capita') && (
+                <td>
+                  {yearData.ghg_excluding_lucf_per_capita?.toLocaleString() ||
+                    'N/A'}
+                </td>
+              )}
+              {configList.includes('ghg_per_capita') && (
+                <td>{yearData.ghg_per_capita?.toLocaleString() || 'N/A'}</td>
+              )}
+
+              {configList.includes('cement_co') && (
+                <td>{yearData.cement_co2?.toLocaleString() || 'N/A'}</td>
+              )}
             </tr>
           );
         })}
