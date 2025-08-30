@@ -1,4 +1,4 @@
-import type { CountriesData } from '@/shared/model/country';
+import type { CountriesData } from '@/shared/types/country';
 import { useSort } from './use-sort';
 import { useConfig } from '@/shared/store/use-config';
 

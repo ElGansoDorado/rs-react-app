@@ -1,5 +1,5 @@
 import { fetchCountryData } from '@/shared/api/co2';
-import type { CountriesData } from '@/shared/model/country';
+import type { CountriesData } from '@/shared/types/country';
 import { useEffect, useRef, useState } from 'react';
 
 export const useLoading = () => {

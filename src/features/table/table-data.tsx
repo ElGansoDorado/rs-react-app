@@ -1,4 +1,4 @@
-import type { CountriesData } from '@/shared/model/country';
+import type { CountriesData } from '@/shared/types/country';
 import { useConfig } from '@/shared/store/use-config';
 
 type Props = {

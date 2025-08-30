@@ -1,4 +1,4 @@
-import type { CountriesData } from '../model/country';
+import type { CountriesData } from '../types/country';
 
 export async function fetchCountryData(
   onProgress?: (progress: number) => void

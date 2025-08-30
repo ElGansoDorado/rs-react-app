@@ -2,7 +2,7 @@ import type {
   CountriesData,
   SortConfig,
   SortField,
-} from '@/shared/model/country';
+} from '@/shared/types/country';
 import { useConfig } from '@/shared/store/use-config';
 import { useMemo, useState } from 'react';
 
