@@ -3,6 +3,7 @@ import type {
   SortConfig,
   SortField,
 } from '@/shared/model/country';
+import { useConfig } from '@/shared/store/use-config';
 import { useMemo, useState } from 'react';
 
 export const useSort = (countryCO2Data: CountriesData) => {
@@ -10,9 +11,12 @@ export const useSort = (countryCO2Data: CountriesData) => {
     field: null,
     direction: 'asc',
   });
+  const search = useConfig((state) => state.search);
 
   const sortedCountryNames = useMemo(() => {
-    const names = Object.keys(countryCO2Data);
+    const names = Object.keys(countryCO2Data).filter((name) =>
+      name.includes(search)
+    );
 
     if (!sortConfig.field) return names;
 
@@ -43,7 +47,7 @@ export const useSort = (countryCO2Data: CountriesData) => {
 
       return sortConfig.direction === 'asc' ? comparison : -comparison;
     });
-  }, [countryCO2Data, sortConfig]);
+  }, [countryCO2Data, sortConfig, search]);
 
   const handleSort = (field: SortField) => {
     setSortConfig((prev) => {

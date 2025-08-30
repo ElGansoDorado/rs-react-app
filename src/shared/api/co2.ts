@@ -4,8 +4,6 @@ export async function fetchCountryData(
   onProgress?: (progress: number) => void
 ): Promise<CountriesData | null> {
   try {
-    console.log('start');
-
     const response = await fetch(
       'https://nyc3.digitaloceanspaces.com/owid-public/data/co2/owid-co2-data.json'
     );
@@ -50,8 +48,6 @@ export async function fetchCountryData(
 
     const result = new TextDecoder('utf-8').decode(chunksAll);
     const data: CountriesData = JSON.parse(result);
-
-    console.log(data);
     return data;
   } catch {
     console.log('error');

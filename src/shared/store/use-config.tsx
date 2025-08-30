@@ -3,6 +3,8 @@ import { create } from 'zustand';
 
 interface ConfigState {
   config: string[];
+  search: string;
+  updateSearch: (str: string) => void;
   updateConfig: (str: string) => void;
 }
 
@@ -10,6 +12,11 @@ export const useConfig = create<ConfigState>()(
   persist(
     (set, get) => ({
       config: [],
+      search: '',
+
+      updateSearch: (str) => {
+        set({ search: str });
+      },
 
       updateConfig: (str) => {
         const configList = get().config;
