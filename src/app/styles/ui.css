@@ -28,3 +28,68 @@
   width: 120px;
   height: 120px;
 }
+
+tbody {
+  display: block;
+  height: 500px;
+  overflow-y: auto;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table__grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 15px;
+  border-collapse: collapse;
+
+  background-color: #fff;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: center;
+}
+
+.table__title {
+  color: var(--color-dark-blue);
+  font: 600 21px/120% 'Segoe UI';
+}
+
+.table__head {
+  font: 500 18px/120% 'Segoe UI';
+}
+
+.table__head th {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.table__button {
+  cursor: pointer;
+  transition: background 0.2s ease-out;
+}
+
+.table__button.table__active,
+.table__button:hover {
+  color: #fff;
+  background-color: var(--color-active);
+}

@@ -1,0 +1,16 @@
+td,
+caption {
+  animation: firstAppearance 1.5s ease-in-out;
+}
+
+@keyframes firstAppearance {
+  0% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #357082;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
