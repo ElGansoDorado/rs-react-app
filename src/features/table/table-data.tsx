@@ -54,22 +54,6 @@ const DynamicColumns = memo(
 );
 DynamicColumns.displayName = 'DynamicColumns';
 
-const TableRow = memo(
-  ({
-    yearData,
-    configFlags,
-  }: {
-    yearData: YearData;
-    configFlags: ConfigFlags;
-  }) => (
-    <tr key={yearData.year}>
-      <StaticColumns yearData={yearData} />
-      <DynamicColumns yearData={yearData} configFlags={configFlags} />
-    </tr>
-  )
-);
-TableRow.displayName = 'TableRow';
-
 const TableHeader = memo(({ configFlags }: { configFlags: ConfigFlags }) => (
   <thead className="table__head">
     <tr>
@@ -117,11 +101,10 @@ function TableData({ countryCO2Data, selectedCountry }: Props) {
         {countryData.map((_, index, array) => {
           const yearData = array[array.length - 1 - index];
           return (
-            <TableRow
-              key={yearData.year}
-              yearData={yearData}
-              configFlags={configFlags}
-            />
+            <tr key={yearData.year}>
+              <StaticColumns yearData={yearData} />
+              <DynamicColumns yearData={yearData} configFlags={configFlags} />
+            </tr>
           );
         })}
       </tbody>
