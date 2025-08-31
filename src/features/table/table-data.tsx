@@ -1,5 +1,6 @@
 import type { CountriesData } from '@/shared/types/country';
 import { useConfig } from '@/shared/store/use-config';
+import { useMemo } from 'react';
 
 type Props = {
   countryCO2Data: CountriesData;
@@ -8,6 +9,17 @@ type Props = {
 
 function TableData({ countryCO2Data, selectedCountry }: Props) {
   const configList = useConfig((state) => state.config);
+
+  const configFlags = useMemo(
+    () => ({
+      hasGdp: configList.includes('gdp'),
+      hasCumulativeLucCo2: configList.includes('cumulative_luc_co2'),
+      hasGhgExcludingLucf: configList.includes('ghg_excluding_lucf_per_capita'),
+      hasGhgPerCapita: configList.includes('ghg_per_capita'),
+      hasCementCo: configList.includes('cement_co'),
+    }),
+    [configList]
+  );
 
   return (
     <table className="table">
@@ -18,15 +30,13 @@ function TableData({ countryCO2Data, selectedCountry }: Props) {
           <th>Population</th>
           <th>CO2</th>
           <th>co2 per capita</th>
-          {configList.includes('gdp') && <th>gdp</th>}
-          {configList.includes('cumulative_luc_co2') && (
-            <td>cumulative luc co2</td>
-          )}
-          {configList.includes('ghg_excluding_lucf_per_capita') && (
+          {configFlags.hasGdp && <th>gdp</th>}
+          {configFlags.hasCumulativeLucCo2 && <td>cumulative luc co2</td>}
+          {configFlags.hasGhgExcludingLucf && (
             <td>ghg excluding lucf per capita</td>
           )}
-          {configList.includes('ghg_per_capita') && <td>ghg per capita</td>}
-          {configList.includes('cement_co') && <th>cement co2</th>}
+          {configFlags.hasGhgPerCapita && <td>ghg per capita</td>}
+          {configFlags.hasCementCo && <th>cement co2</th>}
         </tr>
       </thead>
       <tbody className="table__body">
@@ -40,26 +50,26 @@ function TableData({ countryCO2Data, selectedCountry }: Props) {
               <td>
                 {yearData.cement_co2_per_capita?.toLocaleString() || 'N/A'}
               </td>
-              {configList.includes('gdp') && (
+              {configFlags.hasGdp && (
                 <td>{yearData.gdp?.toLocaleString() || 'N/A'}</td>
               )}
 
-              {configList.includes('cumulative_luc_co2') && (
+              {configFlags.hasCumulativeLucCo2 && (
                 <td>
                   {yearData.cumulative_luc_co2?.toLocaleString() || 'N/A'}
                 </td>
               )}
-              {configList.includes('ghg_excluding_lucf_per_capita') && (
+              {configFlags.hasGhgExcludingLucf && (
                 <td>
                   {yearData.ghg_excluding_lucf_per_capita?.toLocaleString() ||
                     'N/A'}
                 </td>
               )}
-              {configList.includes('ghg_per_capita') && (
+              {configFlags.hasGhgPerCapita && (
                 <td>{yearData.ghg_per_capita?.toLocaleString() || 'N/A'}</td>
               )}
 
-              {configList.includes('cement_co') && (
+              {configFlags.hasCementCo && (
                 <td>{yearData.cement_co2?.toLocaleString() || 'N/A'}</td>
               )}
             </tr>

@@ -25,13 +25,13 @@ function Modal({ onClose }: Props) {
             name="gdp"
             value="gdp"
             type="checkbox"
-            checked={settings.includes('gdp')}
+            defaultChecked={settings.includes('gdp')}
           />
           gdp
         </label>
         <label onClick={() => updateSettings('cumulative_luc_co2')}>
           <input
-            checked={settings.includes('cumulative_luc_co2')}
+            defaultChecked={settings.includes('cumulative_luc_co2')}
             name="cumulative_luc_co2"
             value="cumulative_luc_co2"
             type="checkbox"
@@ -40,7 +40,7 @@ function Modal({ onClose }: Props) {
         </label>
         <label onClick={() => updateSettings('ghg_excluding_lucf_per_capita')}>
           <input
-            checked={settings.includes('ghg_excluding_lucf_per_capita')}
+            defaultChecked={settings.includes('ghg_excluding_lucf_per_capita')}
             name="ghg_excluding_lucf_per_capita"
             value="ghg_excluding_lucf_per_capita"
             type="checkbox"
@@ -49,7 +49,7 @@ function Modal({ onClose }: Props) {
         </label>
         <label onClick={() => updateSettings('ghg_per_capita')}>
           <input
-            checked={settings.includes('ghg_per_capita')}
+            defaultChecked={settings.includes('ghg_per_capita')}
             name="ghg_per_capita"
             value="ghg_per_capita"
             type="checkbox"
@@ -61,7 +61,7 @@ function Modal({ onClose }: Props) {
             name="cement_co"
             value="cement_co"
             type="checkbox"
-            checked={settings.includes('cement_co')}
+            defaultChecked={settings.includes('cement_co')}
           />
           cement co
         </label>

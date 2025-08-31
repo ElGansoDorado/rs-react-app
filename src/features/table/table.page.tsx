@@ -7,28 +7,24 @@ function Table() {
   const [selectedCountry, setSelectedCountry] = useState('');
   const { countryCO2Data, loading } = useLoading();
 
-  if (!countryCO2Data) {
-    return <p>Loading: {loading}%</p>;
-  }
-
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <div className="table__grid">
-        <Profiler id="country" onRender={onRender}>
+    <div className="table__grid">
+      <Profiler id="country" onRender={onRender}>
+        <Suspense fallback={<p>Loading: {loading}%</p>}>
           <TableCountry
             {...{ countryCO2Data, selectedCountry, setSelectedCountry }}
           />
-        </Profiler>
+        </Suspense>
+      </Profiler>
 
-        <Profiler id="data" onRender={onRender}>
-          {selectedCountry ? (
-            <TableData {...{ countryCO2Data, selectedCountry }} />
-          ) : (
-            <p>select a country to display its co2 data</p>
-          )}
-        </Profiler>
-      </div>
-    </Suspense>
+      <Profiler id="data" onRender={onRender}>
+        {countryCO2Data && selectedCountry ? (
+          <TableData {...{ countryCO2Data, selectedCountry }} />
+        ) : (
+          <p>select a country to display its co2 data</p>
+        )}
+      </Profiler>
+    </div>
   );
 }
 
